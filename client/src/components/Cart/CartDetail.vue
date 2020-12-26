@@ -102,6 +102,7 @@ export default {
         this.$store.commit(ADD_TO_CART, this.drink);
       } else if (this.quantity == 0) {
         this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+        console.log("vla");
       }
     },
     setQuantity() {

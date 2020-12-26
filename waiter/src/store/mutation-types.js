@@ -1,0 +1,13 @@
+export const ALL_DRINKS = "ALL_DRINKS";
+export const ALL_FOODS = "ALL_FOODS";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const DELETE_FROM_CART = "DELETE_FROM_CART";
+export const ADD_ORDER = "ADD_ORDER";
+export const ADD_ORDER_SUCCESS = "ADD_ORDER_SUCCESS";
+export const CLEAR_CART = "CLEAR_CART";
+export const ALL_DRINKTYPE = "ALL_DRINKTYPE";
+export const REQUEST_DRINKTYPE = "REQUEST_DRINKTYPE";
+export const ALL_COCKTAILS = "ALL_COCKTAILS";
+export const ALL_BEERS = "ALL_BEERS";
+export const CHANGE_QUANTITY_CART = "CHANGE_QUANTITY_CART";
+export const ALL_ORDERS = "ALL_ORDERS";

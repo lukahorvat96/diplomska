@@ -1,0 +1,27 @@
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Beers from "@/views/Home";
+import Cart from "@/views/Orders";
+
+Vue.use(VueRouter);
+
+const routes = [
+  {
+    path: "/home",
+    name: "Home",
+    component: Beers
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: Cart
+  }
+];
+
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
+});
+
+export default router;

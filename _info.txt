@@ -1,0 +1,29 @@
+1.) python
+2.) Flask - pip install -U Flask
+3.) sql connector - python -m pip install mysql-connector
+
+
+CORS Conrol-Allow
+https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino
+
+
+
+
+https://vuetifyjs.com/en/customization/icons#install-material-design-icons-js-svg
+ npm install @mdi/js -D
+
+// src/plugins/vuetify.js
+
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
+
+Vue.use(Vuetify)
+
+export default new Vuetify({
+  icons: {
+    iconfont: 'mdiSvg',
+  },
+
+
+Update vuetify - npm ls --depth 0 vuetify
+Check vuetify version - npm ls --depth 0 vuetify

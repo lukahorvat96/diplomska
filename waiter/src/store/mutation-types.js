@@ -11,3 +11,4 @@ export const ALL_COCKTAILS = "ALL_COCKTAILS";
 export const ALL_BEERS = "ALL_BEERS";
 export const CHANGE_QUANTITY_CART = "CHANGE_QUANTITY_CART";
 export const ALL_ORDERS = "ALL_ORDERS";
+export const ORDER_BY_ID = "ORDER_BY_ID";

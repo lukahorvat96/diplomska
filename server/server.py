@@ -113,9 +113,9 @@ def allBeers():
 def allFoods():
     return jsonify(SQLqueryFood("SELECT * FROM food"))
 
-@app.route('/order')
-def allOrders():
-    return jsonify(SQLqueryOrder("SELECT * FROM `order`"))
+@app.route('/ordersWithoutEnd')
+def allOrdersWithoutEnd():
+    return jsonify(SQLqueryOrder("SELECT * FROM `order` WHERE Order_end IS NULL"))
 
 @app.route('/addorder/<int:table>', methods=['POST']) #GET requests will be blocked
 def addOrder(table):

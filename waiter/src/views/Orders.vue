@@ -19,14 +19,13 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("allOrders");
-    this.orders = this.$store.getters.getAllOrders;
+    this.$store.dispatch("allOrdersWithoutEnd");
+    this.orders = this.$store.getters.getAllOrdersWithoutEnd;
   },
   computed: {
     allOrders() {
-      console.log(this.$store.getters.getAllOrders);
-      
-      return this.$store.getters.getAllOrders;
+      console.log(this.$store.getters.getAllOrdersWithoutEnd);
+      return this.$store.getters.getAllOrdersWithoutEnd;
     }
   },
   methods: {

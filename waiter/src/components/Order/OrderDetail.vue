@@ -6,27 +6,17 @@
       <p>End: {{ order.end }}$</p>
       <p>Table ID: {{ order.table_id }}$</p>
     </v-card-text>
+    <order-by-id :order_id="order.order_id"> MORE INFO </order-by-id>
   </v-card>
 </template>
 
 <script>
+import OrderDetailById from "./OrderDetailById";
 export default {
   name: "OrderDetail",
   props: ["order"],
-  data() {
-    return {
-      cart: this.$store.state.cart_drink,
-      quantity: 0
-    };
-  },
-  computed: {
-    isNotInCart() {
-      const index = this.$store.state.cart_drink.findIndex(
-        p => p.drink_id === this.drink.drink_id
-      );
-      if (index < 0) return true;
-      return false;
-    }
+  components: {
+    "order-by-id": OrderDetailById
   }
 };
 </script>
@@ -35,4 +25,4 @@ export default {
 .headline {
   color: black;
 }
-</style>
+</style> 

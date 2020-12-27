@@ -16,7 +16,8 @@ import {
   ALL_COCKTAILS,
   ALL_BEERS,
   CHANGE_QUANTITY_CART,
-  ALL_ORDERS
+  ALL_ORDERS,
+  ORDER_BY_ID
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -34,11 +35,12 @@ export default new Vuex.Store({
       }
     ],
     order_complete: false,
-    response: "", 
+    response: "",
     loading: false,
     drinkTypeRequest: "",
     drinksInType: [],
-    orders: []
+    orders: [],
+    orderById: []
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -82,6 +84,9 @@ export default new Vuex.Store({
       state.cart_food = [];
     },
     [ALL_ORDERS](state, payload) {
+      state.orders = payload;
+    },
+    [ORDER_BY_ID](state, payload) {
       state.orders = payload;
     }
   },
@@ -127,12 +132,18 @@ export default new Vuex.Store({
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //})
     },
-    allOrders({ commit }) {
-      axios.get(`${"http://127.0.0.1:5000"}/order`).then(response => {
-        //console.log(response.data)
-        commit("ALL_ORDERS", response.data);
-      });
+    allOrdersWithoutEnd({ commit }) {
+      axios
+        .get(`${"http://127.0.0.1:5000"}/ordersWithoutEnd`)
+        .then(response => {
+          commit("ALL_ORDERS", response.data);
+        });
     },
+    allOrdersDrinkById({ commit }, payload) {
+      axios.get(`${"http://127.0.0.1:5000"}/order/`, payload).then(response => {
+        commit("ORDER_BY_ID", response.data);
+      });
+    }
   },
   getters: {
     allDrinks: state => {
@@ -162,7 +173,7 @@ export default new Vuex.Store({
     getDrinkCartQuantity: (state, getters) => {
       return state.cart_drink.findIndex(p => p.drink_id === getters);
     },
-    getAllOrders: state => {
+    getAllOrdersWithoutEnd: state => {
       return state.orders;
     }
   }

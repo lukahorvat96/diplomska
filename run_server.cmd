@@ -1,3 +1,4 @@
 @echo off
 cd server
-python server.py
+set FLASK_APP=server.py
+flask run -h 192.168.1.13

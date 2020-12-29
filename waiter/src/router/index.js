@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Beers from "@/views/Home";
-import Cart from "@/views/Orders";
+import Order from "@/views/Orders";
+import OrderDetailById from "@/components/Order/OrderDetailById";
 
 Vue.use(VueRouter);
 
@@ -14,7 +15,12 @@ const routes = [
   {
     path: "/orders",
     name: "Orders",
-    component: Cart
+    component: Order
+  },
+  {
+    path: "/orders/:id",
+    name: "Orders",
+    component: OrderDetailById
   }
 ];
 

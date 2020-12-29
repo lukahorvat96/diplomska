@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request
 from datetime import datetime
-#from flask_cors import CORS
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['JSON_SORT_KEYS'] = False #unordered json object
-
 
 import mysql.connector
 import json

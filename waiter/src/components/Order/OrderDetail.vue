@@ -6,18 +6,14 @@
       <p>End: {{ order.end }}$</p>
       <p>Table ID: {{ order.table_id }}$</p>
     </v-card-text>
-    <order-by-id :order_id="order.order_id"> MORE INFO </order-by-id>
+    <router-link :to="'/orders/' + order.order_id">In deatil</router-link>
   </v-card>
 </template>
 
 <script>
-import OrderDetailById from "./OrderDetailById";
 export default {
   name: "OrderDetail",
-  props: ["order"],
-  components: {
-    "order-by-id": OrderDetailById
-  }
+  props: ["order"]
 };
 </script>
 

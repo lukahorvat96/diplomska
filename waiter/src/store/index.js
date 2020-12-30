@@ -92,31 +92,31 @@ export default new Vuex.Store({
   },
   actions: {
     allDrinks({ commit }) {
-      axios.get(`${"http://127.0.0.1:5000"}/drinks`).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/drinks`).then(response => {
         //console.log(response.data)
         commit("ALL_DRINKS", response.data);
       });
     },
     allInDrinkType({ commit }, type) {
-      axios.get(`${"http://127.0.0.1:5000"}/` + type).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/` + type).then(response => {
         console.log(response.data);
         commit("ALL_DRINKTYPE", response.data);
       });
     },
     allCocktails({ commit }) {
-      axios.get(`${"http://127.0.0.1:5000"}/cocktails`).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/cocktails`).then(response => {
         console.log(response.data);
         commit("ALL_COCKTAILS", response.data);
       });
     },
     allBeers({ commit }) {
-      axios.get(`${"http://127.0.0.1:5000"}/beers`).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/beers`).then(response => {
         console.log(response.data);
         commit("ALL_BEERS", response.data);
       });
     },
     allFoods({ commit }) {
-      axios.get(`${"http://127.0.0.1:5000"}/foods`).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/foods`).then(response => {
         //console.log(response.data)
         commit("ALL_FOODS", response.data);
       });
@@ -124,23 +124,23 @@ export default new Vuex.Store({
     addOrder({ commit }, payload) {
       commit("ADD_ORDER");
       axios
-        .post(`${"http://127.0.0.1:5000"}/addorder/1`, payload)
+        .post(`${"http://192.168.1.13:5000"}/addorder/1`, payload)
         .then(response => {
           commit("ADD_ORDER_SUCCESS", response.data);
         });
-      //axios.post(`${'http://127.0.0.1:5000'}/ /1`, payload).then(response => {
+      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //})
     },
     allOrdersWithoutEnd({ commit }) {
       axios
-        .get(`${"http://127.0.0.1:5000"}/ordersWithoutEnd`)
+        .get(`${"http://192.168.1.13:5000"}/ordersWithoutEnd`)
         .then(response => {
           commit("ALL_ORDERS", response.data);
         });
     },
     allOrdersDrinkById({ commit }, payload) {
-      axios.get(`${"http://127.0.0.1:5000"}/order/`, payload).then(response => {
+      axios.get(`${"http://192.168.1.13:5000"}/order/`, payload).then(response => {
         commit("ORDER_BY_ID", response.data);
       });
     }

@@ -100,7 +100,7 @@
 \newcommand{\autfont}{\Large}
 \newcommand{\titfont}{\LARGE\bf}
 \newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
-\setcounter{tocdepth}{2}	      % globina kazala
+\setcounter{tocdepth}{1}	      % globina kazala
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % konstrukti
@@ -277,6 +277,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 \def\thepage{}% preprecimo tezave s stevilkami strani v kazalu
 \tableofcontents{}
 
+
 % prazna stran
 \clearemptydoublepage
 
@@ -355,35 +356,6 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
 
 \chapter{Uvod}
-Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane, hkrati pa opazoval potek dela, v kuhinji in strežbi, v eni izmed bližnji restavraciji. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar samo kot pregledovalnik ( angl. Menu ) ali pa naročanju jedi in pijače. Stranka bi bila tista, ki bi se odločila ali želijo pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročile z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi 
-
-
-\chapter{Uporabljene tehnologije in programske opreme}
-V diplomski nalogi sem se srečeval predvsem z naslednjimi programskimi jeziki: JavaScript, Python, SQL. Vse podrobnosti pa so opisane v spodnjih poglavjih.
-
-\section {Vue.js}
-JavaScript je programski jezik, zaradi katerega so spletne strani postale dinamične in bolj zmogljive. Z njem smo programsko kodo, ki je bila na strežniškem delu, preselili v brskalnik. Tako smo na začetku dobili veliko JavaScript programske kode povezane z različnimi HTML in CSS datotekami brez kakršne koli formalne organizacije (poznano kot «script»). Zaradi tega smo razvijalci začeli uporabljati JavaScript Frameworks, saj poenostavijo izdelavo aplikacij.
-
-
-Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem pa je skupna točka reaktivnost, vendar v drugačnem pomenu besede.  Gre za to, da npr. ko uporabnik klikne na gum s tem sproži dogodek (ang. »event«) in to posledično vodi do posodobitve. reagira pa je po tudi po svoji reaktivnosti, ki omogoča avtomatsko sinhronizacijo ob spremembi vrednosti ali lastnosti JavaScript modela/ov.
-
-
-\subsection {Kaj je reaktivnost?}
-Reaktivnost je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Dober primer reaktivnosti je npr. funkcija »SUM«, ki jo uporabljamo v Excelu. Slika~\ref{Excel-SUM} je v {\tt .pdf} formatu
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=7cm]{Excel-SUM.png}
-\end{center}
-\caption{Kateri dialekt uporabljati?}
-\label{Excel-SUM}
-\end{figure}
-Če vstavitve številko 2 v prvo celico in številko 3 v drugo celico in vnesete funkcijo SUM boste dobili takoj rezultat, kar ni nič posebnega. Vendar če boste spremenili vrednost prve celice, bo funkcija SUM avtomatsko posodobila vrednost.
-
-\subsection {Delovanje reaktivnost v Vue}
-Vue se torej v primerjavi z navadnim JavaScriptom sprehodi skozi podatke in njihove lastnosti (angl. Properties) pretvori v »getter/setters« funkciji, ki sta nevidni uporabniku. Z uporabo »vue-devtools« vmesnika si zadevo lažje predstavljamo. »Getter« funkcija pokliče »Watcher« z namenom odvisnosti do drugih komponent. To pomeni če je podatek označen kot »dependency« to pomeni, da bodo nekateri deli programske kode/funkcije poklicane vsakič, ko se spremeni vrednost podatka. »Setter« funkcija obvesti »watcher« instanco, vsakič ko se podatku spremeni lastnost. Ta poskrbi da se pokliče funkcijo upodabljanja ( angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije.
-
-
-\chapter{Test}	.
 Prvi koristen nasvet v zvezi uporabo \LaTeX{a} je, da ta dokument preberete v celoti!
 
 Datoteka {\tt vzorec\_dip\_Seminar.tex} na kratko opisuje, kako se pisanja diplomskega dela lotimo z uporabo programskega okolja \LaTeX~\cite{lamport,nenajkrajsi}. 

@@ -201,7 +201,7 @@
     \vfill\null%
     {\large \textsc{Mentorica}: doc. dr. Mira Trebar\par}%
    {\large \textsc{Somentor}: as. dr. David Jelenc \par}%
-    {\vskip 2em \large Ljubljana, 2020 \par}%
+    {\vskip 2em \large Ljubljana, 2021 \par}%
 \end{center}
 % prazna stran
 %\clearemptydoublepage      % dodal Solina (izjava o licencah itd. se izpiše na hrbtni strani naslovnice)
@@ -355,7 +355,7 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
 
 \chapter{Uvod}
-Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane, hkrati pa opazoval potek dela, v kuhinji in strežbi, v eni izmed bližnji restavraciji. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar samo kot pregledovalnik ( angl. Menu ) ali pa naročanju jedi in pijače. Stranka bi bila tista, ki bi se odločila ali želijo pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročile z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi 
+Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane v eni izmed bližnji restavraciji, hkrati pa opazoval potek dela v kuhinji in strežbi. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar samo kot pregledovalnik ( angl. Menu ) ali pa naročanju jedi in pijače. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročila z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi. 
 
 
 \chapter{Uporabljene tehnologije in programske opreme}
@@ -365,24 +365,55 @@ V diplomski nalogi sem se srečeval predvsem z naslednjimi programskimi jeziki: 
 JavaScript je programski jezik, zaradi katerega so spletne strani postale dinamične in bolj zmogljive. Z njem smo programsko kodo, ki je bila na strežniškem delu, preselili v brskalnik. Tako smo na začetku dobili veliko JavaScript programske kode povezane z različnimi HTML in CSS datotekami brez kakršne koli formalne organizacije (poznano kot «script»). Zaradi tega smo razvijalci začeli uporabljati JavaScript Frameworks, saj poenostavijo izdelavo aplikacij.
 
 
-Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem pa je skupna točka reaktivnost, vendar v drugačnem pomenu besede.  Gre za to, da npr. ko uporabnik klikne na gum s tem sproži dogodek (ang. »event«) in to posledično vodi do posodobitve. reagira pa je po tudi po svoji reaktivnosti, ki omogoča avtomatsko sinhronizacijo ob spremembi vrednosti ali lastnosti JavaScript modela/ov.
+Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem pa je skupna točka reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. 
 
 
 \subsection {Kaj je reaktivnost?}
-Reaktivnost je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Dober primer reaktivnosti je npr. funkcija »SUM«, ki jo uporabljamo v Excelu. Slika~\ref{Excel-SUM} je v {\tt .pdf} formatu
+Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Dober primer reaktivnosti je npr. funkcija SUM, ki jo uporabljamo v Excelu. Slika~\ref{Excel-SUM} prikazuje primer v Excelu.
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=7cm]{Excel-SUM.png}
 \end{center}
-\caption{Kateri dialekt uporabljati?}
+\caption{Primer fukcije SUM v programu Excel}
 \label{Excel-SUM}
 \end{figure}
-Če vstavitve številko 2 v prvo celico in številko 3 v drugo celico in vnesete funkcijo SUM boste dobili takoj rezultat, kar ni nič posebnega. Vendar če boste spremenili vrednost prve celice, bo funkcija SUM avtomatsko posodobila vrednost.
+
+Če vstavimo številko 2 v prvo celico in številko 3 v drugo celico ter izberemo funkcijo SUM teh dveh celic. Kot rezultat dobimo vsoto obeh številk skupaj, kar ni nič posebnega. Vendar če bomo spremenili vrednost prve celice, bo funkcija SUM avtomatsko posodobila skupno vrednost. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je na nek podatek lahko vezanih več funkciji oziroma delov programske kode, ki se ob spremembi njegove vrednosti posodobijo.
 
 \subsection {Delovanje reaktivnost v Vue}
-Vue se torej v primerjavi z navadnim JavaScriptom sprehodi skozi podatke in njihove lastnosti (angl. Properties) pretvori v »getter/setters« funkciji, ki sta nevidni uporabniku. Z uporabo »vue-devtools« vmesnika si zadevo lažje predstavljamo. »Getter« funkcija pokliče »Watcher« z namenom odvisnosti do drugih komponent. To pomeni če je podatek označen kot »dependency« to pomeni, da bodo nekateri deli programske kode/funkcije poklicane vsakič, ko se spremeni vrednost podatka. »Setter« funkcija obvesti »watcher« instanco, vsakič ko se podatku spremeni lastnost. Ta poskrbi da se pokliče funkcijo upodabljanja ( angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije.
+Vue se torej v primerjavi z navadnim JavaScriptom sprehodi skozi podatke in njihove lastnosti (angl. Properties) pretvori v fukciji Getter in Setter, ki sta nevidni uporabniku \cite{delovanjeReaktivnost}. Poglejte si sliko~\ref{VueReacitivity} za lažjo predstavo. 
+
+Torej funkcija Getter pokliče instanco Watcher z namenom odvisnosti do drugih komponent. To pomeni, če je podatek označen kot odvisen (angl.  Dependency) bodo nekateri deli programske kode oziroma funkcije poklicane vsakič, ko se spremeni vrednost podatka. Funkcija Setter pa obvesti instanco Watcher, vsakič ko se podatku spremeni lastnost. Ta poskrbi, da se pokliče funkcijo upodabljanja (angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije. 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{Vue-reactivity.jpg}
+\end{center}
+\caption{Kateri dialekt uporabljati?}
+\label{VueReacitivity}
+\end{figure}
+
+\subsection {Knjižnice in dodatki}
+
+Tako kot vsak programski jezik ima tudi Vue svoje dodatke, ki pomagajo pri razvoju aplikaciji. Spodnje sem uporabljal sam in so vredni omembe.
+\begin{description}
+\item[Vue CLI] velja za standardno orodje za ekosistem Vue. Zagotavlja, da že pri gradnji novega projekta povezuje različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v celoto. Zadeva izgleda nekako tako, da preko CLI vmesnika izbereš kakšen projekt želiš. Imaš seveda že privzete nastavitve, vendar omogoča tudi nastavljanje po meri. Sam sem uporabil Vuex, Vue-Router, ESLint in Vuetify.
+\item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
+\item[Vue-Router] je uradni usmerjevalnik za Vue.js. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo SPA aplikacij. Usmerjevalki je mišljen v smislu usmerjanja na druge komponente (angl. Component), ki v Vue.js predstavljajo druge poglede, lahko bi rekli podobno kot podstrani.
+\item[ESLint] je orodje za prepoznavanje in priporočanje o popravkih v programski kodi. Cilje je narediti kodo bolj usklajeno in urejeno, kar pripomore k izogibanju napak.
+\item[Vuetify] je eden izmed mnogih uporabniških vmesnikov, ki je zgrajen na vrhu Vue.js. Za razliko od drugih vmesnikov je Vuetiy enostaven za učenje z več stotimi komponentami izdelanih po specifikacijah Material Design.
+\item[Vue-devtools] je zgolj dodatek v brskalniku, ki omogoča lažje sledenje delovanja aplikacije in odpravljanju napak.
+\end{description}
+
+\section {Python/Flask}
+Flask je eno izmed najbolj popularnih spletno aplikacijski vmesnik (angl. Freamwork). Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. Uporabil sem ga za komunikacijo med aplikacijo in podatkovno bazo. Je enostaven za uporabo z veliko podporo na spletu. 
 
 
+\section {MySQL/Toad DataModler}
+\section {Viusal Studio}
+\section {XAMPP}
+\section {Git Hub}
+\chapter {Struktura in delovanje aplikacije}
 \chapter{Test}	.
 Prvi koristen nasvet v zvezi uporabo \LaTeX{a} je, da ta dokument preberete v celoti!
 
@@ -671,7 +702,7 @@ for (i = 0; i < 100; i++)
 Kot smo omenili že v uvodu, je pravi način za citiranje literature uporaba \BibTeX{}a~\cite{bib}. 
 \BibTeX\ zagotovi, da nobene obvezne informacije pri določeni vrsti literature ne izpustimo in da vse informacije o določeni vrsti vira dosledno navajamo na enak način.
 
-Osnovna ideja \BibTeX{a} je, da vse informacije o literaturi zapisujemo v posebno datoteko, v našem primeru je to \texttt{literatura.bib}.
+Osnovna ideja \BibTeX{a} je, da vse informacije o literaturi zapisujemo v posebno datoteko, v našem primeru je to \texttt{literaturbbbbba.bib}.
 Vsakemu viru v tej datoteki določimo simbolično ime.
 V  našem primeru je v tej datoteki nekaj najbolj značilnih zvrsti literature, kot so knjige~\cite{lamport}, 
 članki v revijah~\cite{leonardo} in zbornikih konferenc~\cite{poglavje_springer}, 

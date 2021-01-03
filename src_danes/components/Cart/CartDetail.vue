@@ -31,12 +31,27 @@
       <p>Size: {{ drink.size }}</p>
       <p>Price: {{ drink.price }}$</p>
       <p>
-        Quantity: <span class="font-weight-medium">{{ drink.quantity }}x</span>
+        Quantity: <span class="font-weight-medium">{{ quantity }}x</span>
       </p>
-      <p>
-        Total price: <span class="font-weight-medium">{{ drink.totalPrice }}€</span>
-      </p>
+
       <v-divider class="mx-4"></v-divider>
+      <v-card-actions>
+        <p class="text-h6 mb-5 mt-5" v-if="setQuantity()">
+          Total price: {{ drink.totalPrice }}$
+        </p>
+        <v-spacer></v-spacer>
+        <div>
+          <v-btn elevation="2" tile @click="addToCart(drink)">+</v-btn>
+          <v-btn elevation="2" tile @click="removeFromCart(drink)">-</v-btn>
+          <v-btn
+            elevation="2"
+            color="red"
+            tile
+            @click="removeFromCartAll(drink)"
+            >REMOVE</v-btn
+          >
+        </div>
+      </v-card-actions>
     </v-card-text>
   </v-card>
 </template>
@@ -65,7 +80,6 @@ export default {
     addToCart(drink) {
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * this.drink.price;
-      console.log("TOTAL PRICE: " + this.totalPrice);
       if (this.quantity == 1) {
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);

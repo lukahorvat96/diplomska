@@ -10,46 +10,104 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item :to="{ name: 'Drink' }">
+          <v-list-item-action>
+            <v-icon small>fas fa-glass-cheers</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>All drinks</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-group value="true" no-action>
           <template v-slot:activator>
             <v-list-item-action>
-              <v-icon small>fas fa-glass-martini-alt</v-icon>
+              <v-icon small>fas fa-glass-whiskey</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Drink</v-list-item-title>
+              <v-list-item-title>Beverages</v-list-item-title>
             </v-list-item-content>
           </template>
-          <v-list-item
-            v-for="item in allDrinksType()"
-            :key="item.name"
-            :to="{
-              name: 'DrinkType',
-              params: { drinkTypeID: item.drinkType_id }
-            }"
-          >
+          <!-- <v-list-item :to="{ name: 'Drinks' }">
             <v-list-item-content>
-              <v-list-item-title> {{ item.name }} </v-list-item-title>
+              <v-list-item-title> Juice </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Cocktails' }">
+            <v-list-item-content>
+              <v-list-item-title> Water </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item> -->
+        </v-list-group>
+
+        <v-list-group value="true" no-action>
+          <template v-slot:activator isA>
+            <v-list-item-action>
+              <v-icon small>fas fa-beer</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Beers</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item :to="{ name: 'BottledBeer' }">
+            <v-list-item-content>
+              <v-list-item-title> Bottled </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'DraughtBeer' }">
+            <v-list-item-content>
+              <v-list-item-title> Draught </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Cider' }">
+            <v-list-item-content>
+              <v-list-item-title> Cider </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+
+        <v-list-group value="true" no-action>
+          <template v-slot:activator>
+            <v-list-item-action>
+              <v-icon small>fas fa-wine-glass-alt</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Wines</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item :to="{ name: 'WhiteWine' }">
+            <v-list-item-content>
+              <v-list-item-title> White </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'OrangeWine' }">
+            <v-list-item-content>
+              <v-list-item-title> Orange </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'RoseWine' }">
+            <v-list-item-content>
+              <v-list-item-title> Rose </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'RedWine' }">
+            <v-list-item-content>
+              <v-list-item-title> Red </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'SparklingWine' }">
+            <v-list-item-content>
+              <v-list-item-title> Sparkling </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
         <v-list-item :to="{ name: 'Cart' }">
           <v-list-item-action>
-            <v-icon small>fas fa-home</v-icon>
+            <v-icon small>fas fa-shopping-cart</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Cart</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!--
-        <v-list-group value="true">
-          <template v-slot:activator>
-            <v-list-item-action>
-              <v-icon small>fas fa-beer</v-icon>
-            </v-list-item-action>
-            <v-list-item-title>Beer</v-list-item-title>
-          </template>
-        </v-list-group>
-        -->
       </v-list>
     </v-navigation-drawer>
 
@@ -57,14 +115,18 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <p class="text-h7">Total price: {{ totalprice }}</p>
+      <router-link class="routerLink" :to="{ name: 'Cart' }">
+        <v-btn elevation="2" color="red" tile>
+          Total price: {{ totalprice }} €
+        </v-btn>
+      </router-link>
     </v-app-bar>
 
     <v-main>
       <router-view> </router-view>
     </v-main>
     <v-footer color="indigo" app>
-      <span class="white--text">&copy; 2019</span>
+      <span class="white--text">&copy; 2021</span>
     </v-footer>
   </v-app>
 </template>
@@ -77,11 +139,7 @@ export default {
   data() {
     return {
       drawer: null
-      //allDrinksType: this.$store.state.drinksType
     };
-  },
-  created() {
-    this.$store.dispatch("allDrinksType");
   },
   components: {
     //HelloWorld
@@ -97,11 +155,6 @@ export default {
         totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return totalDrinkPrice;
     }
-  },
-  methods: {
-    allDrinksType() {
-      return this.$store.state.drinksType;
-    }
   }
 };
 </script>
@@ -113,5 +166,8 @@ export default {
 }
 .callovia-font {
   font-family: "Callovia", Helvetica, sans-serif;
+}
+.routerLink {
+  text-decoration: none;
 }
 </style>

@@ -18,6 +18,9 @@ mydb = mysql.connector.connect(
 )
 
 print(" * SERVER IS STARTING........")
+drinsktype = []
+
+
 
 ###FUNCTIONS###
 def SQLqueryDrink(query):
@@ -54,6 +57,25 @@ def SQLqueryDrinksType(query):
             'name': result[1]
         }
         payload.append(content)
+        content = {}
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute("SELECT * FROM drink")
+    myresult = mycursor.fetchall()
+    content = {}
+    drinsktype.clear()
+    for result in myresult:
+        content = {
+            'drink_id': result[0], 
+            'name': result[1], 
+            'price': result[2], 
+            'alcohol': result[3], 
+            'size': result[4], 
+            'calorie': result[5], 
+            'picture': result[6], 
+            'description': result[7], 
+            'type_id': result[8]
+        }
+        drinsktype.append(content)
         content = {}
     return payload
 
@@ -108,6 +130,35 @@ def SQLinsert(query, values):
     mydb.commit()
     return mycursor.rowcount
 
+def SQLqueryOrderDrink(query):
+    mycursor = mydb.cursor()
+    OrderDrinks = mycursor.execute(query)
+    OrderDrinks = mycursor.fetchall()
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute("SELECT * FROM drink")
+    myresult = mycursor.fetchall()
+    AllDrinks = []
+    content = {}
+    for order in OrderDrinks: 
+        for result in myresult:
+            if order[1] == result[0]:
+                content = {
+                    'drink_id': result[0], 
+                    'name': result[1], 
+                    'price': result[2], 
+                    'alcohol': result[3], 
+                    'size': result[4], 
+                    'calorie': result[5], 
+                    'picture': result[6], 
+                    'description': result[7], 
+                    'type_id': result[8],
+                    'quantity':  order[2],
+                    'totalPrice': order[3]
+                }
+                AllDrinks.append(content)
+                content = {}
+    return AllDrinks
+
 ###APP ROUTE###
 @app.route('/') 
 def hello_world():
@@ -121,13 +172,22 @@ def allDrinks():
 def allCocktails():
     return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 1"))
 
-@app.route('/beers')
+@app.route('/bottledbeer')
 def allBeers():
     return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 3"))
+
+@app.route('/draughtbeer')
+def allDraughtBeer():
+    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 2"))
+
+@app.route('/cider')
+def allCider():
+    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 1"))
 
 @app.route('/foods')
 def allFoods():
     return jsonify(SQLqueryFood("SELECT * FROM food"))
+
 
 @app.route('/drinkstype')
 def allDrinksType():
@@ -136,6 +196,11 @@ def allDrinksType():
 @app.route('/ordersWithoutEnd')
 def allOrdersWithoutEnd():
     return jsonify(SQLqueryOrder("SELECT * FROM `order` WHERE Order_end IS NULL"))
+
+@app.route('/orders/<int:order>', methods=['GET']) #GET requests will be blocked
+def getOrderById(order):
+    return jsonify(SQLqueryOrderDrink("SELECT * FROM orderdrink WHERE Order_id = "+str(order)))
+
 
 @app.route('/addorder/<int:table>', methods=['POST']) #GET requests will be blocked
 def addOrder(table):

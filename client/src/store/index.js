@@ -14,24 +14,22 @@ import {
   ALL_DRINKTYPE,
   REQUEST_DRINKTYPE,
   ALL_COCKTAILS,
-  ALL_BEERS,
+  ALL_BOTTLED_BEERS,
   CHANGE_QUANTITY_CART,
-  ALL_DRINKS_TYPE,
-  ALL_DRINKS_BY_TYPE,
-  SET_TYPE_ID
+  ALL_DRAUGHT_BEERS,
+  ALL_CIDER
 } from "./mutation-types";
 
 export default new Vuex.Store({
   state: {
     drinks: [],
     foods: [],
-    beers: [],
+    bottledbeer: [],
+    draughtBeers: [],
+    cider: [],
     cocktails: [],
     cart_drink: [],
     cart_food: [],
-    drinksType: [],
-    drinksTypeID: 0,
-    drinksByType: [],
     table_details: [
       {
         table_id: 1,
@@ -51,20 +49,17 @@ export default new Vuex.Store({
     [ALL_COCKTAILS](state, payload) {
       state.cocktails = payload;
     },
-    [ALL_BEERS](state, payload) {
-      state.beers = payload;
+    [ALL_BOTTLED_BEERS](state, payload) {
+      state.bottledbeer = payload;
+    },
+    [ALL_DRAUGHT_BEERS](state, payload) {
+      state.draughtBeers = payload;
+    },
+    [ALL_CIDER](state, payload) {
+      state.cider = payload;
     },
     [ALL_DRINKTYPE](state, payload) {
       state.drinksInType = payload;
-    },
-    [ALL_DRINKS_TYPE](state, payload) {
-      state.drinksType = payload;
-    },
-    [SET_TYPE_ID](state, payload) {
-      state.drinksTypeID = payload;
-    },
-    [ALL_DRINKS_BY_TYPE](state, payload) {
-      state.drinksByType = payload;
     },
     [REQUEST_DRINKTYPE](state, payload) {
       state.drinkTypeRequest = payload;
@@ -102,16 +97,34 @@ export default new Vuex.Store({
         commit("ALL_DRINKS", response.data);
       });
     },
+    allInDrinkType({ commit }, type) {
+      axios.get(`${"http://192.168.1.13:5000"}/` + type).then(response => {
+        console.log(response.data);
+        commit("ALL_DRINKTYPE", response.data);
+      });
+    },
     allCocktails({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/cocktails`).then(response => {
         console.log(response.data);
         commit("ALL_COCKTAILS", response.data);
       });
     },
-    allBeers({ commit }) {
-      axios.get(`${"http://192.168.1.13:5000"}/beers`).then(response => {
+    allBottledBeer({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/bottledbeer`).then(response => {
         console.log(response.data);
-        commit("ALL_BEERS", response.data);
+        commit("ALL_BOTTLED_BEERS", response.data);
+      });
+    },
+    allDraughtBeers({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/draughtbeer`).then(response => {
+        console.log(response.data);
+        commit("ALL_DRAUGHT_BEERS", response.data);
+      });
+    },
+    allCider({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/cider`).then(response => {
+        console.log(response.data);
+        commit("ALL_CIDER", response.data);
       });
     },
     allFoods({ commit }) {
@@ -121,6 +134,7 @@ export default new Vuex.Store({
       });
     },
     addOrderDrink({ commit }, payload) {
+      commit("ADD_ORDER");
       axios
         .post(`${"http://192.168.1.13:5000"}/addorder/1`, payload)
         .then(response => {
@@ -130,21 +144,6 @@ export default new Vuex.Store({
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //})
-    },
-    allDrinksType({ commit }) {
-      axios.get(`${"http://192.168.1.13:5000"}/drinkstype`).then(response => {
-        //console.log(response.data)
-        commit("ALL_DRINKS_TYPE", response.data);
-      });
-    },
-    allDrinksTypeById({ commit }, payload) {
-      commit("SET_TYPE_ID", payload);
-      console.log("PAYLOAD:" +payload);
-      axios
-        .get(`${"http://192.168.1.13:5000"}/drinkstype/` + payload)
-        .then(response => {
-          commit("ALL_DRINKS_BY_TYPE", response.data);
-        });
     }
   },
   getters: {
@@ -152,16 +151,19 @@ export default new Vuex.Store({
       return state.drinks;
     },
     allInDrinkType: state => {
-      return state.drinksType;
-    },
-    allDrinksByType: state => {
-      return state.drinksByType;
+      return state.drinksInType;
     },
     allCocktails: state => {
       return state.cocktails;
     },
-    allBeers: state => {
-      return state.beers;
+    allBottledBeer: state => {
+      return state.bottledbeer;
+    },
+    allDraughtBeers: state => {
+      return state.draughtBeers;
+    },
+    allCider: state => {
+      return state.cider;
     },
     allFoods: state => {
       return state.foods;

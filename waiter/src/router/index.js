@@ -18,9 +18,10 @@ const routes = [
     component: Order
   },
   {
-    path: "/orders/:id",
-    name: "Orders",
-    component: OrderDetailById
+    path: "/orders/:orderID",
+    name: "OrdersDetail",
+    component: OrderDetailById,
+    props: true
   }
 ];
 

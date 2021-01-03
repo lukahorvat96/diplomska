@@ -36,9 +36,9 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <p class="text-h7">Ordes waiting: {{ totalprice }}</p>
-      
-      <p class="text-h7">Ordes done: {{ totalprice }}</p>
+      <p class="text-h7">
+        Waiting: {{ ordersWaiting }}<br />Done: {{ totalprice }}
+      </p>
     </v-app-bar>
 
     <v-content>
@@ -73,6 +73,9 @@ export default {
       for (var i = 0; i < drinkCard.length; i++)
         totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return totalDrinkPrice;
+    },
+    ordersWaiting(){
+      return this.$store.getters.getAllOrdersWithoutEnd.length;
     }
   }
 };

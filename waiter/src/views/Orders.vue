@@ -24,7 +24,6 @@ export default {
   },
   computed: {
     allOrders() {
-      console.log(this.$store.getters.getAllOrdersWithoutEnd);
       return this.$store.getters.getAllOrdersWithoutEnd;
     }
   },

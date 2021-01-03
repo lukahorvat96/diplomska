@@ -1,33 +1,34 @@
 <template>
   <v-card>
-    <h1>HI </h1>
+    <h1>Order ID: {{ orderID }}</h1>
     <v-card-text>
-      <p>Order ID: {{ order_id }}</p>
+      <drink-list :items="allOrdersDrinkById"></drink-list>
+      <v-btn elevation="2" color="red" tile>
+        END ORDER
+      </v-btn>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import DrinkList from "@/components/Cart/CartList.vue";
 export default {
   name: "OrderDetailById",
-  props: ["order_id"],
-  data() {
-    return {
-      quantity: 0
-    };
-  },
-  computed: {
-    isNotInCart() {
-      const index = this.$store.state.cart_drink.findIndex(
-        p => p.drink_id === this.drink.drink_id
-      );
-      if (index < 0) return true;
-      return false;
+  props: {
+    orderID: {
+      type: Number,
+      required: true
     }
   },
-  methods: {
-    orderDrinks(order_id){
-       this.$store.dispatch("allOrdersDrinkById", order_id);
+  components: {
+    "drink-list": DrinkList
+  },
+  created() {
+    this.$store.dispatch("allOrdersDrinkById", this.orderID); //action; commit -> mutation
+  },
+  computed: {
+    allOrdersDrinkById() {
+      return this.$store.getters.allOrdersDrinkById;
     }
   }
 };

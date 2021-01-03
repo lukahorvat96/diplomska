@@ -1,50 +1,33 @@
 <template>
-  <v-card>
-    <v-img
-      class="white--text align-end"
-      height="200px"
-      v-bind:src="'http://127.0.0.1/img/' + drink.picture"
-    >
-    </v-img>
-    <v-card-title class="headline" dark="1"> {{ drink.name }} </v-card-title>
-    <v-card-text class="text--primary">
-      <v-row align="center" class="mx-0">
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
+  <v-card-actions v-if="isNotInCart">
+    <!--ITEM NOT IN CARD-->
+    <p class="text-h6 mb-5 mt-5">Count: 0x</p>
+    <v-spacer></v-spacer>
+    <div>
+      <v-btn elevation="2" color="green" tile @click="addToCart(drink)"
+        >ADD TO CART</v-btn
+      >
+    </div>
+  </v-card-actions>
 
-        <div class="grey--text ml-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4">
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating. ###OPIS
-      </div>
-
-      <p>Size: {{ drink.size }}</p>
-      <p>Price: {{ drink.price }}$</p>
-      <p>
-        Quantity: <span class="font-weight-medium">{{ drink.quantity }}x</span>
-      </p>
-      <p>
-        Total price: <span class="font-weight-medium">{{ drink.totalPrice }}€</span>
-      </p>
-      <v-divider class="mx-4"></v-divider>
-    </v-card-text>
-  </v-card>
+  <v-card-actions v-else>
+    <!--ITEM ALREADY IN CARD -->
+    <p class="text-h6 mb-5 mt-5" v-if="setQuantity()">Count: {{ quantity }}x</p>
+    <v-spacer></v-spacer>
+    <div>
+      <v-btn elevation="2" tile @click="addToCart(drink)">+</v-btn>
+      <v-btn elevation="2" tile @click="removeFromCart(drink)">-</v-btn>
+      <v-btn elevation="2" color="red" tile @click="removeFromCartAll(drink)"
+        >REMOVE</v-btn
+      >
+    </div>
+  </v-card-actions>
 </template>
 
 <script>
 import { ADD_TO_CART, DELETE_FROM_CART } from "@/store/mutation-types";
 export default {
-  name: "CartDetail",
+  name: "DrinkButton",
   props: ["drink"],
   data() {
     return {
@@ -65,7 +48,6 @@ export default {
     addToCart(drink) {
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * this.drink.price;
-      console.log("TOTAL PRICE: " + this.totalPrice);
       if (this.quantity == 1) {
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
@@ -99,15 +81,12 @@ export default {
       }
       return false;
     },
-    removeFromCartAll(item) {
-      this.$store.commit(DELETE_FROM_CART, item.drink_id);
+    removeFromCartAll(drink) {
+      this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+      this.quantity = 0;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.headline {
-  color: black;
-}
-</style>
+<style></style>

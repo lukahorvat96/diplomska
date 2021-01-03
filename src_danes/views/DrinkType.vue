@@ -24,11 +24,11 @@ export default {
     "drink-list": DrinkList
   },
   created() {
-    this.$store.dispatch("allDrinksTypeById", this.drinkTypeID);
+    this.$store.dispatch("allDrinks");
   },
   computed: {
     allDrinksByType() {
-      return this.$store.getters.allDrinksByType;
+      return this.getDrinksByTypeID();
     }
   },
   methods: {

@@ -6,7 +6,14 @@
       <p>End: {{ order.end }}$</p>
       <p>Table ID: {{ order.table_id }}$</p>
     </v-card-text>
-    <router-link :to="'/orders/' + order.order_id">In deatil</router-link>
+    <router-link
+      class="routerLink"
+      :to="{ name: 'OrdersDetail', params: { orderID: order.order_id } }"
+    >
+      <v-btn elevation="2" color="red" tile>
+        Check details
+      </v-btn>
+    </router-link>
   </v-card>
 </template>
 
@@ -21,4 +28,7 @@ export default {
 .headline {
   color: black;
 }
-</style> 
+.routerLink {
+  text-decoration: none;
+}
+</style>

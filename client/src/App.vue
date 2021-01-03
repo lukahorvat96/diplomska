@@ -19,19 +19,16 @@
               <v-list-item-title>Drink</v-list-item-title>
             </v-list-item-content>
           </template>
-          <v-list-item :to="{ name: 'Drink' }">
+          <v-list-item
+            v-for="item in allDrinksType()"
+            :key="item.name"
+            :to="{
+              name: 'DrinkType',
+              params: { drinkTypeID: item.drinkType_id }
+            }"
+          >
             <v-list-item-content>
-              <v-list-item-title> Juice </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item :to="{ name: 'Beer' }">
-            <v-list-item-content>
-              <v-list-item-title> Beer </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item :to="{ name: 'Cocktail' }">
-            <v-list-item-content>
-              <v-list-item-title> Cocktail </v-list-item-title>
+              <v-list-item-title> {{ item.name }} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -43,7 +40,6 @@
             <v-list-item-title>Cart</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <!--
         <v-list-group value="true">
           <template v-slot:activator>
@@ -64,9 +60,9 @@
       <p class="text-h7">Total price: {{ totalprice }}</p>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <router-view> </router-view>
-    </v-content>
+    </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
@@ -81,7 +77,11 @@ export default {
   data() {
     return {
       drawer: null
+      //allDrinksType: this.$store.state.drinksType
     };
+  },
+  created() {
+    this.$store.dispatch("allDrinksType");
   },
   components: {
     //HelloWorld
@@ -97,6 +97,11 @@ export default {
         totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return totalDrinkPrice;
     }
+  },
+  methods: {
+    allDrinksType() {
+      return this.$store.state.drinksType;
+    }
   }
 };
 </script>
@@ -106,7 +111,7 @@ export default {
   font-family: "Callovia";
   src: local("Callovia"), url(./fonts/Callovia.ttf) format("truetype");
 }
-.callovia-font{
+.callovia-font {
   font-family: "Callovia", Helvetica, sans-serif;
 }
 </style>

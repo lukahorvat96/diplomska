@@ -1,4 +1,6 @@
-﻿CREATE TABLE `Food`
+﻿
+
+CREATE TABLE `Food`
 (
   `Food_id` Int NOT NULL AUTO_INCREMENT,
   `Food_name` Varchar(255) NOT NULL,
@@ -13,15 +15,17 @@
 ;
 
 
+
 CREATE TABLE `Order`
 (
   `Order_id` Int NOT NULL AUTO_INCREMENT,
-  `Order_date` Datetime NOT NULL,
-  `Order_time` Datetime NOT NULL,
+  `Order_date` Date NOT NULL,
+  `Order_time` Time NOT NULL,
   `Table_id` Int NOT NULL,
   PRIMARY KEY (`Order_id`,`Table_id`)
 )
 ;
+
 
 
 CREATE TABLE `Drink`
@@ -40,6 +44,7 @@ CREATE TABLE `Drink`
 ;
 
 
+
 CREATE TABLE `OrderFood`
 (
   `Food_id` Int NOT NULL,
@@ -55,6 +60,7 @@ ALTER TABLE `OrderFood` ADD PRIMARY KEY (`Food_id`,`Order_id`,`Table_id`,`FoodTy
 ;
 
 
+
 CREATE TABLE `Table`
 (
   `Table_id` Int NOT NULL AUTO_INCREMENT,
@@ -63,6 +69,7 @@ CREATE TABLE `Table`
   PRIMARY KEY (`Table_id`)
 )
 ;
+
 
 
 CREATE TABLE `OrderDrink`
@@ -80,6 +87,7 @@ ALTER TABLE `OrderDrink` ADD PRIMARY KEY (`Order_id`,`Drink_id`,`Table_id`,`Drin
 ;
 
 
+
 CREATE TABLE `FoodType`
 (
   `FoodType_id` Int NOT NULL AUTO_INCREMENT,
@@ -87,6 +95,8 @@ CREATE TABLE `FoodType`
   PRIMARY KEY (`FoodType_id`)
 )
 ;
+
+
 
 CREATE TABLE `DrinkType`
 (
@@ -96,16 +106,6 @@ CREATE TABLE `DrinkType`
 )
 ;
 
-
-CREATE TABLE `User`
-(
-  `User_id` Int NOT NULL AUTO_INCREMENT,
-  `User_role` Varchar(255) NOT NULL,
-  `User_name` Varchar(255) NOT NULL,
-  `User_password` Varchar(255) NOT NULL,
-  PRIMARY KEY (`User_id`)
-)
-;
 
 
 ALTER TABLE `OrderFood` ADD CONSTRAINT `Relationship1` FOREIGN KEY (`Food_id`, `FoodType_id`) REFERENCES `Food` (`Food_id`, `FoodType_id`) ON DELETE RESTRICT ON UPDATE RESTRICT

@@ -15,7 +15,10 @@ import {
   REQUEST_DRINKTYPE,
   ALL_COCKTAILS,
   ALL_BEERS,
-  CHANGE_QUANTITY_CART
+  CHANGE_QUANTITY_CART,
+  ALL_DRINKS_TYPE,
+  ALL_DRINKS_BY_TYPE,
+  SET_TYPE_ID
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -26,6 +29,9 @@ export default new Vuex.Store({
     cocktails: [],
     cart_drink: [],
     cart_food: [],
+    drinksType: [],
+    drinksTypeID: 0,
+    drinksByType: [],
     table_details: [
       {
         table_id: 1,
@@ -50,6 +56,15 @@ export default new Vuex.Store({
     },
     [ALL_DRINKTYPE](state, payload) {
       state.drinksInType = payload;
+    },
+    [ALL_DRINKS_TYPE](state, payload) {
+      state.drinksType = payload;
+    },
+    [SET_TYPE_ID](state, payload) {
+      state.drinksTypeID = payload;
+    },
+    [ALL_DRINKS_BY_TYPE](state, payload) {
+      state.drinksByType = payload;
     },
     [REQUEST_DRINKTYPE](state, payload) {
       state.drinkTypeRequest = payload;
@@ -87,12 +102,6 @@ export default new Vuex.Store({
         commit("ALL_DRINKS", response.data);
       });
     },
-    allInDrinkType({ commit }, type) {
-      axios.get(`${"http://192.168.1.13:5000"}/` + type).then(response => {
-        console.log(response.data);
-        commit("ALL_DRINKTYPE", response.data);
-      });
-    },
     allCocktails({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/cocktails`).then(response => {
         console.log(response.data);
@@ -112,7 +121,6 @@ export default new Vuex.Store({
       });
     },
     addOrderDrink({ commit }, payload) {
-      commit("ADD_ORDER");
       axios
         .post(`${"http://192.168.1.13:5000"}/addorder/1`, payload)
         .then(response => {
@@ -122,6 +130,21 @@ export default new Vuex.Store({
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //})
+    },
+    allDrinksType({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/drinkstype`).then(response => {
+        //console.log(response.data)
+        commit("ALL_DRINKS_TYPE", response.data);
+      });
+    },
+    allDrinksTypeById({ commit }, payload) {
+      commit("SET_TYPE_ID", payload);
+      console.log("PAYLOAD:" +payload);
+      axios
+        .get(`${"http://192.168.1.13:5000"}/drinkstype/` + payload)
+        .then(response => {
+          commit("ALL_DRINKS_BY_TYPE", response.data);
+        });
     }
   },
   getters: {
@@ -129,7 +152,10 @@ export default new Vuex.Store({
       return state.drinks;
     },
     allInDrinkType: state => {
-      return state.drinksInType;
+      return state.drinksType;
+    },
+    allDrinksByType: state => {
+      return state.drinksByType;
     },
     allCocktails: state => {
       return state.cocktails;

@@ -42,6 +42,21 @@ def SQLqueryDrink(query):
         content = {}
     return payload
 
+def SQLqueryDrinksType(query):
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute(query)
+    myresult = mycursor.fetchall()
+    payload = []
+    content = {}
+    for result in myresult:
+        content = {
+            'drinkType_id': result[0], 
+            'name': result[1]
+        }
+        payload.append(content)
+        content = {}
+    return payload
+
 def SQLqueryFood(query):
     mycursor = mydb.cursor()
     myresult = mycursor.execute(query)
@@ -113,6 +128,10 @@ def allBeers():
 @app.route('/foods')
 def allFoods():
     return jsonify(SQLqueryFood("SELECT * FROM food"))
+
+@app.route('/drinkstype')
+def allDrinksType():
+    return jsonify(SQLqueryDrinksType("SELECT * FROM drinktype"))
 
 @app.route('/ordersWithoutEnd')
 def allOrdersWithoutEnd():

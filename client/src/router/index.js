@@ -1,10 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-import Drink from "@/views/Drink";
-import Cocktails from "@/views/Cocktails";
-import Beers from "@/views/Beers";
 import Cart from "@/views/Cart";
+import DrinkType from "@/views/DrinkType";
 
 Vue.use(VueRouter);
 
@@ -15,19 +13,10 @@ const routes = [
     component: Home
   },
   {
-    path: "/drink",
-    name: "Drink",
-    component: Drink
-  },
-  {
-    path: "/cocktail",
-    name: "Cocktail",
-    component: Cocktails
-  },
-  {
-    path: "/beer",
-    name: "Beer",
-    component: Beers
+    path: "/drinktype/:drinkTypeID",
+    name: "DrinkType",
+    component: DrinkType,
+    props: true
   },
   {
     path: "/cart",

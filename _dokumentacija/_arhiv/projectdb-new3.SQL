@@ -1,4 +1,15 @@
-﻿CREATE TABLE `Food`
+﻿/*
+Created: 1. 09. 2019
+Modified: 28. 10. 2019
+Model: MySQL 5.0
+Database: MySQL 5.0
+*/
+
+-- Create tables section -------------------------------------------------
+
+-- Table Food
+
+CREATE TABLE `Food`
 (
   `Food_id` Int NOT NULL AUTO_INCREMENT,
   `Food_name` Varchar(255) NOT NULL,
@@ -12,17 +23,19 @@
 )
 ;
 
+-- Table Order
 
 CREATE TABLE `Order`
 (
   `Order_id` Int NOT NULL AUTO_INCREMENT,
-  `Order_date` Datetime NOT NULL,
-  `Order_time` Datetime NOT NULL,
+  `Order_date` Date NOT NULL,
+  `Order_time` Time NOT NULL,
   `Table_id` Int NOT NULL,
   PRIMARY KEY (`Order_id`,`Table_id`)
 )
 ;
 
+-- Table Drink
 
 CREATE TABLE `Drink`
 (
@@ -39,6 +52,7 @@ CREATE TABLE `Drink`
 )
 ;
 
+-- Table OrderFood
 
 CREATE TABLE `OrderFood`
 (
@@ -54,6 +68,7 @@ CREATE TABLE `OrderFood`
 ALTER TABLE `OrderFood` ADD PRIMARY KEY (`Food_id`,`Order_id`,`Table_id`,`FoodType_id`)
 ;
 
+-- Table Table
 
 CREATE TABLE `Table`
 (
@@ -64,6 +79,7 @@ CREATE TABLE `Table`
 )
 ;
 
+-- Table OrderDrink
 
 CREATE TABLE `OrderDrink`
 (
@@ -79,6 +95,7 @@ CREATE TABLE `OrderDrink`
 ALTER TABLE `OrderDrink` ADD PRIMARY KEY (`Order_id`,`Drink_id`,`Table_id`,`DrinkType_id`)
 ;
 
+-- Table FoodType
 
 CREATE TABLE `FoodType`
 (
@@ -88,6 +105,8 @@ CREATE TABLE `FoodType`
 )
 ;
 
+-- Table DrinkType
+
 CREATE TABLE `DrinkType`
 (
   `DrinkType_id` Int NOT NULL AUTO_INCREMENT,
@@ -96,6 +115,7 @@ CREATE TABLE `DrinkType`
 )
 ;
 
+-- Table User
 
 CREATE TABLE `User`
 (
@@ -107,6 +127,7 @@ CREATE TABLE `User`
 )
 ;
 
+-- Create foreign keys (relationships) section -------------------------------------------------
 
 ALTER TABLE `OrderFood` ADD CONSTRAINT `Relationship1` FOREIGN KEY (`Food_id`, `FoodType_id`) REFERENCES `Food` (`Food_id`, `FoodType_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;

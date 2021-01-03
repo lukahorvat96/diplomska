@@ -54,7 +54,7 @@
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Luka Horvat}
-\newcommand{\tkeywords}{Slovenija, naročanje, propadel projekt, spletna aplikacija}
+\newcommand{\tkeywords}{Slovenija, naročanje, neuspešni projekti, rešitev, spletna aplikacija}
 \newcommand{\tkeywordsEn}{computer, computer, computer}
 
 
@@ -289,18 +289,19 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 \begin{tabular}{l|l|l}
   {\bf kratica} & {\bf angleško} & {\bf slovensko} \\ \hline
   % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  {\bf CA} & classification accuracy & klasifikacijska točnost \\
-  {\bf DBMS} & database management system & sistem za upravljanje podatkovnih baz \\
+  {\bf SPA} & single page application & aplikacija na eni strani \\
+  {\bf SQL} & structured query language & strukturirani povpraševalni jezik za delo s podatkovnimi bazami  \\
   {\bf SVM} & support vector machine & metoda podpornih vektorjev \\
+  {\bf SVM}   & support vector machine              & metoda podpornih vektorjev \\
   \dots & \dots & \dots \\
 \end{tabular}
 \end{comment}
 
 \noindent\begin{tabular}{p{0.1\textwidth}|p{.4\textwidth}|p{.4\textwidth}}    % po potrebi razširi prvo kolono tabele na račun drugih dveh!
   {\bf kratica} & {\bf angleško}                             & {\bf slovensko} \\ \hline
-  {\bf CA}      & classification accuracy               & klasifikacijska točnost \\
-  {\bf DBMS} & database management system & sistem za upravljanje podatkovnih baz \\
-  {\bf SVM}   & support vector machine              & metoda podpornih vektorjev \\
+  {\bf SPA}      & single page application               &  aplikacija na eni strani \\
+  {\bf SQL} & structured query language & strukturirani povpraševalni jezik za delo s podatkovnimi bazami  \\
+  {\bf CLI}   & command-line interface              & znakovni uporabniški vmesnik \\
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -321,7 +322,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 
 %\noindent\textbf{Povzetek:} 
 \noindent 
-Slovenija velja za državo z veliko število restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano McDonalds. Obstajali so projekti, ko so naredili aplikacije, ki bi/so vpeljale nekaj tehnologije v restavracije vendar v Sloveniji niso uspeli. Eden ključnih razlogov zakaj niso uspeli je bilo sabotiranje s strani natakarjev, saj so misli da bo tehnologija zamenjala njegove službe. V zavedanju njihovih problemov sem se odločil narediti diplomski nalogo na to temo. Rezultat je aplikacija, ki jo je mogoče uporabiti samo kot pregled hrane in pijače, ki jo ponuja restavracija ali pa kot sistem za naročanje. V diplomski nalogi najprej opišem kako sem prišel do ideje, sam razvoj aplikacije in njeno končno delovanje. Predstavim vse težave na katere sem naletel med samim razvojem. Na koncu sem pripravil tudi primerjavo s konkurenco na trenutnem trgu oziroma z aplikacijo, ki vem da ni uspela. Seveda sem pripravil tudi seznam izboljšav, ki bi mojo aplikacijo lahko pripeljalo med eno izmed boljših.
+Slovenija velja za državo z veliko število restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot na primer ena izmed večjih verig s hitro prehrano McDonalds. Obstajali so projekti, ko so naredili aplikacije, ki bi/so vpeljale nekaj tehnologije v restavracije vendar v Sloveniji niso uspeli. Eden ključnih razlogov zakaj niso uspeli je bilo sabotiranje s strani natakarjev, saj so misli da bo tehnologija zamenjala njegove službe. V zavedanju njihovih problemov sem se odločil narediti diplomski nalogo na to temo. Rezultat je aplikacija, ki jo je mogoče uporabiti samo kot pregled hrane in pijače, ki jo ponuja restavracija, ali pa kot sistem za naročanje. V diplomski nalogi opišem kako sem prišel do ideje, sam razvoj aplikacije in njeno končno delovanje. Predstavim vse težave na katere sem naletel med samim razvojem. Na koncu pa sem naredil primerjavo s konkurenco na trenutnem trgu oziroma z aplikacijo, ki vem da ni uspela. Seveda sem pripravil tudi seznam izboljšav, ki bi mojo aplikacijo lahko pripeljalo med eno izmed boljših.
 
 \noindent\textbf{Ključne besede:} \tkeywords.
 % prazna stran
@@ -355,7 +356,12 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
 
 \chapter{Uvod}
-Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane v eni izmed bližnji restavraciji, hkrati pa opazoval potek dela v kuhinji in strežbi. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar samo kot pregledovalnik ( angl. Menu ) ali pa naročanju jedi in pijače. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročila z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi. 
+Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane v eni izmed bližnji restavraciji, hkrati pa opazoval potek dela v kuhinji in strežbi. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar kot pregledovalnik (angl. Menu) ali pa kot sistem za naročanju hrane in pijače. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročila z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi. 
+\section {Problematika}
+Z izdelavo spletne aplikacije sem želel zagotoviti lažje delovanje restavracij predvsem olajšati delo natakarjem, ki bi se potem lažje osredotočili na kakovost postrežbe pijač in jedi. Izboljšati sem želel čas postrežbe gostov, kar bi prizaneslo tudi k večjemu število postreženih gostov v nekem časovnem obdobju. Naredil sem analizo, ki si jo lahko pogledate v članku 3.2. Vsekakor ni moja aplikacija namenjena zamenjavi delovnih mest, vendar samo pohitritvi strežbe. To bi vplivalo tudi na zmanjšanje časa, ki ga gost porabi v primeru, da je natakar zelo zaseden. Obstajajo tablice, katere uporabljajo natakarji pri sprejemanju naročil, ki predvsem pomagajo, da si ne rabijo vsega zapomniti in da lahko pobirajo zaporedna naročila. Iz lastnih izkušenj vem, da z uporabo spomina pride hitreje do napak, saj si preprosto ne moreš vsega zapomniti. Težava je tudi v tem, da moraš za vsako pobrano naročilo do blagajne, da naročilo ne čaka in čimprej pride do kuharja oziroma natakarja, ki pripravlja pijače. Po navadi največ pri pobiranju naročil vzamejo  gosti, ki se radi premišljujejo zadnje minute, kar ni nič narobe. Ko sem opravljal delo natakarja sem se spraševal zakaj ne bi ta čas raje posvetil strežbi oziroma pripravi naročil, kot pa pobiranju naročil strank, ki ne vedo kaj bi. Ta aplikacija bi še dodatno zmanjšala čas pobiranja naročil, saj natakar včasih pride prehitro ali pa prepozno, vendar z uporabo aplikacije bi bilo naročanje vedno na voljo. 
+
+\section {Ideja}
+Aplikacijo sem si zamislil v treh pogledih, in sicer uporabnik oziroma gost, natakar in kuhar. Gost bi imel na voljo pregled vseh pijač in jedi, ki jih restavracija ponuja. S tem bi pripomogel k ekologiji, saj restavracije ne bi več potrebovale papirnatih menijev. Natakar in kuhar bi imela pregled nad naročili. Naročilo bi razdelil v dva dela, da ima tako natakar kot kuhar nadzor samo nad svojimi naročili. S tem bi omogočil, da se lahko kreira statistika za vsakega posebej.
 
 
 \chapter{Uporabljene tehnologije in programske opreme}
@@ -365,7 +371,7 @@ V diplomski nalogi sem se srečeval predvsem z naslednjimi programskimi jeziki: 
 JavaScript je programski jezik, zaradi katerega so spletne strani postale dinamične in bolj zmogljive. Z njem smo programsko kodo, ki je bila na strežniškem delu, preselili v brskalnik. Tako smo na začetku dobili veliko JavaScript programske kode povezane z različnimi HTML in CSS datotekami brez kakršne koli formalne organizacije (poznano kot «script»). Zaradi tega smo razvijalci začeli uporabljati JavaScript Frameworks, saj poenostavijo izdelavo aplikacij.
 
 
-Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem pa je skupna točka reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. 
+Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna točka reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. 
 
 
 \subsection {Kaj je reaktivnost?}
@@ -378,12 +384,12 @@ Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se 
 \label{Excel-SUM}
 \end{figure}
 
-Če vstavimo številko 2 v prvo celico in številko 3 v drugo celico ter izberemo funkcijo SUM teh dveh celic. Kot rezultat dobimo vsoto obeh številk skupaj, kar ni nič posebnega. Vendar če bomo spremenili vrednost prve celice, bo funkcija SUM avtomatsko posodobila skupno vrednost. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je na nek podatek lahko vezanih več funkciji oziroma delov programske kode, ki se ob spremembi njegove vrednosti posodobijo.
+Če vstavimo številko 2 v prvo celico in številko 3 v drugo celico ter izberemo funkcijo SUM teh dveh celic. Kot rezultat dobimo vsoto obeh številk skupaj, kar ni nič posebnega. Vendar če bomo spremenili vrednost prve celice, bo funkcija SUM avtomatsko posodobila skupno vrednost. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo.
 
 \subsection {Delovanje reaktivnost v Vue}
 Vue se torej v primerjavi z navadnim JavaScriptom sprehodi skozi podatke in njihove lastnosti (angl. Properties) pretvori v fukciji Getter in Setter, ki sta nevidni uporabniku \cite{delovanjeReaktivnost}. Poglejte si sliko~\ref{VueReacitivity} za lažjo predstavo. 
 
-Torej funkcija Getter pokliče instanco Watcher z namenom odvisnosti do drugih komponent. To pomeni, če je podatek označen kot odvisen (angl.  Dependency) bodo nekateri deli programske kode oziroma funkcije poklicane vsakič, ko se spremeni vrednost podatka. Funkcija Setter pa obvesti instanco Watcher, vsakič ko se podatku spremeni lastnost. Ta poskrbi, da se pokliče funkcijo upodabljanja (angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije. 
+Torej funkcija Getter pokliče instanco Watcher z namenom odvisnosti do drugih komponent. To pomeni, če je podatek označen kot odvisen (angl.  Dependency) bodo nekateri deli programske kode oziroma funkcije poklicane vsakič, ko se spremeni vrednost podatka. Funkcija Setter pa obvesti instanco Watcher, vsakič ko se podatku spremeni lastnost. Ta poskrbi, da se pokliče funkcija upodabljanja (angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije. 
 
 \begin{figure}[h]
 \begin{center}
@@ -397,10 +403,10 @@ Torej funkcija Getter pokliče instanco Watcher z namenom odvisnosti do drugih k
 
 Tako kot vsak programski jezik ima tudi Vue svoje dodatke, ki pomagajo pri razvoju aplikaciji. Spodnje sem uporabljal sam in so vredni omembe.
 \begin{description}
-\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta povezuje različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v celoto. Zadeva izgleda nekako tako, da preko CLI vmesnika izbereš kakšen projekt želiš. Imaš seveda že privzete nastavitve, vendar omogoča tudi nastavljanje po meri. Sam sem uporabil Vuex, Vue-Router, ESLint in Vuetify.
+\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v projekt. Zadeva izgleda nekako tako, da preko CLI vmesnika izbereš kakšen projekt želiš. Imaš seveda že privzete nastavitve, vendar omogoča tudi nastavljanje po meri. Sam sem uporabil Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
 \item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo SPA aplikacij. Usmerjevalki je mišljen v smislu usmerjanja na druge komponente (angl. Component), ki v Vue.js predstavljajo druge poglede, lahko bi rekli podobno kot podstrani.
-\item[ESLint] je orodje za prepoznavanje in priporočanje o popravkih v programski kodi \cite{ESLint}. Cilje je narediti kodo bolj usklajeno in urejeno, kar pripomore k izogibanju napak.
+\item[ESLint] je orodje za prepoznavanje in poročanje o popravkih v programski kodi \cite{ESLint}. Cilje je narediti kodo bolj pregledno in urejeno, kar pripomore k izogibanju napak.
 \item[Vuetify] je eden izmed mnogih uporabniških vmesnikov, ki je zgrajen na vrhu Vue.js \cite{Vuetify}. Za razliko od drugih vmesnikov je Vuetiy enostaven za učenje z več stotimi komponentami izdelanih po specifikacijah Material Design.
 \item[Vue-devtools] je zgolj dodatek v brskalniku, ki omogoča lažje sledenje delovanja aplikacije in odpravljanju napak. 
 \end{description}
@@ -413,7 +419,7 @@ Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Fre
 MySQL je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih sistemih npr. Windows, Linux, OS X,… Prva verzija je bil razvita leta 1995 s strani Michael Widenius in David Axmark. Kratica My izhaja iz imena prve hčerke očeta Michaela.  
 
 
-Toad DataModler je orodje za izdelavo visokokakovostnih podatkovnih modelov. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme (npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access, Mircrosoft SQL Server,…) . Program sem uporabil prav zato, da sem najprej naredil fizični podatkovni model ter nato generiral MySQL kodo, ki sem jo potem samo še uvozil v XAMPP. 
+Toad DataModler je orodje za izdelavo visokokakovostnih podatkovnih modelov. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access, Mircrosoft SQL Server,... Program sem uporabil prav zato, da sem najprej naredil fizični podatkovni model ter nato generiral MySQL kodo. 
 
 \section {Viusal Studio}
 Visual Studi Code je odprtokodno razvojno orodje, ki ga je razvil Microsoft leta 2015. Namenjeno je razvoju programov v operacijskem sistemu Windows. Omogoča razvoj aplikacij v jeziku C, C++, Python, Visual Basic .NET, JavaScript,… 
@@ -421,28 +427,66 @@ Visual Studi Code je odprtokodno razvojno orodje, ki ga je razvil Microsoft leta
 Orodje v osnovi omogoča veliko funkcionalnosti, npr. razhroščevanje, popravljanje sintaktičnih napak, avtomatično dopolnjevanje programske kode, izvajanje programske kode v realnem času, dostop do CLI vmesnika, povezavo z GIT,… Kar ni vključeno v orodje je mogoče dodati z razširitvami, ki se jih brezplačno namesti znotraj orodja. Sam sem si namestil razširitev za Vue.js s katerimi sem pridobil avtomatsko dopolnjevanje kode in ESLint, da se je nepravilno urejena koda sproti označevala.  
 
 \section {XAMPP}
-XAMPP je odprtokodni strežnik za razvoj spletnih aplikacij, ki se uporablja lokalno za testne projekte predno postanejo aktivni vsem preko spleta. Ta strežnik za razvoj spletnih aplikacij vsebuje tudi druge pred namestitvene aplikacije, kot so Apache spletni strežnik, MySQL podatkovno bazo, PHP in Perl. Deluje na vseh platformah Linux, Windows in Mac OS. Vse aplikacije se vklaplja preko XAMPP nadzorne plošče, ki jo lahko vidite na sliki …
+XAMPP je odprtokodni strežnik za razvoj spletnih aplikacij, ki se uporablja lokalno za testne projekte predno postanejo aktivni vsem preko spleta. Ta strežnik za razvoj spletnih aplikacij vsebuje tudi druge pred namestitvene aplikacije, kot so Apache spletni strežnik, MySQL podatkovno bazo, PHP in Perl. Deluje na vseh platformah Linux, Windows in Mac OS. Vse aplikacije se vklaplja preko XAMPP nadzorne plošče.
 
 
 PhpMyAdmin je ime za spletni vmesnik, ki omogoča upravljane z MySQL podatkovnimi bazami. Program je vključen v XAMPP in sicer znotraj aplikacije MySQL. Je zelo močno orodje in predvsem enostavno za uporabo. Sam sem ga uporabil pri testiranju poizvedb in dodajanju podatkov v podatkovno bazo.
 
-\section {Git Hub}
-Git Hub je spletna platforma za distribuirano upravljanje s programsko kodo, ki je bila ustanovljena februarja leta 2008 \cite{GitHub}. Njen poudarek je predvsem na hitrosti, integriteti podatkov in vzporednem toku dela. Namenjen je tako za samostojni kot tudi za kolaborantovi razvoj. Začneš tako, da ustvariš repozitoriji, ki predstavlja glavno programsko kodo. Iz tega se lahko naredi več podružnic (angl. Branch), ki predstavljajo kopijo glavne kode na kateri se lahko izvajajo testi oziroma odpravljajo težav. Podružnice potem združuješ in tako glavna programska koda ne vsebuje napak oziroma predstavlja vedno delujoč izdelek.
+\section {GitHub}
+GitHub je spletna platforma za distribuirano upravljanje s programsko kodo, ki je bila ustanovljena februarja leta 2008 \cite{GitHub}. Razvita je bil iz programa Git, ki je lokalna različica GitHuba. Njen poudarek je predvsem na hitrosti, integriteti podatkov in vzporednem toku dela. Namenjen je tako za samostojni kot tudi za kolaborantovi razvoj. Začneš tako, da ustvariš repozitoriji, ki predstavlja glavno programsko kodo. Iz tega se lahko naredi več podružnic (angl. Branch), ki predstavljajo kopijo glavne kode na kateri se lahko izvajajo testi oziroma odpravljajo težav. Podružnice potem združuješ in tako glavna programska koda ne vsebuje napak oziroma predstavlja vedno delujoč izdelek. 
+
 Git Hub Desktop je aplikacija za operacijske sisteme, ki je zelo enostavna. Ponuja vse funkcionalnosti kot na spletu, vendar zaradi uporabe lokalnih orodij veliko bolj priročna. Ko zaključiš delo narediš Commit in Push ter vse spremembe shraniš v repozitoriji na spletu. Tako nikoli ne izgubiš projekta oziroma imaš sinhronizacijo z ostalimi ljudmi na projektu. 
 
-\chapter {Nevem}
-\section {Problematika}
-Z izdelavo spletne aplikacije sem želel zagotoviti lažje delovanje restavracij predvsem olajšati delo natakarjem, ki bi se potem lažje osredotočili na kakovost postrežbe pijač in jedi. Izboljšati sem želel čas postrežbe gostov, kar bi prizaneslo tudi k večjemu število postreženih gostov v nekem časovnem obdobju. Naredil sem analizo, ki si jo lahko pogledate v članku 3.2. Vsekakor ni moja aplikacija namenjena zamenjavi delovnih mest, vendar samo pohitritvi strežbe. To bi vplivalo tudi na zmanjšanje časa, ki ga gost porabi v primeru, da je natakar zelo zaseden. Obstajajo tablice, katere uporabljajo natakarji pri sprejemanju naročil, ki predvsem pomagajo, da si ne rabijo vsega zapomniti in da lahko pobirajo zaporedna naročila. Iz lastnih izkušenj vem, da z uporabo spomina pride hitreje do napak, saj si preprosto ne moreš vsega zapomniti. Težava je tudi v tem, da moraš za vsako pobrano naročilo do blagajne, da naročilo ne čaka in čimprej pride do kuharja oziroma natakarja, ki pripravlja pijače. Po navadi največ pri pobiranju naročil vzamejo  gosti, ki se radi premišljujejo zadnje minute, kar ni nič narobe. Ko sem opravljal delo natakarja sem se spraševal zakaj ne bi ta čas raje posvetil strežbi oziroma pripravi naročil, kot pa pobiranju naročil strank, ki ne vedo kaj bi. Ta aplikacija bi še dodatno zmanjšala čas pobiranja naročil, saj natakar včasih pride prehitro ali pa prepozno, vendar z uporabo aplikacije bi bilo naročanje vedno na voljo. 
 
-\section {Ideja}
-Aplikacijo sem si zamislil v treh pogledih, in sicer uporabnik oziroma gost, natakar in kuhar. Gost bi imel na voljo pregled vseh pijač in jedi, ki jih restavracija ponuja. S tem bi pripomogel k ekologiji, saj restavracije ne bi več potrebovale papirnatih menijev. Natakar in kuhar bi imela pregled nad naročili. Naročilo bi razdelil v dva dela, da ima tako natakar kot kuhar nadzor samo nad svojimi naročili. S tem bi omogočil, da se lahko kreira statistika za vsakega posebej.
+\chapter {Struktura in razvoj aplikacije}
 
+\section{Podatkovna baza}
+Izdelavo podatkovne baze sem se lotil v programu Toad DataModler, slika~\ref{Database_physical}. Baza je sestavljena iz osmih tabel, katere sem bolj podrobno opisal spodaj. 
 
-\section {Analiza trga}
-ssadasdasd
+FoodType tabela je namenjana zapisom vrsti jedi t.i. predjedi, glavne jedi, sladice,… Sestavljena je iz atributov: ID, Name.
 
-\chapter {Struktura in delovanje aplikacije}
-Z izdelavo spletne aplikacije sem želel zagotoviti lažje delovanje v restavracijah predsem na strani natakarjev in kuharjev. Predsem izbolšanju hitrosti postrežbe upam, da s tem ne bi padalo zadovolstvo strank saj interakcija med ljudmi je vsekakor nekaj bolj pristnega kot s tehnologijo. Vendar celoten svet strmi v razvoj 
+DrinkType tabela je namejna vrsti pijač, npr. sokovi, koktejli, piva, topli napitki,… Sestavljena je enakih atirbutov kot FoodType.
+
+Food tabela je namenjena opisu hrane in je sestavljena iz atributov: ID, Name, Price, Size, Calorie, Picture in Description.  V atribut Picture se zapiše ime slike, ki se prikaže v aplikaciji. Vse slike sem hranil v datoteki na lokalnem strežniku Apache.
+
+Drink tabela je namenjan opisu pijače in je sestavljena iz enakih atributov kot Food le da ima še enega dodatnega z imenom Alcohol. Ta atribut je vrste BOOLEAN, kar pomeni  vrednosti 0 ali 1 in s tem označuje pijače, ki vsebujejo alkohol.
+
+OrderFood tabela je namenjena shranjevanju hrane v določenem naročilo. Zapis ne more obstajati če nima definiranega naročila. Tabela je nastala zaradi razmerja mnogo-proti-mnogo med tabelo Food in Order. Zato tabela vsebuje veliko tujih ključev poleg dveh atributov: Quantity in TotalPrice. Prav tako je nastala tabela OrderDrink in vsebuje enake atribute, vendar za naročila pijač.
+
+Table tabela je namejnea shranjevanju miz v restavracijah. Sestavljajo jo atributi: ID, Name in Position, v katerega se lahko bolj podrobno opiše lokacijo mize.
+
+Order tabela je namenjena zapisovanju naročil. Sestavljena je iz atributov: ID, Start, End. Vsebuje tudi tuji ključ ID od table Table, ki je zelo pomemben saj določuje na katero mizo je vezano naročilo.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=9cm]{Database_physical}
+\end{center}
+\caption{Končna podatkovna baza za aplikacijo}
+\label{Database_physical}
+\end{figure}
+
+Končne različice podatkovne baze nisem naredil v prvem poskusu, npr. prvič sem pozabil na tabeli FoodType in DrinkType, kateri mi zelo poenostavijo delo pri selektivnem prikazovanju pijač in jedi v aplikaciji. 
+
+Po končanem urejanju fizične sheme sem naredil izvoz v MySQL 5.0 kodo, ki sem jo potem uvozil v spletni vmesnik phpMyAdmin. Uvoz ni nič posebnega, kreiral sem podatkovna baza in njeno ime ter naredil uvoz. 
+Ko je bila podatkovna baza uvožena sem jo potreboval samo še napolniti s podatki. Zadeve sem se prav tako lotil preko phpMyAdmin vmesnika, ki je zelo enostaven in omogoča dodajanje več podatkov na enkrat. Podatke sem črpal iz znanih slovenskih aplikacij za naročanje hrane na dom, eHrana in Wolt.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm]{phpMyAdmin}
+\end{center}
+\caption{Izgled podatkovne baze v aplikaciji phpMyAdmin}
+\label{phpMyAdmin}
+\end{figure}
+
+\section{Strežnik}
+
+\section{Aplikacija}
+
+\chapter {Delovanje aplikacije}
+\section{Gost}
+\section{Natakar}
+\section{Kuhar}
+\section{Nadzor}
+
+\chapter {Sklepne ugotovitve}
 \newpage %dodaj po potrebi, da bo številka strani za Literaturo v Kazalu pravilna!
 \ \\
 \clearpage

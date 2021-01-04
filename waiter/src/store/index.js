@@ -141,7 +141,7 @@ export default new Vuex.Store({
     },
     allOrdersDrinkById({ commit }, payload) {
       axios
-        .get(`${"http://192.168.1.13:5000"}/orders/`+payload)
+        .get(`${"http://192.168.1.13:5000"}/orders/` + payload)
         .then(response => {
           commit("ORDER_BY_ID", response.data);
         });

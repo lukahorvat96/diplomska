@@ -6,7 +6,6 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           v-if="isEmpty()"
-          
           v-bind="attrs"
           v-on="on"
           elevation="2"

@@ -1,0 +1,35 @@
+Veliko slovnènih napak
+web socket !!!!
+url na qrkodo
+varnost aplikacije
+type # vrsta hrane/pijaèe
+
+postavka
+naroèilo
+artikel
+
+
+
+nameske aplikacije / qr kode
+v prvi osebi( ne pisat) razen za tehnologijo
+
+ne razlagat da je bilo to iz izkušenj
+trpniku/  -- v prvi osebi množni
+Uvod
+
+RESFul storitevv
+pojdi s ptièje prespektive
+
+ESPA
+
+akko poteka komunikacija
+spletna storitev
+
+2.) v bazi 
+
+
+baza postgres
+22.01.2020
+-baza
+-websocket
+-razdelan pogled po vlogah

@@ -63,6 +63,8 @@ export default {
       this.cart = [];
       this.dialog = false;
       this.$router.push('/');
+      console.log("newOrderInDatabese");
+      this.$socket.emit("newOrderInDatabese");
     },
     isEmpty() {
       if (this.cart.length == 0) return false;

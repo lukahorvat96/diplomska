@@ -127,6 +127,8 @@
     </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2021</span>
+      <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn>
+      <p>{{ SomeData }}</p>
     </v-footer>
   </v-app>
 </template>
@@ -138,7 +140,8 @@ export default {
   name: "App",
   data() {
     return {
-      drawer: null
+      drawer: null,
+      someData: null
     };
   },
   components: {
@@ -154,6 +157,17 @@ export default {
       for (var i = 0; i < drinkCard.length; i++)
         totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return totalDrinkPrice;
+    },
+    SomeData() {
+      console.log("SOME DATA: " + this.$store.getters.getSomeData);
+      return this.$store.getters.getSomeData;
+    }
+  },
+  methods: {
+    clickButton: function(data) {
+      // $socket is socket.io-client instance
+      console.log("POSLANO: "+data)
+      this.$socket.emit("dodal_v_bazo", data);
     }
   }
 };

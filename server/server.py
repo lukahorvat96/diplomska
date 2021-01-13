@@ -1,9 +1,13 @@
 from flask import Flask, jsonify, request
 from datetime import datetime
 from flask_cors import CORS
+from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
+#app.config['SECRET_KEY'] = 'secret!'
+app.debug = True
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['JSON_SORT_KEYS'] = False #unordered json object
 
@@ -21,6 +25,24 @@ print(" * SERVER IS STARTING........")
 drinsktype = []
 
 
+@socketio.on('message')
+def handle_message(data):
+    print('received message: ' + data)
+
+@socketio.on('dodal_v_bazo')
+def handle_my_custom_event(string):
+    emit('my response', 'Check database!!!', broadcast=True)
+    print('received string: ' + string)
+
+@socketio.on('newOrderInDatabese')
+def newOrderInDatabese():
+    emit('checkDatabesOrders', broadcast=True)
+    print('newOrderInDatabese')
+
+
+@socketio.on('dodal_v_bazo_waiter')
+def handle_my_custom_event_waiter(string):
+    print('WAITER: ' + string)
 
 ###FUNCTIONS###
 def SQLqueryDrink(query):
@@ -227,4 +249,4 @@ def addOrder(table):
     return "Tabele: " + str(table) + " ID order: " + Order_id + " Data: " + str(data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app)

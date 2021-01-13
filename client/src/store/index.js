@@ -17,7 +17,8 @@ import {
   ALL_BOTTLED_BEERS,
   CHANGE_QUANTITY_CART,
   ALL_DRAUGHT_BEERS,
-  ALL_CIDER
+  ALL_CIDER,
+  SET_DATA
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     response: "",
     loading: false,
     drinkTypeRequest: "",
-    drinksInType: []
+    drinksInType: [],
+    someData: null
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -88,6 +90,9 @@ export default new Vuex.Store({
     [CLEAR_CART](state) {
       state.cart_drink = [];
       state.cart_food = [];
+    },
+    [SET_DATA] (state, payload){
+      state.someData = payload;
     }
   },
   actions: {
@@ -143,7 +148,10 @@ export default new Vuex.Store({
         });
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
-      //})
+      //}),
+    },
+    "SOCKET_my response"({ commit }, payload) {
+      commit("SET_DATA", payload);
     }
   },
   getters: {
@@ -179,6 +187,9 @@ export default new Vuex.Store({
     },
     getDrinkCartQuantity: (state, getters) => {
       return state.cart_drink.findIndex(p => p.drink_id === getters);
+    },
+    getSomeData: state => {
+      return state.someData;
     }
   }
 });

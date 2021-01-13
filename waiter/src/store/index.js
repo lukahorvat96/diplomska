@@ -17,7 +17,8 @@ import {
   ALL_BEERS,
   CHANGE_QUANTITY_CART,
   ALL_ORDERS,
-  ORDER_BY_ID
+  ORDER_BY_ID,
+  NEW_ORDER
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     drinkTypeRequest: "",
     drinksInType: [],
     orders: [],
-    orderById: []
+    orderById: [],
+    newOrder: null
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -88,6 +90,9 @@ export default new Vuex.Store({
     },
     [ORDER_BY_ID](state, payload) {
       state.orderById = payload;
+    },
+    [NEW_ORDER](state, payload) {
+      state.newOrder = payload;
     }
   },
   actions: {
@@ -145,6 +150,15 @@ export default new Vuex.Store({
         .then(response => {
           commit("ORDER_BY_ID", response.data);
         });
+    },
+    "SOCKET_my response"({ commit }, payload) {
+      console.log("IZPIS IZ SOCEKT: " + payload);
+      //dispatch("allOrdersWithoutEnd");
+      commit("NEW_ORDER", payload);
+    },
+    SOCKET_checkDatabesOrders({ dispatch }) {
+      console.log("SOCKET_checkDatabesOrders");
+      dispatch("allOrdersWithoutEnd");
     }
   },
   getters: {
@@ -180,6 +194,9 @@ export default new Vuex.Store({
     },
     allOrdersDrinkById: state => {
       return state.orderById;
+    },
+    newOrderStatus: state => {
+      return state.newOrder;
     }
   }
 });

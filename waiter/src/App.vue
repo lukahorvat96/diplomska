@@ -41,11 +41,12 @@
       </p>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <router-view> </router-view>
-    </v-content>
+    </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2021</span>
+      <v-btn v-on:click="clickButton('WAITERR!!!!')">Pošlji websocket</v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -63,6 +64,13 @@ export default {
   components: {
     //HelloWorld
   },
+  methods: {
+    clickButton: function(data) {
+      // $socket is socket.io-client instance
+      console.log("DELA-WAITER:" + data);
+      this.$socket.emit("dodal_v_bazo_waiter", data);
+    }
+  },
   props: {
     ource: String
   },
@@ -74,7 +82,7 @@ export default {
         totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return totalDrinkPrice;
     },
-    ordersWaiting(){
+    ordersWaiting() {
       return this.$store.getters.getAllOrdersWithoutEnd.length;
     }
   }
@@ -86,7 +94,7 @@ export default {
   font-family: "Callovia";
   src: local("Callovia"), url(./fonts/Callovia.ttf) format("truetype");
 }
-.callovia-font{
+.callovia-font {
   font-family: "Callovia", Helvetica, sans-serif;
 }
 </style>

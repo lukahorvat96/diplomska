@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="yellow_back">
     <v-card-text>
       <p>Order ID: {{ order.order_id }}</p>
       <p>Start: {{ order.start }}$</p>
@@ -15,6 +15,10 @@
       </v-btn>
     </router-link>
   </v-card>
+    <!-- <v-card :loading="loading ? 'blue': null">
+    <template slot="progress">
+      <v-progress-linear color="blue" indeterminate></v-progress-linear>
+    </template> -->
 </template>
 
 <script>
@@ -30,5 +34,10 @@ export default {
 }
 .routerLink {
   text-decoration: none;
+}
+
+.yellow_back {
+  color: yellow;
+  elevation: 5;
 }
 </style>

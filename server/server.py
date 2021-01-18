@@ -190,6 +190,7 @@ def addOrder(table):
         value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
         rowcount = SQLinsert (query,value)
         print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
+    socketio.emit('checkDatabesOrders', broadcast=True)
     return "Tabele: " + str(table) + " ID order: " + Order_id + " Data: " + str(data)
 
 if __name__ == '__main__':

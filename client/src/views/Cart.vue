@@ -62,9 +62,10 @@ export default {
       this.$store.commit(CLEAR_CART);
       this.cart = [];
       this.dialog = false;
+      //this.$socket.emit("newOrderInDatabese");
       this.$router.push('/');
-      console.log("newOrderInDatabese");
-      this.$socket.emit("newOrderInDatabese");
+      //console.log("newOrderInDatabese");
+      //;
     },
     isEmpty() {
       if (this.cart.length == 0) return false;

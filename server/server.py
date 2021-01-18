@@ -18,11 +18,10 @@ mydb = mysql.connector.connect(
   host="localhost", 
   user="root",
   passwd="",
-  database="projectdb"
+  database="newprojectdb"
 )
 
 print(" * SERVER IS STARTING........")
-drinsktype = []
 
 
 @socketio.on('message')
@@ -56,50 +55,16 @@ def SQLqueryDrink(query):
             'drink_id': result[0], 
             'name': result[1], 
             'price': result[2], 
-            'alcohol': result[3], 
-            'size': result[4], 
-            'calorie': result[5], 
-            'picture': result[6], 
-            'description': result[7], 
-            'type_id': result[8]
+            'size': result[3], 
+            'calorie': result[4], 
+            'picture': result[5], 
+            'description': result[6], 
+            'type_id': result[7]
         }
         payload.append(content)
         content = {}
     return payload
 
-def SQLqueryDrinksType(query):
-    mycursor = mydb.cursor()
-    myresult = mycursor.execute(query)
-    myresult = mycursor.fetchall()
-    payload = []
-    content = {}
-    for result in myresult:
-        content = {
-            'drinkType_id': result[0], 
-            'name': result[1]
-        }
-        payload.append(content)
-        content = {}
-    mycursor = mydb.cursor()
-    myresult = mycursor.execute("SELECT * FROM drink")
-    myresult = mycursor.fetchall()
-    content = {}
-    drinsktype.clear()
-    for result in myresult:
-        content = {
-            'drink_id': result[0], 
-            'name': result[1], 
-            'price': result[2], 
-            'alcohol': result[3], 
-            'size': result[4], 
-            'calorie': result[5], 
-            'picture': result[6], 
-            'description': result[7], 
-            'type_id': result[8]
-        }
-        drinsktype.append(content)
-        content = {}
-    return payload
 
 def SQLqueryFood(query):
     mycursor = mydb.cursor()
@@ -132,7 +97,9 @@ def SQLqueryOrder(query):
             'order_id': result[0], 
             'start': result[1], 
             'end': result[2], 
-            'table_id': result[3]
+            'table_id': result[3],
+            'user_id': result[4],
+            'order_status': result[5]
             }
         payload.append(content)
         content = {}
@@ -154,32 +121,26 @@ def SQLinsert(query, values):
 
 def SQLqueryOrderDrink(query):
     mycursor = mydb.cursor()
-    OrderDrinks = mycursor.execute(query)
-    OrderDrinks = mycursor.fetchall()
-    mycursor = mydb.cursor()
-    myresult = mycursor.execute("SELECT * FROM drink")
+    myresult = mycursor.execute(query)
     myresult = mycursor.fetchall()
-    AllDrinks = []
-    content = {}
-    for order in OrderDrinks: 
-        for result in myresult:
-            if order[1] == result[0]:
-                content = {
-                    'drink_id': result[0], 
-                    'name': result[1], 
-                    'price': result[2], 
-                    'alcohol': result[3], 
-                    'size': result[4], 
-                    'calorie': result[5], 
-                    'picture': result[6], 
-                    'description': result[7], 
-                    'type_id': result[8],
-                    'quantity':  order[2],
-                    'totalPrice': order[3]
-                }
-                AllDrinks.append(content)
-                content = {}
-    return AllDrinks
+    payload = []
+    content = {} 
+    for result in myresult:
+        content = {
+            'drink_id': result[0], 
+            'name': result[1], 
+            'price': result[2], 
+            'size': result[3], 
+            'calorie': result[4], 
+            'picture': result[5], 
+            'description': result[6], 
+            'type_id': result[7],
+            'totalPrice': result[10],
+            'quantity':  result[11]
+        }
+        payload.append(content)
+        content = {}
+    return payload
 
 ###APP ROUTE###
 @app.route('/') 
@@ -188,32 +149,19 @@ def hello_world():
 
 @app.route('/drinks')
 def allDrinks():
-    return jsonify(SQLqueryDrink("SELECT * FROM drink"))
-
-@app.route('/cocktails')
-def allCocktails():
-    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 1"))
+    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink'"))
 
 @app.route('/bottledbeer')
 def allBeers():
-    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 3"))
+    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=3"))
 
 @app.route('/draughtbeer')
 def allDraughtBeer():
-    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 2"))
+    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=2"))
 
 @app.route('/cider')
 def allCider():
-    return jsonify(SQLqueryDrink("SELECT * FROM drink WHERE DrinkType_id = 1"))
-
-@app.route('/foods')
-def allFoods():
-    return jsonify(SQLqueryFood("SELECT * FROM food"))
-
-
-@app.route('/drinkstype')
-def allDrinksType():
-    return jsonify(SQLqueryDrinksType("SELECT * FROM drinktype"))
+    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=1"))
 
 @app.route('/ordersWithoutEnd')
 def allOrdersWithoutEnd():
@@ -221,7 +169,7 @@ def allOrdersWithoutEnd():
 
 @app.route('/orders/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderById(order):
-    return jsonify(SQLqueryOrderDrink("SELECT * FROM orderdrink WHERE Order_id = "+str(order)))
+    return jsonify(SQLqueryOrderDrink("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
 
 
 @app.route('/addorder/<int:table>', methods=['POST']) #GET requests will be blocked
@@ -229,23 +177,19 @@ def addOrder(table):
     data =  request.get_json(force=True) #force = ignore the request.headers.get('Content-Type') == 'application/json'
     now = datetime.now()
     date_time = now.strftime("%Y-%m-%d %H:%M:%S.%f")  #current time in the requested format
-    query = "INSERT INTO `order` (Order_start, Table_id) VALUES (%s,%s)"
-    value = (date_time, table)
+    query = "INSERT INTO `order` (Order_start, Table_id, Order_status) VALUES (%s,%s,%s)"
+    value = (date_time, table, "Not served")
     rowcount = SQLinsert(query,value)
     Order_id = SQLqueryLastID()
     print(str(rowcount) + " ORDER was inserted. Order ID: " + Order_id)
     for detail in data:
-        total_price = detail['quantity'] * detail['price']
-        query = '''INSERT INTO `orderdrink` (   Order_id, 
-                                                Drink_id,
-                                                Drink_quantity,
-                                                Drink_total_price,
-                                                Table_id,
-                                                DrinkType_id    ) VALUES (%s,%s,%s,%s,%s,%s)'''
-        value = (Order_id, detail['drink_id'],detail['quantity'],detail['totalPrice'],table,detail['type_id'])
+        query = '''INSERT INTO `productorder` (     Product_id, 
+                                                    Order_id,
+                                                    Product_total_price,
+                                                    Product_quantity ) VALUES (%s,%s,%s,%s)'''
+        value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
         rowcount = SQLinsert (query,value)
-        OrderDrink_id = SQLqueryLastID()
-        print(str(rowcount) + " ORDERDRINK was inserted. OrderDrink ID: " + OrderDrink_id)
+        print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
     return "Tabele: " + str(table) + " ID order: " + Order_id + " Data: " + str(data)
 
 if __name__ == '__main__':

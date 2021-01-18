@@ -48,7 +48,6 @@ export default {
     addToCart(drink) {
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * this.drink.price;
-      console.log("TOTAL PRICE: " + this.totalPrice);
       if (this.quantity == 1) {
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
@@ -59,8 +58,6 @@ export default {
         this.drink.totalPrice = Number(totalPrice);
         this.$store.commit(ADD_TO_CART, this.drink);
       }
-      console.log(this.drink.totalPrice);
-      console.log(this.cart);
     },
     removeFromCart(drink) {
       this.quantity = this.quantity - 1;
@@ -73,7 +70,6 @@ export default {
       } else if (this.quantity == 0) {
         this.$store.commit(DELETE_FROM_CART, drink.drink_id);
       }
-      console.log(this.cart);
     },
     setQuantity() {
       const index = this.$store.state.cart_drink.findIndex(

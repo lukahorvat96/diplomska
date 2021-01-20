@@ -189,9 +189,10 @@ def addOrder(table):
                                                     Product_quantity ) VALUES (%s,%s,%s,%s)'''
         value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
         rowcount = SQLinsert (query,value)
-        print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
+        #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
+        print("Tabele: " + str(table) + " ID order: " + Order_id + " Order Start: " + date_time)
     socketio.emit('checkDatabesOrders', broadcast=True)
-    return "Tabele: " + str(table) + " ID order: " + Order_id + " Data: " + str(data)
+    return Order_id
 
 if __name__ == '__main__':
     socketio.run(app)

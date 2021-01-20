@@ -30,20 +30,6 @@ export default {
     allDrinksByType() {
       return this.$store.getters.allDrinksByType;
     }
-  },
-  methods: {
-    getDrinksByTypeID(){
-      var allDrinks = this.$store.getters.allDrinks;
-      var allDrinksType = this.$store.state.drinksType;
-      var thisDrinks = [];
-      for (var i = 0; i < allDrinksType.length; i++)
-        if (allDrinksType[i].drinkType_id == this.drinkTypeID)
-          this.drinkTypeName=allDrinksType[i].name;
-      for (i = 0; i < allDrinks.length; i++)
-        if (allDrinks[i].type_id == this.drinkTypeID)
-          thisDrinks.push(allDrinks[i]);
-      return thisDrinks;
-    }
   }
 };
 </script>

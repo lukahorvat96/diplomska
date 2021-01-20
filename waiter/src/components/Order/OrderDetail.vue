@@ -4,6 +4,7 @@
       <p>Order ID: {{ order.order_id }}</p>
       <p>Start: {{ order.start }}$</p>
       <p>End: {{ order.end }}$</p>
+      <p>Order status: {{ order.order_status }}
       <p>Table ID: {{ order.table_id }}$</p>
     </v-card-text>
     <router-link
@@ -15,7 +16,7 @@
       </v-btn>
     </router-link>
   </v-card>
-    <!-- <v-card :loading="loading ? 'blue': null">
+  <!-- <v-card :loading="loading ? 'blue': null">
     <template slot="progress">
       <v-progress-linear color="blue" indeterminate></v-progress-linear>
     </template> -->

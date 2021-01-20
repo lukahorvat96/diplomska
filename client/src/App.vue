@@ -127,8 +127,8 @@
     </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2021</span>
-      <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn>
-      <p>{{ SomeData }}</p>
+      <!-- <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn> -->
+      <!-- <p>{{ SomeData }}</p> -->
     </v-footer>
   </v-app>
 </template>
@@ -152,11 +152,11 @@ export default {
   },
   computed: {
     totalprice() {
-      var drinkCard = this.$store.getters.allDrinksInCart;
-      var totalDrinkPrice = 0;
-      for (var i = 0; i < drinkCard.length; i++)
-        totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
-      return totalDrinkPrice;
+      // var drinkCard = this.$store.getters.allDrinksInCart;
+      // var totalDrinkPrice = 0;
+      // for (var i = 0; i < drinkCard.length; i++)
+      //   totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
+      return this.$store.getters.getTotalPrice;
     },
     SomeData() {
       console.log("SOME DATA: " + this.$store.getters.getSomeData);

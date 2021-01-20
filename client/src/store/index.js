@@ -30,6 +30,7 @@ export default new Vuex.Store({
     cider: [],
     cocktails: [],
     cart_drink: [],
+    orderedDrink: [],
     cart_food: [],
     table_details: [
       {
@@ -42,7 +43,10 @@ export default new Vuex.Store({
     loading: false,
     drinkTypeRequest: "",
     drinksInType: [],
-    someData: null
+    someData: null,
+    orderID: null,
+    totalPrice: 0,
+    orderPlaced: false
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -85,13 +89,13 @@ export default new Vuex.Store({
       state.loading = true;
     },
     [ADD_ORDER_SUCCESS](state, payload) {
-      state.response = payload;
+      state.orderID = payload;
     },
     [CLEAR_CART](state) {
       state.cart_drink = [];
       state.cart_food = [];
     },
-    [SET_DATA] (state, payload){
+    [SET_DATA](state, payload) {
       state.someData = payload;
     }
   },
@@ -146,6 +150,7 @@ export default new Vuex.Store({
           console.log(response.data);
           commit("ADD_ORDER_SUCCESS", response.data);
         });
+      commit("CLEAR_CART");
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
@@ -190,6 +195,12 @@ export default new Vuex.Store({
     },
     getSomeData: state => {
       return state.someData;
+    },
+    getOrderID: state => {
+      return state.orderID;
+    },
+    getTotalPrice: state => {
+      return state.totalPrice;
     }
   }
 });

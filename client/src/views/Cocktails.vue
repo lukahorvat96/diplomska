@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     allCocktails() {
-      return this.$store.getters.allCocktails
+      return this.$store.getters.allCocktails;
     }
   }
 };

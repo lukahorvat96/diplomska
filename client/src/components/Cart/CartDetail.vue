@@ -41,7 +41,7 @@
         </p>
         <v-spacer></v-spacer>
         <div>
-          <v-btn elevation="2" tile @click="addToCart(drink)">+</v-btn>
+          <v-btn disabled elevation="2" tile @click="addToCart(drink)">+</v-btn>
           <v-btn elevation="2" tile @click="removeFromCart(drink)">-</v-btn>
           <v-btn
             elevation="2"
@@ -81,11 +81,13 @@ export default {
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * this.drink.price;
       if (this.quantity == 1) {
+        this.$store.state.totalPrice += totalPrice;
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
         this.$store.commit(ADD_TO_CART, this.drink);
       } else {
         this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+        this.$store.state.totalPrice += totalPrice;
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
         this.$store.commit(ADD_TO_CART, this.drink);
@@ -94,8 +96,10 @@ export default {
     removeFromCart(drink) {
       this.quantity = this.quantity - 1;
       var totalPrice = this.quantity * this.drink.price;
+      this.$store.state.totalPrice -= this.drink.price * this.drink.quantity;
       if (this.quantity != 0) {
         this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+        this.$store.state.totalPrice += totalPrice;
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
         this.$store.commit(ADD_TO_CART, this.drink);
@@ -114,7 +118,9 @@ export default {
       return false;
     },
     removeFromCartAll(item) {
+      this.$store.state.totalPrice -= this.drink.price * this.drink.quantity;
       this.$store.commit(DELETE_FROM_CART, item.drink_id);
+      this.quantity = 0;
     }
   }
 };

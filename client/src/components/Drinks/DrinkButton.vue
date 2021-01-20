@@ -51,23 +51,17 @@ export default {
       orderedQuantity: 0,
       orderPlaced: this.$store.state.orderPlaced,
       orderedCart: this.$store.state.orderedDrink,
+      orderedQuantity2: 0,
       index: -1
     };
   },
   computed: {
     isNotInCart() {
-      const ordered = this.$store.state.orderedDrink.findIndex(
+      const index = this.$store.state.cart_drink.findIndex(
         p => p.drink_id === this.drink.drink_id
       );
-      if (ordered >= 0) {
-        return false;
-      } else {
-        const index = this.$store.state.cart_drink.findIndex(
-          p => p.drink_id === this.drink.drink_id
-        );
-        if (index < 0) return true;
-        return false;
-      }
+      if (index < 0) return true;
+      return false;
     }
   },
   methods: {
@@ -79,6 +73,7 @@ export default {
         this.$store.state.totalPrice += totalPrice;
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
+        this.drink.orderedQuantity = Number(this.orderedQuantity2);
         this.$store.commit(ADD_TO_CART, this.drink);
       } else {
         this.$store.state.totalPrice -= this.drink.price * this.drink.quantity;
@@ -86,17 +81,13 @@ export default {
         this.$store.commit(DELETE_FROM_CART, drink.drink_id);
         this.drink.quantity = Number(this.quantity);
         this.drink.totalPrice = Number(totalPrice);
+        this.drink.orderedQuantity = Number(this.orderedQuantity2);
         this.$store.commit(ADD_TO_CART, this.drink);
       }
       console.log("POVEČANO: " + this.quantity)
     },
     removeFromCart(drink) {
-      console.log("QUAN IN CART: "+this.orderedCart[this.index].quantity)
-      console.log("THIS QUAN: "+ this.quantity)
-      if (
-        this.orderPlaced == true &&
-        this.orderedCart[this.index].quantity == this.quantity
-      )
+      if (this.orderPlaced == true && this.orderedQuantity2 == this.quantity)
         this.disableMinus = true;
       else {
         this.quantity = this.quantity - 1;
@@ -122,6 +113,9 @@ export default {
           this.disableRemove = true;
         }
         this.quantity = this.cart[this.index].quantity;
+        this.orderedQuantity2 = this.cart[this.index].orderedQuantity;
+        console.log("QUAN: " + this.quantity);
+        console.log("ORD QUAN: " + this.orderedQuantity2);
         return true;
       }
       return false;

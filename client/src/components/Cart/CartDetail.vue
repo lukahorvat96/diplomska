@@ -40,8 +40,8 @@
           Total price: {{ drink.totalPrice }}$
         </p>
         <v-spacer></v-spacer>
-        <div>
-          <v-btn disabled elevation="2" tile @click="addToCart(drink)">+</v-btn>
+        <div v-if="itemInCard()">
+          <v-btn elevation="2" tile @click="addToCart(drink)">+</v-btn>
           <v-btn elevation="2" tile @click="removeFromCart(drink)">-</v-btn>
           <v-btn
             elevation="2"

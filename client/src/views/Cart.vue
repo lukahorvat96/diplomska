@@ -57,7 +57,10 @@ export default {
   },
   methods: {
     addDrinksToDB() {
-      this.$store.state.orderedDrink = this.cart;
+      for (var i = 0; i < this.cart.length; i++)
+        this.cart[i].orderedQuantity = Number(this.cart[i].quantity);
+
+      this.cart = [];
       this.$store.state.orderPlaced = true;
 
       // this.$store.dispatch("addOrderDrink", this.cart);

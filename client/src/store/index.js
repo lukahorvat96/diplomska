@@ -74,7 +74,14 @@ export default new Vuex.Store({
       state.drinks = payload;
     },
     [ADD_TO_CART](state, payload) {
-      state.cart_drink.push(payload);
+      const index = state.cart_drink.findIndex(
+        p => p.drink_id === payload.drink_id
+      );
+      console.log("INDEX V BAZI: " + index)
+      if (index == -1) state.cart_drink.push(payload);
+      if (index != -1) {
+        Vue.set(state.cart_drink, index, payload);
+      }
     },
     [DELETE_FROM_CART](state, payload) {
       const index = state.cart_drink.findIndex(p => p.drink_id === payload);
@@ -89,6 +96,7 @@ export default new Vuex.Store({
       state.loading = true;
     },
     [ADD_ORDER_SUCCESS](state, payload) {
+      console.log("ORDER ID: " + payload);
       state.orderID = payload;
     },
     [CLEAR_CART](state) {
@@ -150,7 +158,23 @@ export default new Vuex.Store({
           console.log(response.data);
           commit("ADD_ORDER_SUCCESS", response.data);
         });
-      commit("CLEAR_CART");
+      // commit("CLEAR_CART");
+      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
+      //  commit(ADD_ORDER_SUCCESS, response.data)
+      //}),
+    },
+    updateOrderDrink({ commit, state }, payload) {
+      commit("ADD_ORDER");
+      console.log("ORDER ID: " + state.orderID);
+      axios
+        .post(
+          `${"http://192.168.1.13:5000"}/updateorder/` + state.orderID,
+          payload
+        )
+        .then(response => {
+          console.log(response.data);
+        });
+      // commit("CLEAR_CART");
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),

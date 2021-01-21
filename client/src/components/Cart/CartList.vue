@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import CartDetail from "./CartDetail";
+// import CartDetail from "./CartDetail";
+import DrinkButton from "../Drinks/DrinkDetail.vue"
 export default {
   name: "CartList",
   props: {
@@ -39,7 +40,7 @@ export default {
     };
   },
   components: {
-    "cart-detail": CartDetail
+    "cart-detail": DrinkButton
   }
 };
 </script>

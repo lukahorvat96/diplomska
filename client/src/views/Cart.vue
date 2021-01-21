@@ -1,28 +1,22 @@
 <template>
   <v-container grid-list-lg>
-    <h1>CURRENT ACTIVE ORDERS</h1>
-    <p>{{ this.orderID }}</p>
-    <h1>CART DRINKS</h1>
+    <h1>DRINKS IN CARD</h1>
     <cart-list :items="allInCart"></cart-list>
     <v-btn
-      v-if="isEmpty()"
-      v-bind="attrs"
-      v-on="on"
+      v-if="showPlaceOrder"
       elevation="2"
       color="red"
       tile
-      @click="addDrinksToDB(cart)"
+      @click="addDrinksToDB()"
     >
       PLACE ORDER
     </v-btn>
     <v-btn
-      v-if="noOrderYet()"
-      v-bind="attrs"
-      v-on="on"
+      v-if="showRequestReseipe"
       elevation="2"
       color="red"
       tile
-      @click="addDrinksToDB(cart)"
+      @click="finishOrder()"
     >
       REQUEST RESEIPE
     </v-btn>
@@ -52,20 +46,45 @@ export default {
   },
   computed: {
     allInCart() {
+      console.log(this.$store.getters.allDrinksInCart);
       return this.$store.getters.allDrinksInCart;
+    },
+    showPlaceOrder() {
+      var cart = this.$store.getters.allDrinksInCart;
+      if (cart.length > 0 && this.$store.state.orderPlaced == false)
+        return true;
+      else if (this.$store.state.orderPlaced == true) {
+        var thereIsSomethingChanged = false;
+        for (var i = 0; i < this.cart.length; i++) {
+          if (cart[i].orderedQuantity != cart[i].quantity)
+            thereIsSomethingChanged = true;
+        }
+        return thereIsSomethingChanged;
+      }
+      return false;
+    },
+    showRequestReseipe() {
+      if (this.showPlaceOrder == false && this.$store.state.orderPlaced == true)
+        return true;
+      return false;
     }
   },
   methods: {
     addDrinksToDB() {
-      for (var i = 0; i < this.cart.length; i++)
+      if (this.$store.state.orderPlaced == false) {
+        this.$store.dispatch("addOrderDrink", this.cart);
+        this.$store.state.orderPlaced = true;
+      } else {
+        this.$store.dispatch("updateOrderDrink", this.cart);
+      }
+      for (var i = 0; i < this.cart.length; i++) {
         this.cart[i].orderedQuantity = Number(this.cart[i].quantity);
-
+        this.cart[i].isOrdered = true;
+      }
       this.cart = [];
-      this.$store.state.orderPlaced = true;
 
-      // this.$store.dispatch("addOrderDrink", this.cart);
+      //
       // this.response = this.$store.state.response;
-      //this.$store.commit(CLEAR_CART);
       //this.cart = [];
       // this.$store.state.drink_cart = [];
 
@@ -74,14 +93,9 @@ export default {
       //--console.log("newOrderInDatabese");
       //;
     },
-    isEmpty() {
-      if (this.cart.length == 0) return false;
-      else return true;
-    },
-    noOrderYet() {
-      this.orderID = this.$store.getters.getOrderID;
-      if (this.orderID == null) return false;
-      return true;
+    finishOrder() {
+      //this.$store.commit(CLEAR_CART);
+      return false;
     }
   }
 };

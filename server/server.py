@@ -142,6 +142,23 @@ def SQLqueryOrderDrink(query):
         content = {}
     return payload
 
+def SQLqueryOrderProduct(query):
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute(query)
+    myresult = mycursor.fetchall()
+    payload = []
+    content = {} 
+    for result in myresult:
+        content = {
+            'product_id': result[0], 
+            'order_id': result[1], 
+            'product_total_price': result[2], 
+            'product_quantity': result[3]
+        }
+        payload.append(content)
+        content = {}
+    return payload
+
 ###APP ROUTE###
 @app.route('/') 
 def hello_world():
@@ -193,6 +210,49 @@ def addOrder(table):
         print("Tabele: " + str(table) + " ID order: " + Order_id + " Order Start: " + date_time)
     socketio.emit('checkDatabesOrders', broadcast=True)
     return Order_id
+
+@app.route('/updateorder/<int:orderID>', methods=['POST']) #GET requests will be blocked
+def updateOrder(orderID):
+    data =  request.get_json(force=True) #force = ignore the request.headers.get('Content-Type') == 'application/json'
+    print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
+    #če je quantity enak orderqunatity #1 še ne obstaja v bazi; #2 je že v bazi - preveri!
+    #SELECT * FROM productorder where productorder.Product_id = 4 AND productorder.Order_id=33
+    for detail in data:
+        result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['drink_id']) + " AND productorder.Order_id=" + str(orderID))
+        if len(result) == 0:
+            print("DODAJAM V BAZO!")
+            query = '''INSERT INTO `productorder` ( Product_id, 
+                                                    Order_id,
+                                                    Product_total_price,
+                                                    Product_quantity ) VALUES (%s,%s,%s,%s)'''
+            value = (detail['drink_id'],orderID,detail['totalPrice'],detail['quantity'])
+            rowcount = SQLinsert (query,value)
+            #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
+            print("DODANO V BAZO: " + str(orderID) + " PRODUCT ID: " + str(detail['drink_id']))
+        else if 
+        #select quantity za order in preverš ali je enak iz naročila, če ni popravi!!!
+        print("RESULT: " + str(result))
+        print("LEN RESULT: " + str(len(result)))    
+    return ""
+    # now = datetime.now()
+    # date_time = now.strftime("%Y-%m-%d %H:%M:%S.%f")  #current time in the requested format
+    # query = "INSERT INTO `order` (Order_start, Table_id, Order_status) VALUES (%s,%s,%s)"
+    # value = (date_time, table, "Not served")
+    # rowcount = SQLinsert(query,value)
+    # Order_id = SQLqueryLastID()
+    # print(str(rowcount) + " ORDER was inserted. Order ID: " + Order_id)
+    # for detail in data:
+    #     query = '''INSERT INTO `productorder` (     Product_id, 
+    #                                                 Order_id,
+    #                                                 Product_total_price,
+    #                                                 Product_quantity ) VALUES (%s,%s,%s,%s)'''
+    #     value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
+    #     rowcount = SQLinsert (query,value)
+    #     #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
+    #     print("Tabele: " + str(table) + " ID order: " + Order_id + " Order Start: " + date_time)
+    # socketio.emit('checkDatabesOrders', broadcast=True)
+    # return Order_id
+    
 
 if __name__ == '__main__':
     socketio.run(app)

@@ -15,10 +15,9 @@
             <v-icon small>fas fa-list</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Orders</v-list-item-title>
+            <v-list-item-title>All Orders</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <!--
         <v-list-group value="true">
           <template v-slot:activator>

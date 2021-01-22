@@ -35,3 +35,5 @@ baza postgres
 -websocket 1/2
 -narediti tako, da se narocino ne zakljuci dokler stranka to ne zeli (npr. zakljuci narocilo - placaj kartica/gotovina)
 -razdelan pogled po vlogah
+
+-popravi bazo (float za produtct total price - productorder)

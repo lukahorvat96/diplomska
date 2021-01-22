@@ -151,6 +151,32 @@ export default new Vuex.Store({
           commit("ORDER_BY_ID", response.data);
         });
     },
+    updateOrderStatus({ commit }, payload) {
+      commit("ADD_ORDER");
+      console.log("ORDER ID: " + payload);
+      axios
+        .post(`${"http://192.168.1.13:5000"}/updateorderstatus/` + payload)
+        .then(response => {
+          console.log(response.data);
+        });
+      // commit("CLEAR_CART");
+      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
+      //  commit(ADD_ORDER_SUCCESS, response.data)
+      //}),
+    },
+    endOrder({ commit }, payload) {
+      commit("ADD_ORDER");
+      console.log("ORDER ID: " + payload);
+      axios
+        .post(`${"http://192.168.1.13:5000"}/endorder/` + payload)
+        .then(response => {
+          console.log(response.data);
+        });
+      // commit("CLEAR_CART");
+      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
+      //  commit(ADD_ORDER_SUCCESS, response.data)
+      //}),
+    },
     "SOCKET_my response"({ commit }, payload) {
       console.log("IZPIS IZ SOCEKT: " + payload);
       //dispatch("allOrdersWithoutEnd");

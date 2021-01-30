@@ -1,11 +1,11 @@
 <template>
   <v-card>
-    <v-img
+    <!-- <v-img
       class="white--text align-end"
       height="200px"
       v-bind:src="'http://127.0.0.1/img/' + drink.picture"
     >
-    </v-img>
+    </v-img> -->
     <v-card-title class="headline" dark="1"> {{ drink.name }} </v-card-title>
     <v-card-text class="text--primary">
       <v-row align="center" class="mx-0">

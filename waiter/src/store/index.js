@@ -18,7 +18,9 @@ import {
   CHANGE_QUANTITY_CART,
   ALL_ORDERS,
   ORDER_BY_ID,
-  NEW_ORDER
+  NEW_ORDER,
+  CHECK_LOGIN,
+  LOGOUT
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -42,7 +44,11 @@ export default new Vuex.Store({
     drinksInType: [],
     orders: [],
     orderById: [],
-    newOrder: null
+    newOrder: null,
+    isLogin: false,
+    loginMessege: null,
+    isWaiter: false,
+    isCooker: false
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -93,6 +99,26 @@ export default new Vuex.Store({
     },
     [NEW_ORDER](state, payload) {
       state.newOrder = payload;
+    },
+    [CHECK_LOGIN](state, payload) {
+      if (payload != "False") {
+        state.isLogin = true;
+        state.loginMessege = "Correct username and password.";
+        if (payload == "Waiter") {
+          state.isWaiter = true;
+          state.loginMessege = "waiter";
+        }
+        if (payload == "Cooker") {
+          state.isCoocker = true;
+          state.loginMessege = "cooker";
+        }
+      } else state.loginMessege = "Login failed. Check username and password.";
+    },
+    [LOGOUT](state) {
+      state.isLogin = false;
+      state.loginMessege = null;
+      state.isWaiter = false;
+      state.isCooker = false;
     }
   },
   actions: {
@@ -177,6 +203,22 @@ export default new Vuex.Store({
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
     },
+    checkLogin({ commit }, payload) {
+      commit("ADD_ORDER");
+      console.log("Checking username...");
+      axios
+        .post(`${"http://192.168.1.13:5000"}/users`, payload)
+        .then(response => {
+          commit("CHECK_LOGIN", response.data);
+        });
+      // commit("CLEAR_CART");
+      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
+      //  commit(ADD_ORDER_SUCCESS, response.data)
+      //}),
+      // console.log(resposneFromServer)
+      // if (resposneFromServer.data == "False") return false;
+      // return true;
+    },
     "SOCKET_my response"({ commit }, payload) {
       console.log("IZPIS IZ SOCEKT: " + payload);
       //dispatch("allOrdersWithoutEnd");
@@ -223,6 +265,18 @@ export default new Vuex.Store({
     },
     newOrderStatus: state => {
       return state.newOrder;
+    },
+    getIsLogin: state => {
+      return state.isLogin;
+    },
+    loginMessage: state => {
+      return state.loginMessege;
+    },
+    isWaiter: state => {
+      return state.isWaiter;
+    },
+    isCoocker: state => {
+      return state.isCoocker;
     }
   }
 });

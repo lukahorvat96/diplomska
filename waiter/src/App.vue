@@ -10,12 +10,28 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item :to="{ name: 'Orders' }">
+        <v-list-item v-if="waiter" :to="{ name: 'Orders' }">
           <v-list-item-action>
             <v-icon small>fas fa-list</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>All Orders</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="waiter" :to="{ name: 'Orders' }">
+          <v-list-item-action>
+            <v-icon small>fas fa-border-all</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Orders by table</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="login" v-on:click="logout()" :to="{ name: 'Home' }">
+          <v-list-item-action>
+            <v-icon small>fas fa-sign-out-alt</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Sign out</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <!--
@@ -45,14 +61,14 @@
     </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2021</span>
-      <v-btn v-on:click="clickButton('WAITERR!!!!')">Pošlji websocket</v-btn>
+      <!-- <v-btn v-on:click="clickButton('WAITERR!!!!')">Pošlji websocket</v-btn> -->
     </v-footer>
   </v-app>
 </template>
 
 <script>
 //import HelloWorld from "./components/HelloWorld";
-
+import { LOGOUT } from "@/store/mutation-types";
 export default {
   name: "App",
   data() {
@@ -64,10 +80,13 @@ export default {
     //HelloWorld
   },
   methods: {
-    clickButton: function(data) {
-      // $socket is socket.io-client instance
-      console.log("DELA-WAITER:" + data);
-      this.$socket.emit("dodal_v_bazo_waiter", data);
+    // clickButton: function(data) {
+    //   // $socket is socket.io-client instance
+    //   console.log("DELA-WAITER:" + data);
+    //   this.$socket.emit("dodal_v_bazo_waiter", data);
+    // }
+    logout: function() {
+      this.$store.commit(LOGOUT);
     }
   },
   props: {
@@ -83,6 +102,15 @@ export default {
     },
     ordersWaiting() {
       return this.$store.getters.getAllOrdersWithoutEnd.length;
+    },
+    waiter() {
+      return this.$store.getters.isWaiter;
+    },
+    coocker() {
+      return this.$store.getters.isCooker;
+    },
+    login() {
+      return this.$store.getters.getIsLogin;
     }
   }
 };

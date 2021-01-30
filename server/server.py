@@ -159,6 +159,23 @@ def SQLqueryOrderProduct(query):
         content = {}
     return payload
 
+def SQLqueryUser(query):
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute(query)
+    myresult = mycursor.fetchall()
+    payload = []
+    content = {} 
+    for result in myresult:
+        content = {
+            'user_id': result[0], 
+            'user_role': result[1], 
+            'user_name': result[2], 
+            'user_password': result[3]
+        }
+        payload.append(content)
+        content = {}
+    return payload
+
 ###APP ROUTE###
 @app.route('/') 
 def hello_world():
@@ -295,7 +312,25 @@ def endOrder(orderID):
     print("ORDER END; ORDERID: " + str(orderID)) 
     socketio.emit('checkDatabesOrders', broadcast=True)
     return ""
-
     # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
+
+
+@app.route('/users', methods=['POST']) #GET requests will be blocked
+def checkUsername():
+    data =  request.get_json(force=True) 
+    print(str(data))
+    print("User: " + str(data['username']) + " Password: " + str(data['password']))
+    query = "SELECT * FROM user WHERE user.User_name = '" + str(data['username']) + "' AND user.User_password = '" + str(data['password'])+"'"
+    print(query)
+    result = SQLqueryUser(query)
+    print(str(result))
+    if(len(result) == 0):
+        return "False"
+    else:
+        return str(result[0]['user_role'])
+    # print("LEN: " + str(len(result)))
+    # print("Result: " + str(result))
+    # return ""
+
 if __name__ == '__main__':
     socketio.run(app)

@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-lg>
+  <v-container v-if="login" grid-list-lg>
     <h1>ORDERS</h1>
     <order-list :orders="allOrders"></order-list>
   </v-container>
@@ -22,6 +22,9 @@ export default {
     socketNewOrder() {
       console.log("There is new order! CHECK DB");
       return this.$store.getters.newOrderStatus;
+    },
+    login() {
+      return this.$store.getters.getIsLogin;
     }
   }
 };

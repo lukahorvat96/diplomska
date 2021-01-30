@@ -10,11 +10,13 @@
       class="routerLink"
       :to="{ name: 'OrdersDetail', params: { orderID: order.order_id } }"
     >
-      <v-btn elevation="2" color="green" tile>
+      <v-btn 
+      class="mr-2" elevation="2" color="green" tile>
         Check details
       </v-btn>
     </router-link>
     <v-btn
+      class="mr-2"
       v-show="orderStatus"
       v-on:click="updateOrderStatus()"
       elevation="2"
@@ -23,8 +25,7 @@
     >
       {{ showServed() }}
     </v-btn>
-    <v-spacer> </v-spacer>
-    <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
+    <v-btn  v-on:click="endOrder()" elevation="2" color="red" tile>
       PRINT THE RECEPIE
     </v-btn>
   </v-card>

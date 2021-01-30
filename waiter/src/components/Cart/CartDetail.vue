@@ -1,42 +1,20 @@
 <template>
   <v-card>
-    <v-img
+    <!-- <v-img
       class="white--text align-end"
       height="200px"
       v-bind:src="'http://127.0.0.1/img/' + drink.picture"
     >
-    </v-img>
-    <v-card-title class="headline" dark="1"> {{ drink.name }} </v-card-title>
+    </v-img> -->
+    <v-card-title class="font-weight-bold"  dark="1"
+      >{{ drink.quantity }}x {{ drink.name }}
+    </v-card-title>
     <v-card-text class="text--primary">
-      <v-row align="center" class="mx-0">
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ml-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4">
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating. ###OPIS
-      </div>
-
       <p>Size: {{ drink.size }}</p>
       <p>Price: {{ drink.price }}$</p>
       <p>
-        Quantity: <span class="font-weight-medium">{{ drink.quantity }}x</span>
-      </p>
-      <p>
         Total price: <span class="font-weight-medium">{{ drink.totalPrice }}€</span>
       </p>
-      <v-divider class="mx-4"></v-divider>
     </v-card-text>
   </v-card>
 </template>

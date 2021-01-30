@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      colsNum: 2
+      colsNum: 3
     };
   },
   components: {

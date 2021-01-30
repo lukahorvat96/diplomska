@@ -13,3 +13,5 @@ export const CHANGE_QUANTITY_CART = "CHANGE_QUANTITY_CART";
 export const ALL_ORDERS = "ALL_ORDERS";
 export const ORDER_BY_ID = "ORDER_BY_ID";
 export const NEW_ORDER = "NEW_ORDER";
+export const CHECK_LOGIN = "CHECK_LOGIN";
+export const LOGOUT = "LOGOUT";

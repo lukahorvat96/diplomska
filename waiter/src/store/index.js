@@ -170,7 +170,7 @@ export default new Vuex.Store({
           commit("ALL_ORDERS", response.data);
         });
     },
-    allOrdersDrinkById({ commit }, payload) {
+    allOrdersProductById({ commit }, payload) {
       axios
         .get(`${"http://192.168.1.13:5000"}/orders/` + payload)
         .then(response => {
@@ -260,7 +260,7 @@ export default new Vuex.Store({
     getAllOrdersWithoutEnd: state => {
       return state.orders;
     },
-    allOrdersDrinkById: state => {
+    allOrdersProductById: state => {
       return state.orderById;
     },
     newOrderStatus: state => {

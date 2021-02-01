@@ -1,7 +1,9 @@
 <template>
   <v-container grid-list-lg>
     <h1>DRINKS IN CARD</h1>
-    <cart-list :items="allInCart"></cart-list>
+    <cart-list :items="allDrinksInCart"></cart-list>
+    <h1>FOODS IN CARD</h1>
+    <cart-list :items="allFoodsInCart"></cart-list>
     <v-btn
       v-if="showPlaceOrder"
       elevation="2"
@@ -41,16 +43,18 @@ export default {
     };
   },
   created() {
-    this.cart = this.$store.getters.allDrinksInCart;
+    this.cart = this.$store.getters.allProductsInCart;
     this.orderID = this.$store.getters.getOrderID;
   },
   computed: {
-    allInCart() {
-      console.log(this.$store.getters.allDrinksInCart);
+    allDrinksInCart() {
       return this.$store.getters.allDrinksInCart;
     },
+    allFoodsInCart() {
+      return this.$store.getters.allFoodsInCart;
+    },
     showPlaceOrder() {
-      var cart = this.$store.getters.allDrinksInCart;
+      var cart = this.$store.getters.allProductsInCart;
       if (cart.length > 0 && this.$store.state.orderPlaced == false)
         return true;
       else if (this.$store.state.orderPlaced == true) {

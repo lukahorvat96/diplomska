@@ -8,16 +8,16 @@
 <script>
 import ProductList from "@/components/Products/ProductList.vue";
 export default {
-  name: "BottledBeer",
+  name: "Wine",
   components: {
     "product-list": ProductList
   },
   created() {
-    this.$store.dispatch("allBottledBeer"); //action; commit -> mutation
+    this.$store.dispatch("allWine"); //action; commit -> mutation
   },
   computed: {
     allBottledBeer() {
-      return this.$store.getters.allBottledBeer;
+      return this.$store.getters.allWine;
     }
   }
 };

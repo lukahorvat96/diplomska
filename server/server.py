@@ -44,7 +44,7 @@ def handle_my_custom_event_waiter(string):
     print('WAITER: ' + string)
 
 ###FUNCTIONS###
-def SQLqueryDrink(query):
+def SQLqueryProduct(query):
     mycursor = mydb.cursor()
     myresult = mycursor.execute(query)
     myresult = mycursor.fetchall()
@@ -52,7 +52,7 @@ def SQLqueryDrink(query):
     content = {}
     for result in myresult:
         content = {
-            'drink_id': result[0], 
+            'product_id': result[0], 
             'name': result[1], 
             'price': result[2], 
             'size': result[3], 
@@ -119,7 +119,7 @@ def SQLinsert(query, values):
     mydb.commit()
     return mycursor.rowcount
 
-def SQLqueryOrderDrink(query):
+def SQLqueryAllProductByID(query):
     mycursor = mydb.cursor()
     myresult = mycursor.execute(query)
     myresult = mycursor.fetchall()
@@ -127,7 +127,7 @@ def SQLqueryOrderDrink(query):
     content = {} 
     for result in myresult:
         content = {
-            'drink_id': result[0], 
+            'product_id': result[0], 
             'name': result[1], 
             'price': result[2], 
             'size': result[3], 
@@ -181,21 +181,81 @@ def SQLqueryUser(query):
 def hello_world():
     return "<h1>WELCOME TO WEBWAITER SERVER</h1>"#jsonify({'in' : 'progress'})
 
+@app.route('/foods')
+def allFoods():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food'"))
+
 @app.route('/drinks')
 def allDrinks():
-    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink'"))
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink'"))
 
 @app.route('/bottledbeer')
 def allBeers():
-    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=3"))
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=3"))
 
 @app.route('/draughtbeer')
 def allDraughtBeer():
-    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=2"))
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=2"))
 
 @app.route('/cider')
 def allCider():
-    return jsonify(SQLqueryDrink("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=1"))
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=1"))
+
+@app.route('/wine')
+def allWine():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=6"))
+
+@app.route('/hotdrink')
+def allHotDink():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=4"))
+
+@app.route('/bottledbeverage')
+def allBottledBeverages():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=12"))
+
+@app.route('/naturalbeverage')
+def allNaturalBeverages():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=13"))
+
+@app.route('/gin')
+def allGin():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=5"))
+
+@app.route('/vodka')
+def allVodka():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink' AND producttype.ProductType_id=9"))
+
+@app.route('/starter')
+def allStarter():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=15"))
+
+@app.route('/soup')
+def allSoup():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=16"))
+
+@app.route('/salad')
+def allSalad():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=17"))
+
+@app.route('/pasta')
+def allPasta():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=18"))
+
+@app.route('/rissoto')
+def allRissoto():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=19"))
+
+@app.route('/pizza')
+def allPizza():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=20"))
+
+@app.route('/meat')
+def allMeat():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=21"))
+
+@app.route('/padthai')
+def allPadThai():
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Food' AND producttype.ProductType_id=22"))
 
 @app.route('/ordersWithoutEnd')
 def allOrdersWithoutEnd():
@@ -203,7 +263,7 @@ def allOrdersWithoutEnd():
 
 @app.route('/orders/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderById(order):
-    return jsonify(SQLqueryOrderDrink("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
+    return jsonify(SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
 
 
 @app.route('/addorder/<int:table>', methods=['POST']) #GET requests will be blocked
@@ -221,7 +281,7 @@ def addOrder(table):
                                                     Order_id,
                                                     Product_total_price,
                                                     Product_quantity ) VALUES (%s,%s,%s,%s)'''
-        value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
+        value = (detail['product_id'],Order_id,detail['totalPrice'],detail['quantity'])
         rowcount = SQLinsert (query,value)
         #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
         print("Tabele: " + str(table) + " ID order: " + Order_id + " Order Start: " + date_time)
@@ -245,26 +305,26 @@ def updateOrder(orderID):
     mydb.commit()
     print("ORDER UPDATED")
     for detail in data:
-        result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['drink_id']) + " AND productorder.Order_id=" + str(orderID))
+        result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['product_id']) + " AND productorder.Order_id=" + str(orderID))
         if len(result) == 0:
             print("DODAJAM V BAZO!")
             query = '''INSERT INTO `productorder` ( Product_id, 
                                                     Order_id,
                                                     Product_total_price,
                                                     Product_quantity ) VALUES (%s,%s,%s,%s)'''
-            value = (detail['drink_id'],orderID,detail['totalPrice'],detail['quantity'])
+            value = (detail['product_id'],orderID,detail['totalPrice'],detail['quantity'])
             rowcount = SQLinsert (query,value)
             #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
-            print("ROW: "+ str(rowcount) + " DODANO V BAZO: " + str(orderID) + " PRODUCT ID: " + str(detail['drink_id']))
+            print("ROW: "+ str(rowcount) + " DODANO V BAZO: " + str(orderID) + " PRODUCT ID: " + str(detail['product_id']))
         else:
             if ((result[0]['product_quantity']) != detail['quantity'] ):
                 query = "UPDATE productorder SET productorder.Product_total_price = %s, productorder.Product_quantity = %s WHERE Order_id = %s AND Product_id = %s"
-                value = (detail['totalPrice'],detail['quantity'],orderID,detail['drink_id'])
+                value = (detail['totalPrice'],detail['quantity'],orderID,detail['product_id'])
                 mycursor = mydb.cursor()
                 mycursor = mydb.cursor()
                 mycursor.execute(query,value)
                 mydb.commit()
-                print(mycursor.rowcount, "POSDOBLJENO V BAZI; PRODUCT ID: " + str(detail['drink_id']) + " NEW QUAN: "+ str(detail['quantity']))
+                print(mycursor.rowcount, "POSDOBLJENO V BAZI; PRODUCT ID: " + str(detail['product_id']) + " NEW QUAN: "+ str(detail['quantity']))
         #select quantity za order in preverš ali je enak iz naročila, če ni popravi!!!   
         socketio.emit('checkDatabesOrders', broadcast=True)
     return ""

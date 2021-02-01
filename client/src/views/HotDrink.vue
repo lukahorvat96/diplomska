@@ -1,23 +1,23 @@
 <template>
   <v-container>
-    <h1>Bottled beers</h1>
-    <product-list :products="allBottledBeer"></product-list>
+    <h1>DRINKS</h1>
+    <product-list :products="allDrinks"></product-list>
   </v-container>
 </template>
 
 <script>
 import ProductList from "@/components/Products/ProductList.vue";
 export default {
-  name: "BottledBeer",
+  name: "HotDrink",
   components: {
     "product-list": ProductList
   },
   created() {
-    this.$store.dispatch("allBottledBeer"); //action; commit -> mutation
+    this.$store.dispatch("allHotDrinks"); //action; commit -> mutation
   },
   computed: {
-    allBottledBeer() {
-      return this.$store.getters.allBottledBeer;
+    allDrinks() {
+      return this.$store.getters.allHotDrinks;
     }
   }
 };

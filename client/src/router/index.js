@@ -1,18 +1,29 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
+
+//DRINKs
 import Drink from "@/views/Drink";
-import Cocktails from "@/views/Cocktails";
 import BottledBeer from "@/views/Beers/BottledBeer";
 import DraughtBeer from "@/views/Beers/DraughtBeer";
 import Cider from "@/views/Beers/Cider";
+import Wine from "@/views/Wine";
+import HotDrink from "@/views/HotDrink";
+import BottledBeverage from "@/views/BottledBeverage";
+import NaturalBeverage from "@/views/NaturalBeverage";
+import Gin from "@/views/Gin";
+import Vodka from "@/views/Vodka";
 
-import WhiteWine from "@/views/Wines/WhiteWine";
-import OrangeWine from "@/views/Wines/OrangeWine";
-import RoseWine from "@/views/Wines/RoseWine";
-import RedWine from "@/views/Wines/RedWine";
-import SparklingWine from "@/views/Wines/SparklingWine";
-
+//FOODs
+import Food from "@/views/Food";
+import Starter from "@/views/Starter";
+import Soup from "@/views/Soup";
+import Salad from "@/views/Salad";
+import Pasta from "@/views/Pasta";
+import Rissoto from "@/views/Rissoto";
+import Pizza from "@/views/Pizza";
+import Meat from "@/views/Meat";
+import PadThai from "@/views/PadThai";
 
 import Cart from "@/views/Cart";
 
@@ -30,55 +41,105 @@ const routes = [
     component: Drink
   },
   {
-    path: "/cocktail",
-    name: "Cocktail",
-    component: Cocktails
-  },
-  {
-    path: "/BottledBeer",
+    path: "/bottledbeer",
     name: "BottledBeer",
     component: BottledBeer
   },
   {
-    path: "/DraughtBeer",
+    path: "/draughtbeer",
     name: "DraughtBeer",
     component: DraughtBeer
   },
   {
-    path: "/Cider",
+    path: "/cider",
     name: "Cider",
     component: Cider
   },
   {
-    path: "/White",
-    name: "WhiteWine",
-    component: WhiteWine
+    path: "/whine",
+    name: "Wine",
+    component: Wine
   },
   {
-    path: "/Orange",
-    name: "OrangeWine",
-    component: OrangeWine
+    path: "/hotdrink",
+    name: "HotDrink",
+    component: HotDrink
   },
   {
-    path: "/Rose",
-    name: "RoseWine",
-    component: RoseWine
+    path: "/bottledbeverage",
+    name: "BottledBeverage",
+    component: BottledBeverage
   },
   {
-    path: "/Red",
-    name: "RedWine",
-    component: RedWine
+    path: "/naturalbeverage",
+    name: "NaturalBeverage",
+    component: NaturalBeverage
   },
   {
-    path: "/Sparkling",
-    name: "SparklingWine",
-    component: SparklingWine
+    path: "/gin",
+    name: "Gin",
+    component: Gin
+  },
+  {
+    path: "/vodka",
+    name: "Vodka",
+    component: Vodka
+  },
+  {
+    path: "/food",
+    name: "Food",
+    component: Food
+  },
+  {
+    path: "/starter",
+    name: "Starter",
+    component: Starter
+  },
+  {
+    path: "/soup",
+    name: "Soup",
+    component: Soup
+  },
+  {
+    path: "/salad",
+    name: "Salad",
+    component: Salad
+  },
+  {
+    path: "/pasta",
+    name: "Pasta",
+    component: Pasta
+  },
+  {
+    path: "/salad",
+    name: "Salad",
+    component: Salad
+  },
+  {
+    path: "/rissoto",
+    name: "Rissoto",
+    component: Rissoto
+  },
+  {
+    path: "/pizza",
+    name: "Pizza",
+    component: Pizza
+  },
+  {
+    path: "/meat",
+    name: "Meat",
+    component: Meat
+  },
+  {
+    path: "/padthai",
+    name: "PadThai",
+    component: PadThai
   },
   {
     path: "/cart",
     name: "Cart",
     component: Cart
-  }
+  },
 ];
 
 const router = new VueRouter({

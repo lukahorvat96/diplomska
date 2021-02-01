@@ -1,16 +1,16 @@
 <template>
   <v-container>
     <h1>DRINKS</h1>
-    <drink-list :drinks="allDrinks"></drink-list>
+    <product-list :products="allDrinks"></product-list>
   </v-container>
 </template>
 
 <script>
-import DrinkList from "@/components/Drinks/DrinkList.vue";
+import ProductList from "@/components/Products/ProductList.vue";
 export default {
-  name: "drink",
+  name: "Drink",
   components: {
-    "drink-list": DrinkList
+    "product-list": ProductList
   },
   created() {
     this.$store.dispatch("allDrinks"); //action; commit -> mutation

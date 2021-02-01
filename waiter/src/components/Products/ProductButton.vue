@@ -4,7 +4,7 @@
     <p class="text-h6 mb-5 mt-5">Count: 0x</p>
     <v-spacer></v-spacer>
     <div>
-      <v-btn elevation="2" color="green" tile @click="addToCart(drink)"
+      <v-btn elevation="2" color="green" tile @click="addToCart(product)"
         >ADD TO CART</v-btn
       >
     </div>
@@ -15,12 +15,12 @@
     <p class="text-h6 mb-5 mt-5" v-if="setQuantity()">Count: {{ quantity }}x</p>
     <v-spacer></v-spacer>
     <div>
-      <v-btn elevation="2" tile @click="addToCart(drink)">+</v-btn>
+      <v-btn elevation="2" tile @click="addToCart(product)">+</v-btn>
       <v-btn
         :disabled="disableMinus"
         elevation="2"
         tile
-        @click="removeFromCart(drink)"
+        @click="removeFromCart(product)"
         >-</v-btn
       >
       <v-btn
@@ -28,7 +28,7 @@
         elevation="2"
         color="red"
         tile
-        @click="removeFromCartAll(drink)"
+        @click="removeFromCartAll(product)"
         >REMOVE</v-btn
       >
     </div>
@@ -38,11 +38,11 @@
 <script>
 import { ADD_TO_CART, DELETE_FROM_CART } from "@/store/mutation-types";
 export default {
-  name: "DrinkButton",
-  props: ["drink"],
+  name: "ProductButton",
+  props: ["product"],
   data() {
     return {
-      cart: this.$store.state.cart_drink,
+      cart: this.$store.state.orderById,
       quantity: 0,
       orderedQuantity: 0,
       orderedQuantity2: 0,
@@ -55,59 +55,60 @@ export default {
   },
   computed: {
     isNotInCart() {
-      var cart = this.$store.getters.allCardDrinks;
-      const index2 = cart.findIndex(p => p.drink_id === this.drink.drink_id);
-      console.log("index: " + index2);
+      var cart = this.$store.getters.allOrdersProductById;
+      const index2 = cart.findIndex(
+        p => p.product_id === this.product.product_id
+      );
       if (index2 < 0) return true;
       return false;
     }
   },
   methods: {
-    addToCart(drink) {
-      var priceBefore = drink.price * this.quantity;
+    addToCart(product) {
+      var priceBefore = product.price * this.quantity;
       console.log("before: " + priceBefore);
       this.quantity = this.quantity + 1;
-      var totalPrice = this.quantity * drink.price;
+      var totalPrice = this.quantity * product.price;
       console.log("TotalPrice: " + totalPrice);
       this.disableMinus = false;
       if (this.quantity == 1) {
         this.$store.state.totalPrice += totalPrice;
-        drink.quantity = Number(this.quantity);
-        drink.totalPrice = Number(totalPrice);
-        drink.orderedQuantity = Number(this.orderedQuantity2);
-        drink.isOrdered = this.alreadyOrdered;
-        this.$store.commit(ADD_TO_CART, drink);
+        product.quantity = Number(this.quantity);
+        product.totalPrice = Number(totalPrice);
+        product.orderedQuantity = Number(this.orderedQuantity2);
+        product.isOrdered = this.alreadyOrdered;
+        this.$store.commit(ADD_TO_CART, product);
       } else {
         this.$store.state.totalPrice -= priceBefore;
         this.$store.state.totalPrice += totalPrice;
         console.log("After totalPriceState: " + this.$store.state.totalPrice);
-        //this.$store.commit(DELETE_FROM_CART, drink.drink_id);
-        drink.quantity = Number(this.quantity);
-        drink.totalPrice = Number(totalPrice);
-        drink.orderedQuantity = Number(this.orderedQuantity2);
-        drink.isOrdered = this.alreadyOrdered;
-        this.$store.commit(ADD_TO_CART, drink);
+        //this.$store.commit(DELETE_FROM_CART, product.product_id);
+        product.quantity = Number(this.quantity);
+        product.totalPrice = Number(totalPrice);
+        product.orderedQuantity = Number(this.orderedQuantity2);
+        product.isOrdered = this.alreadyOrdered;
+        this.$store.commit(ADD_TO_CART, product);
       }
       console.log("POVEČANO: " + this.quantity);
       if (this.orderPlaced == true && this.orderedQuantity2 == this.quantity)
         this.disableMinus = true;
     },
-    removeFromCart(drink) {
+    removeFromCart(product) {
       if (this.alreadyOrdered == true && this.orderedQuantity2 == this.quantity)
         this.disableMinus = true;
       else {
-        var priceBefore = drink.price * this.quantity;
+        var priceBefore = product.price * this.quantity;
         this.quantity = this.quantity - 1;
-        var totalPrice = this.quantity * drink.price;
+        var totalPrice = this.quantity * product.price;
         if (this.quantity != 0) {
-          //this.$store.commit(DELETE_FROM_CART, drink.drink_id);
-          drink.quantity = Number(this.quantity);
-          drink.totalPrice = Number(totalPrice);
-          drink.orderedQuantity = Number(this.orderedQuantity2);
-          drink.isOrdered = this.alreadyOrdered;
-          this.$store.commit(ADD_TO_CART, drink);
+          //this.$store.commit(DELETE_FROM_CART, product.product_id);
+          product.quantity = Number(this.quantity);
+          product.totalPrice = Number(totalPrice);
+          product.orderedQuantity = Number(this.orderedQuantity2);
+          product.isOrdered = this.alreadyOrdered;
+          this.$store.commit(ADD_TO_CART, product);
         } else if (this.quantity == 0) {
-          this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+          this.$store.commit(DELETE_FROM_CART, product.product_id);
         }
         this.$store.state.totalPrice -= priceBefore;
         this.$store.state.totalPrice += totalPrice;
@@ -116,8 +117,8 @@ export default {
         this.disableMinus = true;
     },
     setQuantity() {
-      this.index = this.$store.state.cart_drink.findIndex(
-        p => p.drink_id === this.drink.drink_id
+      this.index = this.$store.state.orderById.findIndex(
+        p => p.product_id === this.product.product_id
       );
       if (this.index >= 0) {
         this.alreadyOrdered = this.cart[this.index].isOrdered;
@@ -137,9 +138,9 @@ export default {
       }
       return false;
     },
-    removeFromCartAll(drink) {
-      this.$store.state.totalPrice -= this.drink.price * this.drink.quantity;
-      this.$store.commit(DELETE_FROM_CART, drink.drink_id);
+    removeFromCartAll(product) {
+      this.$store.state.totalPrice -= this.product.price * this.product.quantity;
+      this.$store.commit(DELETE_FROM_CART, product.product_id);
       this.quantity = 0;
     }
   }

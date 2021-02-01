@@ -2,7 +2,7 @@
   <v-container grid-list-xs>
     <v-row v-for="(row, i) in itemsInCart" :key="i" row wrap>
       <v-col class="example" v-for="item in row" :key="item.id" :cols="cols">
-        <cart-detail :drink="item"></cart-detail>
+        <cart-detail :product="item"></cart-detail>
       </v-col>
     </v-row>
   </v-container>
@@ -10,7 +10,7 @@
 
 <script>
 // import CartDetail from "./CartDetail";
-import DrinkButton from "../Drinks/DrinkDetail.vue"
+import DrinkButton from "../Products/ProductDetail.vue"
 export default {
   name: "CartList",
   props: {

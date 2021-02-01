@@ -2,7 +2,7 @@
   <v-card>
     <h1>Order ID: {{ orderID }}</h1>
     <v-card-text>
-      <drink-list :items="allOrdersDrinkById"></drink-list>
+      <product-list :products="allOrdersProductById"></product-list>
       <v-btn elevation="2" color="red" tile>
         END ORDER
       </v-btn>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DrinkList from "@/components/Cart/CartList.vue";
+import ProductList from "@/components/Products/ProductList.vue";
 export default {
   name: "OrderDetailById",
   props: {
@@ -21,14 +21,15 @@ export default {
     }
   },
   components: {
-    "drink-list": DrinkList
+    "product-list": ProductList
   },
   created() {
-    this.$store.dispatch("allOrdersDrinkById", this.orderID); //action; commit -> mutation
+    this.$store.dispatch("allOrdersProductById", this.orderID); //action; commit -> mutation
   },
   computed: {
-    allOrdersDrinkById() {
-      return this.$store.getters.allOrdersDrinkById;
+    allOrdersProductById() {
+      console.log(this.$store.getters.allOrdersProductById)
+      return this.$store.getters.allOrdersProductById;
     }
   }
 };

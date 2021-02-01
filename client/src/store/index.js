@@ -11,38 +11,56 @@ import {
   ADD_ORDER,
   ADD_ORDER_SUCCESS,
   CLEAR_CART,
-  ALL_DRINKTYPE,
-  REQUEST_DRINKTYPE,
-  ALL_COCKTAILS,
   ALL_BOTTLED_BEERS,
   CHANGE_QUANTITY_CART,
   ALL_DRAUGHT_BEERS,
   ALL_CIDER,
-  SET_DATA
+  SET_DATA,
+  ALL_WINE,
+  ALL_STARTER,
+  ALL_SOUP,
+  ALL_SALAD,
+  ALL_PASTA,
+  ALL_RISSOTO,
+  ALL_PIZZA,
+  ALL_MEAT,
+  ALL_PADTHAI,
+  ALL_HOTDRINK,
+  ALL_BOTTLEDBEVERAGE,
+  ALL_NATURALBEVERAGE,
+  ALL_GIN,
+  ALL_VODKA
 } from "./mutation-types";
 
 export default new Vuex.Store({
   state: {
-    drinks: [],
-    foods: [],
-    bottledbeer: [],
-    draughtBeers: [],
-    cider: [],
-    cocktails: [],
-    cart_drink: [],
-    orderedDrink: [],
-    cart_food: [],
     table_details: [
       {
         table_id: 1,
         table_name: "Miza 1"
       }
     ],
-    order_complete: false,
-    response: "",
+    drinks: [],
+    bottledbeer: [],
+    draughtBeers: [],
+    cider: [],
+    wine: [],
+    hotDrink: [],
+    bottledBeverage: [],
+    naturalBeverage: [],
+    gin: [],
+    vodka: [],
+    foods: [],
+    starter: [],
+    soup: [],
+    salad: [],
+    pasta: [],
+    rissoto: [],
+    pizza: [],
+    meat: [],
+    padthai: [],
+    cart_product: [],
     loading: false,
-    drinkTypeRequest: "",
-    drinksInType: [],
     someData: null,
     orderID: null,
     totalPrice: 0,
@@ -51,9 +69,12 @@ export default new Vuex.Store({
   mutations: {
     [ALL_DRINKS](state, payload) {
       state.drinks = payload;
+      //state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
     },
-    [ALL_COCKTAILS](state, payload) {
-      state.cocktails = payload;
+    [ALL_FOODS](state, payload) {
+      state.foods = payload;
+      console.log("FOODS: " + state.foods);
+      //state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
     },
     [ALL_BOTTLED_BEERS](state, payload) {
       state.bottledbeer = payload;
@@ -64,33 +85,68 @@ export default new Vuex.Store({
     [ALL_CIDER](state, payload) {
       state.cider = payload;
     },
-    [ALL_DRINKTYPE](state, payload) {
-      state.drinksInType = payload;
+    [ALL_WINE](state, payload) {
+      state.wine = payload;
     },
-    [REQUEST_DRINKTYPE](state, payload) {
-      state.drinkTypeRequest = payload;
+    [ALL_HOTDRINK](state, payload) {
+      state.hotDrink = payload;
     },
-    [ALL_FOODS](state, payload) {
-      state.drinks = payload;
+    [ALL_BOTTLEDBEVERAGE](state, payload) {
+      state.bottledBeverage = payload;
+    },
+    [ALL_NATURALBEVERAGE](state, payload) {
+      state.naturalBeverage = payload;
+    },
+    [ALL_GIN](state, payload) {
+      state.gin = payload;
+    },
+    [ALL_VODKA](state, payload) {
+      state.vodka = payload;
+    },
+    [ALL_STARTER](state, payload) {
+      state.starter = payload;
+    },
+    [ALL_SOUP](state, payload) {
+      state.soup = payload;
+    },
+    [ALL_SALAD](state, payload) {
+      state.salad = payload;
+    },
+    [ALL_PASTA](state, payload) {
+      state.pasta = payload;
+    },
+    [ALL_RISSOTO](state, payload) {
+      state.rissoto = payload;
+    },
+    [ALL_PIZZA](state, payload) {
+      state.pizza = payload;
+    },
+    [ALL_MEAT](state, payload) {
+      state.meat = payload;
+    },
+    [ALL_PADTHAI](state, payload) {
+      state.padthai = payload;
     },
     [ADD_TO_CART](state, payload) {
-      const index = state.cart_drink.findIndex(
-        p => p.drink_id === payload.drink_id
+      const index = state.cart_product.findIndex(
+        p => p.product_id === payload.product_id
       );
-      console.log("INDEX V BAZI: " + index)
-      if (index == -1) state.cart_drink.push(payload);
+      console.log("INDEX V BAZI: " + index);
+      if (index == -1) state.cart_product.push(payload);
       if (index != -1) {
-        Vue.set(state.cart_drink, index, payload);
+        Vue.set(state.cart_product, index, payload);
       }
     },
     [DELETE_FROM_CART](state, payload) {
-      const index = state.cart_drink.findIndex(p => p.drink_id === payload);
-      state.cart_drink.splice(index, 1);
+      const index = state.cart_product.findIndex(p => p.product_id === payload);
+      state.cart_product.splice(index, 1);
     },
     [CHANGE_QUANTITY_CART](state, payload) {
-      const index = state.cart_drink.findIndex(p => p.drink_id === payload[0]);
-      state.cart_drink[index].quantity = payload[1];
-      state.cart_drink[index].totalPrice = payload[2];
+      const index = state.cart_product.findIndex(
+        p => p.product_id === payload[0]
+      );
+      state.cart_product[index].quantity = payload[1];
+      state.cart_product[index].totalPrice = payload[2];
     },
     [ADD_ORDER](state) {
       state.loading = true;
@@ -100,8 +156,7 @@ export default new Vuex.Store({
       state.orderID = payload;
     },
     [CLEAR_CART](state) {
-      state.cart_drink = [];
-      state.cart_food = [];
+      state.cart_product = [];
     },
     [SET_DATA](state, payload) {
       state.someData = payload;
@@ -112,18 +167,6 @@ export default new Vuex.Store({
       axios.get(`${"http://192.168.1.13:5000"}/drinks`).then(response => {
         //console.log(response.data)
         commit("ALL_DRINKS", response.data);
-      });
-    },
-    allInDrinkType({ commit }, type) {
-      axios.get(`${"http://192.168.1.13:5000"}/` + type).then(response => {
-        console.log(response.data);
-        commit("ALL_DRINKTYPE", response.data);
-      });
-    },
-    allCocktails({ commit }) {
-      axios.get(`${"http://192.168.1.13:5000"}/cocktails`).then(response => {
-        console.log(response.data);
-        commit("ALL_COCKTAILS", response.data);
       });
     },
     allBottledBeer({ commit }) {
@@ -144,10 +187,92 @@ export default new Vuex.Store({
         commit("ALL_CIDER", response.data);
       });
     },
-    allFoods({ commit }) {
-      axios.get(`${"http://192.168.1.13:5000"}/foods`).then(response => {
-        //console.log(response.data)
-        commit("ALL_FOODS", response.data);
+    allWine({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/wine`).then(response => {
+        console.log(response.data);
+        commit("ALL_WINE", response.data);
+      });
+    },
+    allHotDrinks({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/hotdrink`).then(response => {
+        console.log(response.data);
+        commit("ALL_HOTDRINK", response.data);
+      });
+    },
+    allBottledBeverages({ commit }) {
+      axios
+        .get(`${"http://192.168.1.13:5000"}/bottledbeverage`)
+        .then(response => {
+          console.log(response.data);
+          commit("ALL_BOTTLEDBEVERAGE", response.data);
+        });
+    },
+    allNaturalBeverages({ commit }) {
+      axios
+        .get(`${"http://192.168.1.13:5000"}/naturalbeverage`)
+        .then(response => {
+          console.log(response.data);
+          commit("ALL_NATURALBEVERAGE", response.data);
+        });
+    },
+    allGin({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/gin`).then(response => {
+        console.log(response.data);
+        commit("ALL_GIN", response.data);
+      });
+    },
+    allVodka({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/vodka`).then(response => {
+        console.log(response.data);
+        commit("ALL_VODKA", response.data);
+      });
+    },
+    allStarters({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/starter`).then(response => {
+        console.log(response.data);
+        commit("ALL_STARTER", response.data);
+      });
+    },
+    allSoups({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/soup`).then(response => {
+        console.log(response.data);
+        commit("ALL_SOUP", response.data);
+      });
+    },
+    allSalads({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/salad`).then(response => {
+        console.log(response.data);
+        commit("ALL_SALAD", response.data);
+      });
+    },
+    allPasta({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/pasta`).then(response => {
+        console.log(response.data);
+        commit("ALL_PASTA", response.data);
+      });
+    },
+    allRissoto({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/rissoto`).then(response => {
+        console.log(response.data);
+        commit("ALL_RISSOTO", response.data);
+      });
+    },
+    allPizzas({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/pizza`).then(response => {
+        console.log(response.data);
+        commit("ALL_PIZZA", response.data);
+      });
+    },
+    allMeat({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/meat`).then(response => {
+        console.log(response.data);
+        commit("ALL_MEAT", response.data);
+      });
+    },
+    allPadThai({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/padthai`).then(response => {
+        console.log(response.data);
+        commit("ALL_PADTHAI", response.data);
       });
     },
     addOrderDrink({ commit }, payload) {
@@ -187,6 +312,9 @@ export default new Vuex.Store({
     allDrinks: state => {
       return state.drinks;
     },
+    allFoods: state => {
+      return state.foods;
+    },
     allInDrinkType: state => {
       return state.drinksInType;
     },
@@ -202,21 +330,60 @@ export default new Vuex.Store({
     allCider: state => {
       return state.cider;
     },
-    allFoods: state => {
-      return state.foods;
+    allWine: state => {
+      return state.wine;
     },
-    allCardDrinks: state => {
-      return state.cart_drink;
+    allHotDrinks: state => {
+      return state.hotDrink;
+    },
+    allBottledBeverages: state => {
+      return state.bottledBeverage;
+    },
+    allNaturalBeverages: state => {
+      return state.naturalBeverage;
+    },
+    allGin: state => {
+      return state.gin;
+    },
+    allVodka: state => {
+      return state.vodka;
+    },
+    allStarters: state => {
+      return state.starter;
+    },
+    allSoups: state => {
+      return state.soup;
+    },
+    allSalads: state => {
+      return state.salad;
+    },
+    allPasta: state => {
+      return state.pasta;
+    },
+    allRissoto: state => {
+      return state.rissoto;
+    },
+    allPizzas: state => {
+      return state.pizza;
+    },
+    allMeat: state => {
+      return state.meat;
+    },
+    allPadThai: state => {
+      return state.padthai;
+    },
+    allCardProducts: state => {
+      return state.cart_product;
     },
     orderResponse: state => {
       return state.response;
     },
-    allDrinksInCart: state => {
-      return state.cart_drink;
+    allProductsInCart: state => {
+      return state.cart_product;
     },
-    getDrinkCartQuantity: (state, getters) => {
-      return state.cart_drink.findIndex(p => p.drink_id === getters);
-    },
+    // getDrinkCartQuantity: (state, getters) => {
+    //   return state.cart_product.findIndex(p => p.product_id === getters);
+    // },
     getSomeData: state => {
       return state.someData;
     },
@@ -225,6 +392,20 @@ export default new Vuex.Store({
     },
     getTotalPrice: state => {
       return state.totalPrice;
+    },
+    allFoodsInCart: state => {
+      var cart_foods = [];
+      for (var i = 0; i < state.cart_product.length; i++)
+        if (state.cart_product[i].type_id >= 15)
+          cart_foods.push(state.cart_product[i]);
+      return cart_foods;
+    },
+    allDrinksInCart: state => {
+      var cart_drinks = [];
+      for (var i = 0; i < state.cart_product.length; i++)
+        if (state.cart_product[i].type_id < 15)
+          cart_drinks.push(state.cart_product[i]);
+      return cart_drinks;
     }
   }
 });

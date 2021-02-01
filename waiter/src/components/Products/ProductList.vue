@@ -1,26 +1,31 @@
 <template>
   <v-container grid-list-xs>
     <v-row v-for="(row, i) in items" :key="i" row wrap>
-      <v-col class="example" v-for="drink in row" :key="drink.id" :cols="cols">
-        <drink-detail :drink="drink"></drink-detail>
+      <v-col
+        class="example"
+        v-for="product in row"
+        :key="product.id"
+        :cols="cols"
+      >
+        <product-detail :product="product"></product-detail>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import DrinkDetail from "@/components/Drinks/DrinkDetail.vue";
+import ProductDetail from "@/components/Products/ProductDetail.vue";
 export default {
-  name: "DrinkList",
+  name: "ProductList",
   props: {
-    drinks: {
+    products: {
       type: Array,
       required: true
     }
   },
   computed: {
     items: function() {
-      return this.drinks.reduce((acc, el, i) => {
+      return this.products.reduce((acc, el, i) => {
         if (i % this.colsNum === 0) {
           acc.push([el]);
         } else {
@@ -39,7 +44,7 @@ export default {
     };
   },
   components: {
-    "drink-detail": DrinkDetail
+    "product-detail": ProductDetail
   }
 };
 </script>

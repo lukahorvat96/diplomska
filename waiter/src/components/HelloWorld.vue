@@ -137,7 +137,6 @@ export default {
         username: this.username,
         password: this.password
       };
-      console.log(latest);
       this.$store.dispatch("checkLogin", latest);
     }
   }

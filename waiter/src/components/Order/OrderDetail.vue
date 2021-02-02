@@ -2,16 +2,16 @@
   <v-card class="yellow_back">
     <v-card-text>
       <h3>Order ID: {{ order.order_id }}</h3>
-      <p>Start: {{ order.order_start }} </p>
+      <p>Start: {{ order.order_start }}</p>
       <p class="font-weight-black">Order status: {{ order.order_status }}</p>
-      <p>Table ID: {{ order.table_id }}$</p>
+      <p class="font-weight-black">Cook status: {{ order.order_status }}</p>
+      <p>Table ID: {{ order.table_id }}</p>
     </v-card-text>
     <router-link
       class="routerLink"
       :to="{ name: 'OrdersDetail', params: { orderID: order.order_id } }"
     >
-      <v-btn 
-      class="mr-2" elevation="2" color="green" tile>
+      <v-btn @click="update()" class="mr-2" elevation="2" color="green" tile>
         Check details
       </v-btn>
     </router-link>
@@ -25,7 +25,7 @@
     >
       {{ showServed() }}
     </v-btn>
-    <v-btn  v-on:click="endOrder()" elevation="2" color="red" tile>
+    <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
       PRINT THE RECEPIE
     </v-btn>
   </v-card>
@@ -70,8 +70,11 @@ export default {
       )
         this.$store.dispatch("updateOrderStatus", this.order.order_id);
     },
-    endOrder(){
-      this.$store.dispatch("endOrder", this.order.order_id)
+    endOrder() {
+      this.$store.dispatch("endOrder", this.order.order_id);
+    },
+    update(){
+      this.$store.dispatch("allOrdersProductById", this.order.order_id); //action; commit -> mutation
     }
   }
 };

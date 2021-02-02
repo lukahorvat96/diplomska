@@ -48,7 +48,8 @@ export default new Vuex.Store({
     isLogin: false,
     loginMessege: null,
     isWaiter: false,
-    isCooker: false
+    isCooker: false,
+    checking: false
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -70,16 +71,23 @@ export default new Vuex.Store({
       state.drinks = payload;
     },
     [ADD_TO_CART](state, payload) {
-      state.cart_drink.push(payload);
+      const index = state.orderById.findIndex(
+        p => p.product_id === payload.product_id
+      );
+      console.log("INDEX V BAZI: " + index);
+      if (index == -1) state.orderById.push(payload);
+      if (index != -1) {
+        Vue.set(state.orderById, index, payload);
+      }
     },
     [DELETE_FROM_CART](state, payload) {
-      const index = state.cart_drink.findIndex(p => p.drink_id === payload);
-      state.cart_drink.splice(index, 1);
+      const index = state.orderById.findIndex(p => p.product_id === payload);
+      state.orderById.splice(index, 1);
     },
     [CHANGE_QUANTITY_CART](state, payload) {
-      const index = state.cart_drink.findIndex(p => p.drink_id === payload[0]);
-      state.cart_drink[index].quantity = payload[1];
-      state.cart_drink[index].totalPrice = payload[2];
+      const index = state.orderById.findIndex(p => p.product_id === payload[0]);
+      state.orderById[index].quantity = payload[1];
+      state.orderById[index].totalPrice = payload[2];
     },
     [ADD_ORDER](state) {
       state.loading = true;
@@ -95,6 +103,7 @@ export default new Vuex.Store({
       state.orders = payload;
     },
     [ORDER_BY_ID](state, payload) {
+      state.orderById = [];
       state.orderById = payload;
     },
     [NEW_ORDER](state, payload) {
@@ -177,6 +186,13 @@ export default new Vuex.Store({
           commit("ORDER_BY_ID", response.data);
         });
     },
+    // allOrdersProducts({ commit }, payload) {
+    //   axios
+    //     .get(`${"http://192.168.1.13:5000"}/allordersproducts`)
+    //     .then(response => {
+    //       commit("ORDER_BY_ID", response.data);
+    //     });
+    // },
     updateOrderStatus({ commit }, payload) {
       commit("ADD_ORDER");
       console.log("ORDER ID: " + payload);
@@ -211,13 +227,18 @@ export default new Vuex.Store({
         .then(response => {
           commit("CHECK_LOGIN", response.data);
         });
-      // commit("CLEAR_CART");
-      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
-      //  commit(ADD_ORDER_SUCCESS, response.data)
-      //}),
-      // console.log(resposneFromServer)
-      // if (resposneFromServer.data == "False") return false;
-      // return true;
+    },
+    updateOrderProductById({ commit, state }, orderID) {
+      commit("ADD_ORDER");
+      console.log("ORDER ID: " + orderID);
+      axios
+        .post(
+          `${"http://192.168.1.13:5000"}/updateorder/` + orderID,
+          state.orderById
+        )
+        .then(response => {
+          console.log(response.data);
+        });
     },
     "SOCKET_my response"({ commit }, payload) {
       console.log("IZPIS IZ SOCEKT: " + payload);
@@ -262,6 +283,28 @@ export default new Vuex.Store({
     },
     allOrdersProductById: state => {
       return state.orderById;
+    },
+    allOrdersFoodsById: state => {
+      var order_foods = [];
+      for (var i = 0; i < state.orderById.length; i++)
+        if (state.orderById[i].type_id >= 15)
+          order_foods.push(state.orderById[i]);
+      return order_foods;
+    },
+    allOrdersDrinksById: state => {
+      var order_drinks = [];
+      for (var i = 0; i < state.orderById.length; i++)
+        if (state.orderById[i].type_id < 15){
+          order_drinks.push(state.orderById[i]);
+          console.log("state: " + state.orderById[i]);
+        }
+      return order_drinks;
+    },
+    totalPriceById: state => {
+      var totalPrice = 0;
+      for (var i = 0; i < state.orderById.length; i++)
+        totalPrice += state.orderById[i].totalPrice;
+      return totalPrice;
     },
     newOrderStatus: state => {
       return state.newOrder;

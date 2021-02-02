@@ -119,6 +119,30 @@ def SQLinsert(query, values):
     mydb.commit()
     return mycursor.rowcount
 
+def SQLqueryAllOrdersProducts(query):
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute(query)
+    myresult = mycursor.fetchall()
+    payload = []
+    content = {} 
+    for result in myresult:
+        content = {
+            'product_id': result[0], 
+            'name': result[1], 
+            'price': result[2], 
+            'size': result[3], 
+            'calorie': result[4], 
+            'picture': result[5], 
+            'description': result[6], 
+            'type_id': result[7],
+            'order_id': result[9],
+            'totalPrice': result[10],
+            'quantity':  result[11]
+        }
+        payload.append(content)
+        content = {}
+    return payload
+
 def SQLqueryAllProductByID(query):
     mycursor = mydb.cursor()
     myresult = mycursor.execute(query)
@@ -265,6 +289,9 @@ def allOrdersWithoutEnd():
 def getOrderById(order):
     return jsonify(SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
 
+@app.route('/allordersproducts') #GET requests will be blocked
+def getAllOrdersProducts():
+    return jsonify(SQLqueryAllOrdersProducts("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id"))
 
 @app.route('/addorder/<int:table>', methods=['POST']) #GET requests will be blocked
 def addOrder(table):

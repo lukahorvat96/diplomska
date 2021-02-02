@@ -16,19 +16,8 @@
     <v-spacer></v-spacer>
     <div>
       <v-btn elevation="2" tile @click="addToCart(product)">+</v-btn>
-      <v-btn
-        :disabled="disableMinus"
-        elevation="2"
-        tile
-        @click="removeFromCart(product)"
-        >-</v-btn
-      >
-      <v-btn
-        :disabled="disableRemove"
-        elevation="2"
-        color="red"
-        tile
-        @click="removeFromCartAll(product)"
+      <v-btn elevation="2" tile @click="removeFromCart(product)">-</v-btn>
+      <v-btn elevation="2" color="red" tile @click="removeFromCartAll(product)"
         >REMOVE</v-btn
       >
     </div>
@@ -42,15 +31,9 @@ export default {
   props: ["product"],
   data() {
     return {
-      cart: this.$store.state.orderById,
+      cart: [],
       quantity: 0,
-      orderedQuantity: 0,
-      orderedQuantity2: 0,
-      index: -1,
-      alreadyOrdered: false,
-      disablePlus: false,
-      disableMinus: false,
-      disableRemove: false
+      index: -1
     };
   },
   computed: {
@@ -70,13 +53,10 @@ export default {
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * product.price;
       console.log("TotalPrice: " + totalPrice);
-      this.disableMinus = false;
       if (this.quantity == 1) {
         this.$store.state.totalPrice += totalPrice;
         product.quantity = Number(this.quantity);
         product.totalPrice = Number(totalPrice);
-        product.orderedQuantity = Number(this.orderedQuantity2);
-        product.isOrdered = this.alreadyOrdered;
         this.$store.commit(ADD_TO_CART, product);
       } else {
         this.$store.state.totalPrice -= priceBefore;
@@ -85,61 +65,42 @@ export default {
         //this.$store.commit(DELETE_FROM_CART, product.product_id);
         product.quantity = Number(this.quantity);
         product.totalPrice = Number(totalPrice);
-        product.orderedQuantity = Number(this.orderedQuantity2);
-        product.isOrdered = this.alreadyOrdered;
         this.$store.commit(ADD_TO_CART, product);
       }
       console.log("POVEČANO: " + this.quantity);
-      if (this.orderPlaced == true && this.orderedQuantity2 == this.quantity)
-        this.disableMinus = true;
     },
     removeFromCart(product) {
-      if (this.alreadyOrdered == true && this.orderedQuantity2 == this.quantity)
-        this.disableMinus = true;
-      else {
-        var priceBefore = product.price * this.quantity;
-        this.quantity = this.quantity - 1;
-        var totalPrice = this.quantity * product.price;
-        if (this.quantity != 0) {
-          //this.$store.commit(DELETE_FROM_CART, product.product_id);
-          product.quantity = Number(this.quantity);
-          product.totalPrice = Number(totalPrice);
-          product.orderedQuantity = Number(this.orderedQuantity2);
-          product.isOrdered = this.alreadyOrdered;
-          this.$store.commit(ADD_TO_CART, product);
-        } else if (this.quantity == 0) {
-          this.$store.commit(DELETE_FROM_CART, product.product_id);
-        }
-        this.$store.state.totalPrice -= priceBefore;
-        this.$store.state.totalPrice += totalPrice;
+      var priceBefore = product.price * this.quantity;
+      this.quantity = this.quantity - 1;
+      var totalPrice = this.quantity * product.price;
+      console.log(this.quantity);
+      if (this.quantity != 0) {
+        //this.$store.commit(DELETE_FROM_CART, product.product_id);
+        product.quantity = Number(this.quantity);
+        product.totalPrice = Number(totalPrice);
+        this.$store.commit(ADD_TO_CART, product);
+      } else if (this.quantity == 0) {
+        this.$store.commit(DELETE_FROM_CART, product.product_id);
       }
-      if (this.alreadyOrdered == true && this.orderedQuantity2 == this.quantity)
-        this.disableMinus = true;
+      this.$store.state.totalPrice -= priceBefore;
+      this.$store.state.totalPrice += totalPrice;
     },
     setQuantity() {
       this.index = this.$store.state.orderById.findIndex(
         p => p.product_id === this.product.product_id
       );
+      this.cart = this.$store.state.orderById;
       if (this.index >= 0) {
-        this.alreadyOrdered = this.cart[this.index].isOrdered;
-        if (this.alreadyOrdered == true) {
-          this.disableRemove = true;
-        }
+        console.log("QUA1:")
         this.quantity = this.cart[this.index].quantity;
-        this.orderedQuantity2 = this.cart[this.index].orderedQuantity;
         console.log("QUAN: " + this.quantity);
-        console.log("ORD QUAN: " + this.orderedQuantity2);
-        if (
-          this.alreadyOrdered == true &&
-          this.orderedQuantity2 == this.quantity
-        )
-          this.disableMinus = true;
         return true;
       }
       return false;
     },
     removeFromCartAll(product) {
-      this.$store.state.totalPrice -= this.product.price * this.product.quantity;
+      this.$store.state.totalPrice -=
+        this.product.price * this.product.quantity;
       this.$store.commit(DELETE_FROM_CART, product.product_id);
       this.quantity = 0;
     }

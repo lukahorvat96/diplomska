@@ -17,7 +17,7 @@
     </router-link>
     <v-btn
       class="mr-2"
-      v-show="orderStatus"
+      v-show="orderStatusServed"
       v-on:click="updateOrderStatus()"
       elevation="2"
       color="blue"
@@ -45,10 +45,13 @@ export default {
     };
   },
   computed: {
-    orderStatus() {
+    orderStatusServed() {
+      console.log("STATUS: " + this.order.order_status);
       if (
-        this.order.order_status == "Not served" ||
-        this.order.order_status == "Order updated"
+        // this.order.order_status == "Not served" ||
+        this.order.order_status == "CONFIRMED" ||
+        this.order.order_status == "PLACED" ||
+        this.order.order_status == "UPDATED"
       )
         return true;
       else return false;
@@ -57,23 +60,38 @@ export default {
   methods: {
     showServed() {
       if (
-        this.order.order_status == "Not served" ||
-        this.order.order_status == "Order updated"
+        this.order.order_status == "PLACED" ||
+        this.order.order_status == "UPDATED" ||
+        this.order.order_status == "UPDATED"
       )
-        return "SERVED";
-      else return "DREK";
+        return "CONFIRM";
+      if (this.order.order_status == "CONFIRMED") return "SERVED";
+      else return "";
     },
     updateOrderStatus() {
       if (
-        this.order.order_status == "Not served" ||
-        this.order.order_status == "Order updated"
-      )
-        this.$store.dispatch("updateOrderStatus", this.order.order_id);
+        this.order.order_status == "PLACED" ||
+        this.order.order_status == "UPDATED" ||
+        this.order.order_status == "UPDATED"
+      ) {
+        const latest = {
+          order_id: this.order.order_id,
+          order_status: "CONFIRMED"
+        };
+        this.$store.dispatch("updateOrderStatus", latest);
+      }
+      if (this.order.order_status == "CONFIRMED") {
+        const latest = {
+          order_id: this.order.order_id,
+          order_status: "SERVED"
+        };
+        this.$store.dispatch("updateOrderStatus", latest);
+      }
     },
     endOrder() {
       this.$store.dispatch("endOrder", this.order.order_id);
     },
-    update(){
+    update() {
       this.$store.dispatch("allOrdersProductById", this.order.order_id); //action; commit -> mutation
     }
   }

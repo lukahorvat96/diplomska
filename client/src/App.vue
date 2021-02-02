@@ -193,13 +193,11 @@
       <router-view> </router-view>
     </v-main>
     <v-footer color="indigo" app>
-      <span class="white--text">&copy; 2021</span>
+      <span class="white--text"></span>
       <!-- <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn> -->
       <!-- <p>{{ SomeData }}</p> -->
       <v-spacer></v-spacer>
-      <div>
-        Order status: Not ordered!
-      </div>
+      <div class="font-weight-bold">Order status: {{ orderStatus }}</div>
     </v-footer>
   </v-app>
 </template>
@@ -232,6 +230,10 @@ export default {
     SomeData() {
       console.log("SOME DATA: " + this.$store.getters.getSomeData);
       return this.$store.getters.getSomeData;
+    },
+    orderStatus() {
+      if (this.$store.getters.getOrderStatus == "") return "NO ORDER PLACED";
+      return this.$store.getters.getOrderStatus;
     }
   },
   methods: {

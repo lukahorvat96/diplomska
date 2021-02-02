@@ -76,7 +76,7 @@ export default {
   methods: {
     addDrinksToDB() {
       if (this.$store.state.orderPlaced == false) {
-        this.$store.dispatch("addOrderDrink", this.cart);
+        this.$store.dispatch("addOrder", this.cart);
         this.$store.state.orderPlaced = true;
       } else {
         this.$store.dispatch("updateOrderDrink", this.cart);

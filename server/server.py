@@ -200,6 +200,20 @@ def SQLqueryUser(query):
         content = {}
     return payload
 
+def SQLqueryOrderStatus(query):
+    mycursor = mydb.cursor()
+    myresult = mycursor.execute(query)
+    myresult = mycursor.fetchall()
+    payload = []
+    content = {} 
+    for result in myresult:
+        content = {
+            'order_status': result[0], 
+        }
+        payload.append(content)
+        content = {}
+    return payload
+
 ###APP ROUTE###
 @app.route('/') 
 def hello_world():
@@ -285,6 +299,10 @@ def allPadThai():
 def allOrdersWithoutEnd():
     return jsonify(SQLqueryOrder("SELECT * FROM `order` WHERE Order_end IS NULL"))
 
+@app.route('/order/<int:order>', methods=['GET']) #GET requests will be blocked
+def getOrderStatus(order):
+    return jsonify(SQLqueryOrderStatus("SELECT order_status FROM `order` WHERE order.order_id = "+str(order)))
+
 @app.route('/orders/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderById(order):
     return jsonify(SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
@@ -299,7 +317,7 @@ def addOrder(table):
     now = datetime.now()
     date_time = now.strftime("%Y-%m-%d %H:%M:%S.%f")  #current time in the requested format
     query = "INSERT INTO `order` (Order_start, Table_id, Order_status) VALUES (%s,%s,%s)"
-    value = (date_time, table, "Not served")
+    value = (date_time, table, "PLACED")
     rowcount = SQLinsert(query,value)
     Order_id = SQLqueryLastID()
     print(str(rowcount) + " ORDER was inserted. Order ID: " + Order_id)
@@ -315,6 +333,49 @@ def addOrder(table):
     socketio.emit('checkDatabesOrders', broadcast=True)
     return Order_id
 
+
+@app.route('/updateorderwaiter/<int:orderID>', methods=['POST']) #GET requests will be blocked
+def updateOrderWaiter(orderID):
+    data =  request.get_json(force=True) #force = ignore the request.headers.get('Content-Type') == 'application/json'
+    # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
+    #če je quantity enak orderqunatity #1 še ne obstaja v bazi; #2 je že v bazi - preveri!
+    #SELECT * FROM productorder where productorder.Product_id = 4 AND productorder.Order_id=33
+    result = SQLqueryOrder("SELECT * FROM `order` where Order_id=" + str(orderID))
+    #print(str(result))
+    # if (result[0]['order_status'] != "Not served" ):
+    query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
+    value = ("Order updated from waiter, please place order if you agree with changes!",orderID)
+    mycursor = mydb.cursor()
+    mycursor = mydb.cursor()
+    mycursor.execute(query,value)
+    mydb.commit()
+    print("Lets begin....")
+    productinorder = SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(orderID))
+    for product in productinorder:
+        ordered = False
+        for detail in data:
+            if(product['product_id'] == detail['product_id']):
+                ordered = True
+                result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['product_id']) + " AND productorder.Order_id=" + str(orderID))
+                if ((result[0]['product_quantity']) != detail['quantity'] ):
+                    query = "UPDATE productorder SET productorder.Product_total_price = %s, productorder.Product_quantity = %s WHERE Order_id = %s AND Product_id = %s"
+                    value = (detail['totalPrice'],detail['quantity'],orderID,detail['product_id'])
+                    mycursor = mydb.cursor()
+                    mycursor = mydb.cursor()
+                    mycursor.execute(query,value)
+                    mydb.commit()
+                    print(mycursor.rowcount, "POSDOBLJENO V BAZI; PRODUCT ID: " + str(detail['product_id']) + " NEW QUAN: "+ str(detail['quantity']))
+        if(ordered == False):
+            query = "DELETE FROM productorder WHERE productorder.order_id = %s AND productorder.product_id = %s"
+            value = (orderID, product['product_id'])
+            mycursor = mydb.cursor()
+            mycursor = mydb.cursor()
+            mycursor.execute(query,value)
+            mydb.commit()
+            print(mycursor.rowcount, "DELETED FROM DB; PRODUCT ID: " + str(product['product_id']))
+            # socketio.emit('checkDatabesOrders', broadcast=True)
+    return ""
+
 @app.route('/updateorder/<int:orderID>', methods=['POST']) #GET requests will be blocked
 def updateOrder(orderID):
     data =  request.get_json(force=True) #force = ignore the request.headers.get('Content-Type') == 'application/json'
@@ -325,7 +386,7 @@ def updateOrder(orderID):
     print(str(result))
     # if (result[0]['order_status'] != "Not served" ):
     query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
-    value = ("Order updated",orderID)
+    value = ("UPDATED",orderID)
     mycursor = mydb.cursor()
     mycursor = mydb.cursor()
     mycursor.execute(query,value)
@@ -355,35 +416,22 @@ def updateOrder(orderID):
         #select quantity za order in preverš ali je enak iz naročila, če ni popravi!!!   
         socketio.emit('checkDatabesOrders', broadcast=True)
     return ""
-    # now = datetime.now()
-    # date_time = now.strftime("%Y-%m-%d %H:%M:%S.%f")  #current time in the requested format
-    # query = "INSERT INTO `order` (Order_start, Table_id, Order_status) VALUES (%s,%s,%s)"
-    # value = (date_time, table, "Not served")
-    # rowcount = SQLinsert(query,value)
-    # Order_id = SQLqueryLastID()
-    # print(str(rowcount) + " ORDER was inserted. Order ID: " + Order_id)
-    # for detail in data:
-    #     query = '''INSERT INTO `productorder` (     Product_id, 
-    #                                                 Order_id,
-    #                                                 Product_total_price,
-    #                                                 Product_quantity ) VALUES (%s,%s,%s,%s)'''
-    #     value = (detail['drink_id'],Order_id,detail['totalPrice'],detail['quantity'])
-    #     rowcount = SQLinsert (query,value)
-    #     #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
-    #     print("Tabele: " + str(table) + " ID order: " + Order_id + " Order Start: " + date_time)
-    # socketio.emit('checkDatabesOrders', broadcast=True)
-    # return Order_id
 
 @app.route('/updateorderstatus/<int:orderID>', methods=['POST']) #GET requests will be blocked
 def updateOrderStatus(orderID):
+    data =  request.get_json(force=True) 
     query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
-    value = ("Served",orderID)
+    value = (data['order_status'],orderID)
     mycursor = mydb.cursor()
     mycursor = mydb.cursor()
     mycursor.execute(query,value)
     mydb.commit()
-    print("UPDATE ORDER STATUS: " + str(orderID)) 
+    print("UPDATE ORDER STATUS: " + str(orderID) + " NEW STATUS: " + str(data['order_status'])) 
     socketio.emit('checkDatabesOrders', broadcast=True)
+    if(data['order_status'] == "CONFIRMED"):
+        socketio.emit('CONFIRMED', orderID, broadcast=True)
+    if(data['order_status'] == "SERVED"):
+        socketio.emit('SERVED', orderID, broadcast=True)
     return ""
 
 @app.route('/endorder/<int:orderID>', methods=['POST']) #GET requests will be blocked

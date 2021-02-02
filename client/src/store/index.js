@@ -29,7 +29,8 @@ import {
   ALL_BOTTLEDBEVERAGE,
   ALL_NATURALBEVERAGE,
   ALL_GIN,
-  ALL_VODKA
+  ALL_VODKA,
+  SET_ORDER_STATUS
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -64,7 +65,8 @@ export default new Vuex.Store({
     someData: null,
     orderID: null,
     totalPrice: 0,
-    orderPlaced: false
+    orderPlaced: false,
+    orderStatus: ""
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -127,6 +129,9 @@ export default new Vuex.Store({
     [ALL_PADTHAI](state, payload) {
       state.padthai = payload;
     },
+    [SET_ORDER_STATUS](state, payload) {
+      state.orderStatus = payload;
+    },
     [ADD_TO_CART](state, payload) {
       const index = state.cart_product.findIndex(
         p => p.product_id === payload.product_id
@@ -152,7 +157,7 @@ export default new Vuex.Store({
       state.loading = true;
     },
     [ADD_ORDER_SUCCESS](state, payload) {
-      console.log("ORDER ID: " + payload);
+      state.orderStatus = "PLACED";
       state.orderID = payload;
     },
     [CLEAR_CART](state) {
@@ -275,7 +280,7 @@ export default new Vuex.Store({
         commit("ALL_PADTHAI", response.data);
       });
     },
-    addOrderDrink({ commit }, payload) {
+    addOrder({ commit }, payload) {
       commit("ADD_ORDER");
       axios
         .post(`${"http://192.168.1.13:5000"}/addorder/1`, payload)
@@ -287,6 +292,16 @@ export default new Vuex.Store({
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
+      commit("SET_ORDER_STATUS", "PLACED");
+    },
+    orderStatus({ commit, state }) {
+      commit("ADD_ORDER");
+      axios
+        .get(`${"http://192.168.1.13:5000"}/order/`, state.orderID)
+        .then(response => {
+          console.log(response.data);
+          commit("SET_ORDER_STATUS", response.data);
+        });
     },
     updateOrderDrink({ commit, state }, payload) {
       commit("ADD_ORDER");
@@ -299,6 +314,7 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response.data);
         });
+      commit("SET_ORDER_STATUS", "UPDATED");
       // commit("CLEAR_CART");
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
@@ -306,6 +322,12 @@ export default new Vuex.Store({
     },
     "SOCKET_my response"({ commit }, payload) {
       commit("SET_DATA", payload);
+    },
+    SOCKET_CONFIRMED({ commit, state }, payload) {
+      if (payload == state.orderID) commit("SET_ORDER_STATUS", "CONFIRMED");
+    },
+    SOCKET_SERVED({ commit, state }, payload) {
+      if (payload == state.orderID) commit("SET_ORDER_STATUS", "SERVED");
     }
   },
   getters: {
@@ -406,6 +428,9 @@ export default new Vuex.Store({
         if (state.cart_product[i].type_id < 15)
           cart_drinks.push(state.cart_product[i]);
       return cart_drinks;
+    },
+    getOrderStatus: state => {
+      return state.orderStatus;
     }
   }
 });

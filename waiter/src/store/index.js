@@ -195,9 +195,13 @@ export default new Vuex.Store({
     // },
     updateOrderStatus({ commit }, payload) {
       commit("ADD_ORDER");
-      console.log("ORDER ID: " + payload);
+      console.log(payload)
       axios
-        .post(`${"http://192.168.1.13:5000"}/updateorderstatus/` + payload)
+        .post(
+          `${"http://192.168.1.13:5000"}/updateorderstatus/` +
+            payload["order_id"],
+          payload
+        )
         .then(response => {
           console.log(response.data);
         });
@@ -221,7 +225,6 @@ export default new Vuex.Store({
     },
     checkLogin({ commit }, payload) {
       commit("ADD_ORDER");
-      console.log("Checking username...");
       axios
         .post(`${"http://192.168.1.13:5000"}/users`, payload)
         .then(response => {
@@ -233,7 +236,7 @@ export default new Vuex.Store({
       console.log("ORDER ID: " + orderID);
       axios
         .post(
-          `${"http://192.168.1.13:5000"}/updateorder/` + orderID,
+          `${"http://192.168.1.13:5000"}/updateorderwaiter/` + orderID,
           state.orderById
         )
         .then(response => {

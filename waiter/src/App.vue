@@ -51,9 +51,9 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <p class="text-h7">
+      <div v-if="login" class="text-h7">
         Waiting: {{ ordersWaiting }}<br />Done: {{ totalprice }}
-      </p>
+      </div>
     </v-app-bar>
 
     <v-main>
@@ -62,6 +62,8 @@
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2021</span>
       <!-- <v-btn v-on:click="clickButton('WAITERR!!!!')">Pošlji websocket</v-btn> -->
+      <v-spacer></v-spacer>
+      <div v-if="login" class="font-weight-bold">Login username: {{ username }}</div>
     </v-footer>
   </v-app>
 </template>
@@ -111,6 +113,9 @@ export default {
     },
     login() {
       return this.$store.getters.getIsLogin;
+    },
+    username() {
+      return this.$store.getters.loginUsername;
     }
   }
 };

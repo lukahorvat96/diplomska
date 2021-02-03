@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="login" grid-list-lg>
-    <h1 v-if="checking()">ORDERS</h1>
+    <h1>ORDERS</h1>
     <order-list :orders="allOrders"></order-list>
   </v-container>
 </template>
@@ -26,13 +26,6 @@ export default {
     login() {
       return this.$store.getters.getIsLogin;
     }
-  },
-  methods: {
-    checking(){
-      this.$store.state.checking = false;
-      console.log("reseting...." + this.$store.state.checking)
-      return true;
-    }
-  },
+  }
 };
 </script>

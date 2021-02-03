@@ -120,7 +120,6 @@ export default {
   }),
   computed: {
     value() {
-      console.log(!this.$store.getters.getIsLogin);
       return !this.$store.getters.getIsLogin;
     },
     messege() {

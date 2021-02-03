@@ -47,9 +47,10 @@ export default new Vuex.Store({
     newOrder: null,
     isLogin: false,
     loginMessege: null,
+    loginUsername: "",
+    loginUsernameID: null,
     isWaiter: false,
-    isCooker: false,
-    checking: false
+    isCooker: false
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -110,16 +111,20 @@ export default new Vuex.Store({
       state.newOrder = payload;
     },
     [CHECK_LOGIN](state, payload) {
-      if (payload != "False") {
+      if (payload["result"] != "False") {
         state.isLogin = true;
         state.loginMessege = "Correct username and password.";
-        if (payload == "Waiter") {
+        if (payload["result"] == "Waiter") {
           state.isWaiter = true;
           state.loginMessege = "waiter";
+          state.loginUsername = payload["username"];
+          state.loginUsernameID = payload["user_id"];
         }
-        if (payload == "Cooker") {
+        if (payload["result"] == "Cooker") {
           state.isCoocker = true;
           state.loginMessege = "cooker";
+          state.loginUsername = payload["username"];
+          state.loginUsernameID = payload["user_id"];
         }
       } else state.loginMessege = "Login failed. Check username and password.";
     },
@@ -210,11 +215,14 @@ export default new Vuex.Store({
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
     },
-    endOrder({ commit }, payload) {
+    endOrder({ commit, state }, payload) {
       commit("ADD_ORDER");
       console.log("ORDER ID: " + payload);
+      const latest = {
+        user_id: state.loginUsernameID
+      };
       axios
-        .post(`${"http://192.168.1.13:5000"}/endorder/` + payload)
+        .post(`${"http://192.168.1.13:5000"}/endorder/` + payload, latest)
         .then(response => {
           console.log(response.data);
         });
@@ -249,6 +257,10 @@ export default new Vuex.Store({
       commit("NEW_ORDER", payload);
     },
     SOCKET_checkDatabesOrders({ dispatch }) {
+      console.log("SOCKET_checkDatabesOrders");
+      dispatch("allOrdersWithoutEnd");
+    },
+    SOCKET_orderEnd({ dispatch }) {
       console.log("SOCKET_checkDatabesOrders");
       dispatch("allOrdersWithoutEnd");
     }
@@ -323,6 +335,9 @@ export default new Vuex.Store({
     },
     isCoocker: state => {
       return state.isCoocker;
+    },
+    loginUsername: state => {
+      return state.loginUsername;
     }
   }
 });

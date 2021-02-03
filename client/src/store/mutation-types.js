@@ -8,6 +8,8 @@ export const CLEAR_CART = "CLEAR_CART";
 export const CHANGE_QUANTITY_CART = "CHANGE_QUANTITY_CART";
 export const SET_DATA = "SET_DATA";
 export const SET_ORDER_STATUS = "SET_ORDER_STATUS";
+export const CHANGED_ORDER = "CHANGED_ORDER";
+export const CLEAR_ALL = "CLEAR_ALL";
 
 //DRINKs
 export const ALL_BOTTLED_BEERS = "ALL_BOTTLED_BEERS";

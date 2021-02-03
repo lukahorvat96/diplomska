@@ -1,5 +1,40 @@
 <template>
   <v-app id="inspire">
+    <div class="text-center">
+      <v-dialog v-model="showDialog" width="500">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
+            Click Me
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Privacy Policy
+          </v-card-title>
+
+          <v-card-text>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="showDialog = false">
+              > I accept
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense flat rounded>
         <v-list-item :to="{ name: 'Home' }">
@@ -197,7 +232,9 @@
       <!-- <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn> -->
       <!-- <p>{{ SomeData }}</p> -->
       <v-spacer></v-spacer>
-      <div class="font-weight-bold">Order status: {{ orderStatus }}</div>
+      <div class="font-weight-bold" v-if="checkOrder()">
+        Order status: {{ orderStatus }}
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -210,7 +247,8 @@ export default {
   data() {
     return {
       drawer: null,
-      someData: null
+      someData: null,
+      showDialog: false
     };
   },
   components: {
@@ -241,6 +279,18 @@ export default {
       // $socket is socket.io-client instance
       console.log("POSLANO: " + data);
       this.$socket.emit("dodal_v_bazo", data);
+    },
+    checkOrder() {
+      if (this.$store.getters.getOrderStatus == "CHANGED BY WAITER") {
+        this.$router.push("/");
+        this.$store.state.orderStatus = "CHANGED";
+      }
+      if (this.$store.getters.getOrderStatus == "ORDER_END"){
+        this.$router.push("/");
+        this.showDialog = true;
+        this.$store.state.orderStatus = "";
+      }
+      return true;
     }
   }
 };

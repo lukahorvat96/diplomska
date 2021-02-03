@@ -344,7 +344,7 @@ def updateOrderWaiter(orderID):
     #print(str(result))
     # if (result[0]['order_status'] != "Not served" ):
     query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
-    value = ("Order updated from waiter, please place order if you agree with changes!",orderID)
+    value = ("CHANGED",orderID)
     mycursor = mydb.cursor()
     mycursor = mydb.cursor()
     mycursor.execute(query,value)
@@ -374,17 +374,14 @@ def updateOrderWaiter(orderID):
             mydb.commit()
             print(mycursor.rowcount, "DELETED FROM DB; PRODUCT ID: " + str(product['product_id']))
             # socketio.emit('checkDatabesOrders', broadcast=True)
+    socketio.emit('orderChanged', orderID, broadcast=True)
     return ""
 
 @app.route('/updateorder/<int:orderID>', methods=['POST']) #GET requests will be blocked
 def updateOrder(orderID):
-    data =  request.get_json(force=True) #force = ignore the request.headers.get('Content-Type') == 'application/json'
-    # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
-    #če je quantity enak orderqunatity #1 še ne obstaja v bazi; #2 je že v bazi - preveri!
-    #SELECT * FROM productorder where productorder.Product_id = 4 AND productorder.Order_id=33
+    data =  request.get_json(force=True) 
     result = SQLqueryOrder("SELECT * FROM `order` where Order_id=" + str(orderID))
     print(str(result))
-    # if (result[0]['order_status'] != "Not served" ):
     query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
     value = ("UPDATED",orderID)
     mycursor = mydb.cursor()
@@ -402,7 +399,6 @@ def updateOrder(orderID):
                                                     Product_quantity ) VALUES (%s,%s,%s,%s)'''
             value = (detail['product_id'],orderID,detail['totalPrice'],detail['quantity'])
             rowcount = SQLinsert (query,value)
-            #print(str(rowcount) + " ORDER was inserted. ID: " + str(Order_id))
             print("ROW: "+ str(rowcount) + " DODANO V BAZO: " + str(orderID) + " PRODUCT ID: " + str(detail['product_id']))
         else:
             if ((result[0]['product_quantity']) != detail['quantity'] ):
@@ -413,8 +409,7 @@ def updateOrder(orderID):
                 mycursor.execute(query,value)
                 mydb.commit()
                 print(mycursor.rowcount, "POSDOBLJENO V BAZI; PRODUCT ID: " + str(detail['product_id']) + " NEW QUAN: "+ str(detail['quantity']))
-        #select quantity za order in preverš ali je enak iz naročila, če ni popravi!!!   
-        socketio.emit('checkDatabesOrders', broadcast=True)
+    socketio.emit('checkDatabesOrders', broadcast=True)
     return ""
 
 @app.route('/updateorderstatus/<int:orderID>', methods=['POST']) #GET requests will be blocked
@@ -436,16 +431,18 @@ def updateOrderStatus(orderID):
 
 @app.route('/endorder/<int:orderID>', methods=['POST']) #GET requests will be blocked
 def endOrder(orderID):
-    query = "UPDATE `order` SET Order_status = %s, Order_end = %s WHERE Order_id = %s"
+    data =  request.get_json(force=True) 
+    query = "UPDATE `order` SET Order_status = %s, Order_end = %s, User_id = %s WHERE Order_id = %s"
     now = datetime.now()
     date_time = now.strftime("%Y-%m-%d %H:%M:%S.%f")
-    value = ("Finished",date_time,orderID)
+    value = ("Finished",date_time,data['user_id'],orderID)
     mycursor = mydb.cursor()
     mycursor = mydb.cursor()
     mycursor.execute(query,value)
     mydb.commit()
     print("ORDER END; ORDERID: " + str(orderID)) 
-    socketio.emit('checkDatabesOrders', broadcast=True)
+    # socketio.emit('checkDatabesOrders', broadcast=True)
+    socketio.emit('orderEnd', orderID, broadcast=True)
     return ""
     # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
 
@@ -453,16 +450,18 @@ def endOrder(orderID):
 @app.route('/users', methods=['POST']) #GET requests will be blocked
 def checkUsername():
     data =  request.get_json(force=True) 
-    print(str(data))
     print("User: " + str(data['username']) + " Password: " + str(data['password']))
     query = "SELECT * FROM user WHERE user.User_name = '" + str(data['username']) + "' AND user.User_password = '" + str(data['password'])+"'"
-    print(query)
     result = SQLqueryUser(query)
-    print(str(result))
+    new = {}
     if(len(result) == 0):
-        return "False"
+        new['result'] = "False"
+        return new
     else:
-        return str(result[0]['user_role'])
+        new['result'] = result[0]['user_role']
+        new['user_id'] = result[0]['user_id']
+        new['username'] = result[0]['user_name']
+        return new
     # print("LEN: " + str(len(result)))
     # print("Result: " + str(result))
     # return ""

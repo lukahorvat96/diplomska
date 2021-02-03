@@ -30,7 +30,9 @@ import {
   ALL_NATURALBEVERAGE,
   ALL_GIN,
   ALL_VODKA,
-  SET_ORDER_STATUS
+  SET_ORDER_STATUS,
+  CHANGED_ORDER,
+  CLEAR_ALL
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -132,6 +134,13 @@ export default new Vuex.Store({
     [SET_ORDER_STATUS](state, payload) {
       state.orderStatus = payload;
     },
+    [CHANGED_ORDER](state, payload) {
+      var totalPrice = 0;
+      for (var i = 0; i < payload.length; i++)
+        totalPrice += payload[i].quantity * payload[i].price;
+      state.cart_product = payload;
+      state.totalPrice = totalPrice;
+    },
     [ADD_TO_CART](state, payload) {
       const index = state.cart_product.findIndex(
         p => p.product_id === payload.product_id
@@ -165,6 +174,13 @@ export default new Vuex.Store({
     },
     [SET_DATA](state, payload) {
       state.someData = payload;
+    },
+    [CLEAR_ALL](state) {
+      state.cart_product = [];
+      state.someData = null;
+      state.orderID = null;
+      state.totalPrice = 0;
+      state.orderPlaced = false;
     }
   },
   actions: {
@@ -297,7 +313,7 @@ export default new Vuex.Store({
     orderStatus({ commit, state }) {
       commit("ADD_ORDER");
       axios
-        .get(`${"http://192.168.1.13:5000"}/order/`, state.orderID)
+        .get(`${"http://192.168.1.13:5000"}/order/` + state.orderID)
         .then(response => {
           console.log(response.data);
           commit("SET_ORDER_STATUS", response.data);
@@ -305,7 +321,6 @@ export default new Vuex.Store({
     },
     updateOrderDrink({ commit, state }, payload) {
       commit("ADD_ORDER");
-      console.log("ORDER ID: " + state.orderID);
       axios
         .post(
           `${"http://192.168.1.13:5000"}/updateorder/` + state.orderID,
@@ -315,10 +330,16 @@ export default new Vuex.Store({
           console.log(response.data);
         });
       commit("SET_ORDER_STATUS", "UPDATED");
-      // commit("CLEAR_CART");
-      //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
-      //  commit(ADD_ORDER_SUCCESS, response.data)
-      //}),
+    },
+    checkOrder({ commit, state }) {
+      //prejem spremeb iz baze zaradi srpemeb na strani natakarja
+      commit("ADD_ORDER");
+      axios
+        .get(`${"http://192.168.1.13:5000"}/orders/` + state.orderID)
+        .then(response => {
+          console.log(response.data);
+          commit("CHANGED_ORDER", response.data);
+        });
     },
     "SOCKET_my response"({ commit }, payload) {
       commit("SET_DATA", payload);
@@ -328,6 +349,19 @@ export default new Vuex.Store({
     },
     SOCKET_SERVED({ commit, state }, payload) {
       if (payload == state.orderID) commit("SET_ORDER_STATUS", "SERVED");
+    },
+    SOCKET_orderChanged({ commit, dispatch, state }, payload) {
+      if (payload == state.orderID) {
+        commit("SET_ORDER_STATUS", "CHANGED BY WAITER");
+        dispatch("checkOrder");
+      }
+    },
+    SOCKET_orderEnd({ commit, state }, payload) {
+      console.log("orderENDD!!!")
+      if (payload == state.orderID) {
+        commit("SET_ORDER_STATUS", "ORDER_END");
+        commit("CLEAR_ALL");
+      }
     }
   },
   getters: {

@@ -3,14 +3,13 @@
     <v-card-text>
       <h3>Order ID: {{ order.order_id }}</h3>
       <p>Start: {{ order.order_start }}</p>
-      <p class="font-weight-black">Order status: {{ order.order_status }}</p>
       <p class="font-weight-black">Cook status: {{ order.cook_status }}</p>
       <p>Table ID: {{ order.table_id }}</p>
     </v-card-text>
     <router-link
       class="routerLink"
       :to="{
-        name: 'OrdersDetail',
+        name: 'OrdersFoodDetail',
         params: { orderID: order.order_id }
       }"
     >
@@ -28,9 +27,9 @@
     >
       {{ showServed() }}
     </v-btn>
-    <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
-      PRINT THE RECEPIE
-    </v-btn>
+    <!-- <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
+      ORDER DONE
+    </v-btn> -->
   </v-card>
   <!-- <v-card :loading="loading ? 'blue': null">
     <template slot="progress">
@@ -52,10 +51,8 @@ export default {
       console.log("STATUS: " + this.order.order_status);
       if (
         // this.order.order_status == "Not served" ||
-        this.order.order_status == "CONFIRMED" ||
-        this.order.order_status == "PLACED" ||
-        this.order.order_status == "UPDATED" ||
-        this.order.order_status == "CALLING WAITER" 
+        this.order.cook_status == "" ||
+        this.order.cook_status == "CONFIRMED"
       )
         return true;
       else return false;
@@ -63,35 +60,25 @@ export default {
   },
   methods: {
     showServed() {
-      if (
-        this.order.order_status == "PLACED" ||
-        this.order.order_status == "UPDATED" ||
-        this.order.order_status == "UPDATED" ||
-        this.order.order_status == "CALLING WAITER" 
-      )
+      if (this.order.cook_status == "" || this.order.cook_status == "UPDATED")
         return "CONFIRM";
-      if (this.order.order_status == "CONFIRMED") return "SERVED";
+      if (this.order.cook_status == "CONFIRMED") return "DONE";
       else return "";
     },
     updateOrderStatus() {
-      if (
-        this.order.order_status == "PLACED" ||
-        this.order.order_status == "UPDATED" ||
-        this.order.order_status == "UPDATED" ||
-        this.order.order_status == "CALLING WAITER"
-      ) {
+      if (this.order.cook_status == "" || this.order.cook_status == "UPDATED") {
         const latest = {
           order_id: this.order.order_id,
-          order_status: "CONFIRMED"
+          cook_status: "CONFIRMED"
         };
-        this.$store.dispatch("updateOrderStatus", latest);
+        this.$store.dispatch("updateOrderCookStatus", latest);
       }
-      if (this.order.order_status == "CONFIRMED") {
+      if (this.order.cook_status == "CONFIRMED") {
         const latest = {
           order_id: this.order.order_id,
-          order_status: "SERVED"
+          cook_status: "DONE"
         };
-        this.$store.dispatch("updateOrderStatus", latest);
+        this.$store.dispatch("updateOrderCookStatus", latest);
       }
     },
     endOrder() {

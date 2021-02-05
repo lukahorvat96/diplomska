@@ -18,13 +18,21 @@
             <v-list-item-title>All Orders</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="waiter" :to="{ name: 'Orders' }">
+        <!-- <v-list-item v-if="waiter" :to="{ name: 'Orders' }">
           <v-list-item-action>
             <v-icon small>fas fa-border-all</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Orders by table</v-list-item-title>
           </v-list-item-content>
+        </v-list-item> -->
+        <v-list-item v-if="coocker" :to="{ name: 'OrdersFood' }">
+          <v-list-item-action>
+            <v-icon small>fas fa-border-all</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Orders food</v-list-item-title>
+        </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="login" v-on:click="logout()" :to="{ name: 'Home' }">
           <v-list-item-action>

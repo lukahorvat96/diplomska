@@ -1,35 +1,26 @@
 <template>
   <v-container grid-list-xs>
-    <v-row v-for="(row, i) in items" :key="i" row wrap>
-      <v-col
-        class="example"
-        v-for="product in row"
-        :key="product.id"
-        :cols="cols"
-      >
-        <product-detail :product="product"></product-detail>
+    <v-row v-for="(row, i) in ordersInCart" :key="i" row wrap>
+      <v-col class="example" v-for="order in row" :key="order.id" :cols="cols">
+        <order-detail :order="order"></order-detail>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import ProductDetail from "@/components/Products/ProductDetail.vue";
+import OrderDetail from "./OrderDetail";
 export default {
-  name: "ProductList",
+  name: "OrderList",
   props: {
-    products: {
+    orders: {
       type: Array,
-      required: true
-    },
-    colsNum: {
-      type: Number,
       required: true
     }
   },
   computed: {
-    items: function() {
-      return this.products.reduce((acc, el, i) => {
+    ordersInCart: function() {
+      return this.orders.reduce((acc, el, i) => {
         if (i % this.colsNum === 0) {
           acc.push([el]);
         } else {
@@ -42,8 +33,13 @@ export default {
       return 12 / this.colsNum;
     }
   },
+  data() {
+    return {
+      colsNum: 2
+    };
+  },
   components: {
-    "product-detail": ProductDetail
+    "order-detail": OrderDetail
   }
 };
 </script>

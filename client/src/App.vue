@@ -214,7 +214,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>
+      <v-btn elevation="2" color="black" tile @click="callWaiter()">
         Call waiter!
       </v-btn>
       <router-link class="routerLink" :to="{ name: 'Cart' }">
@@ -285,12 +285,19 @@ export default {
         this.$router.push("/");
         this.$store.state.orderStatus = "CHANGED";
       }
-      if (this.$store.getters.getOrderStatus == "ORDER_END"){
+      if (this.$store.getters.getOrderStatus == "ORDER_END") {
         this.$router.push("/");
         this.showDialog = true;
         this.$store.state.orderStatus = "";
       }
       return true;
+    },
+    callWaiter() {
+      const latest = {
+        order_id: this.$store.state.orderID,
+        order_status: "CALLING WAITER"
+      };
+      this.$store.dispatch("updateOrderStatus", latest);
     }
   }
 };

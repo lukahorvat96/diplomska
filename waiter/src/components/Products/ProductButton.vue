@@ -15,9 +15,18 @@
     <p class="text-h6 mb-5 mt-5" v-if="setQuantity()">Count: {{ quantity }}x</p>
     <v-spacer></v-spacer>
     <div>
-      <v-btn elevation="2" tile @click="addToCart(product)">+</v-btn>
-      <v-btn elevation="2" tile @click="removeFromCart(product)">-</v-btn>
-      <v-btn elevation="2" color="red" tile @click="removeFromCartAll(product)"
+      <v-btn elevation="2" v-if="!coocker" tile @click="addToCart(product)"
+        >+</v-btn
+      >
+      <v-btn elevation="2" v-if="!coocker" tile @click="removeFromCart(product)"
+        >-</v-btn
+      >
+      <v-btn
+        elevation="2"
+        v-if="!coocker"
+        color="red"
+        tile
+        @click="removeFromCartAll(product)"
         >REMOVE</v-btn
       >
     </div>
@@ -44,6 +53,9 @@ export default {
       );
       if (index2 < 0) return true;
       return false;
+    },
+    coocker() {
+      return this.$store.getters.isCooker;
     }
   },
   methods: {
@@ -91,7 +103,7 @@ export default {
       );
       this.cart = this.$store.state.orderById;
       if (this.index >= 0) {
-        console.log("QUA1:")
+        console.log("QUA1:");
         this.quantity = this.cart[this.index].quantity;
         console.log("QUAN: " + this.quantity);
         return true;

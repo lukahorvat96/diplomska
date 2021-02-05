@@ -127,16 +127,11 @@ export default {
     }
   },
   methods: {
-    submit() {
-      console.log("Username: " + this.username);
-      console.log("Password: " + this.password);
-    },
     login() {
       const latest = {
         username: this.username,
         password: this.password
       };
-      console.log(latest)
       this.$store.dispatch("checkLogin", latest);
     }
   }

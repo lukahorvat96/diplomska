@@ -99,10 +99,13 @@ def SQLqueryOrder(query):
             'order_end': result[2], 
             'table_id': result[3],
             'user_id': result[4],
-            'order_status': result[5]
+            'order_status': result[5],
+            'cook_status': result[6],
+            'payment': result[7]
             }
         payload.append(content)
         content = {}
+    print(payload)
     return payload
 
 def SQLqueryLastID():
@@ -297,7 +300,14 @@ def allPadThai():
 
 @app.route('/ordersWithoutEnd')
 def allOrdersWithoutEnd():
-    return jsonify(SQLqueryOrder("SELECT * FROM `order` WHERE Order_end IS NULL"))
+    new = {}
+    new['orders'] = SQLqueryOrder("SELECT * FROM `order` WHERE Order_end IS NULL")
+    new['ordersfood'] = SQLqueryOrder("SELECT DISTINCT `order`.`Order_id`, `order`.`Order_start`, `order`.`Order_end`, `order`.`Table_id`, `order`.`User_id`, `order`.`Order_status`, `order`.`Cook_status`, `order`.`Payment` FROM `order`, productorder, product, producttype WHERE `order`.Order_id = productorder.Order_id AND productorder.Product_id = product.Product_id AND product.ProductType_id = producttype.ProductType_id AND producttype.ProductType_type = 'Food' AND `order`.`Order_end` IS NULL")
+    return new
+
+@app.route('/ordersFoodWithoutEnd')
+def allOrdersFoodWithoutEnd():
+    return jsonify(SQLqueryOrder("SELECT `order`.`Order_id`, `order`.`Order_start`, `order`.`Order_end`, `order`.`Table_id`, `order`.`User_id`, `order`.`Order_status`, `order`.`Cook_status`, `order`.`Payment` FROM `order`, productorder, product, producttype WHERE `order`.Order_id = productorder.Order_id AND productorder.Product_id = product.Product_id AND product.ProductType_id = producttype.ProductType_id AND producttype.ProductType_type = 'Food' AND `order`.`Order_end` IS NULL"))
 
 @app.route('/order/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderStatus(order):
@@ -426,7 +436,26 @@ def updateOrderStatus(orderID):
     if(data['order_status'] == "CONFIRMED"):
         socketio.emit('CONFIRMED', orderID, broadcast=True)
     if(data['order_status'] == "SERVED"):
-        socketio.emit('SERVED', orderID, broadcast=True)
+        socketio.emit('SERVED', orderID, broadcast=True)    
+    if(data['order_status'] == "CALLING WAITER"):
+        socketio.emit('CALLING_WAITER', orderID, broadcast=True)
+    return ""
+
+@app.route('/updateordercookstatus/<int:orderID>', methods=['POST']) #GET requests will be blocked
+def updateOrderCookStatus(orderID):
+    data =  request.get_json(force=True) 
+    query = "UPDATE `order` SET Cook_status = %s WHERE Order_id = %s"
+    value = (data['cook_status'],orderID)
+    mycursor = mydb.cursor()
+    mycursor = mydb.cursor()
+    mycursor.execute(query,value)
+    mydb.commit()
+    print("UPDATE ORDER STATUS: " + str(orderID) + " NEW STATUS: " + str(data['cook_status'])) 
+    socketio.emit('checkDatabesOrders', broadcast=True)
+    # if(data['cook_status'] == "CONFIRMED"):
+    #     socketio.emit('CONFIRMED', orderID, broadcast=True)
+    # if(data['cook_status'] == "SERVED"):
+    #     socketio.emit('SERVED', orderID, broadcast=True)
     return ""
 
 @app.route('/endorder/<int:orderID>', methods=['POST']) #GET requests will be blocked

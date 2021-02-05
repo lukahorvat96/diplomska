@@ -77,7 +77,6 @@ export default new Vuex.Store({
     },
     [ALL_FOODS](state, payload) {
       state.foods = payload;
-      console.log("FOODS: " + state.foods);
       //state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
     },
     [ALL_BOTTLED_BEERS](state, payload) {
@@ -188,6 +187,12 @@ export default new Vuex.Store({
       axios.get(`${"http://192.168.1.13:5000"}/drinks`).then(response => {
         //console.log(response.data)
         commit("ALL_DRINKS", response.data);
+      });
+    },
+    allFoods({ commit }) {
+      axios.get(`${"http://192.168.1.13:5000"}/foods`).then(response => {
+        //console.log(response.data)
+        commit("ALL_FOODS", response.data);
       });
     },
     allBottledBeer({ commit }) {
@@ -341,6 +346,18 @@ export default new Vuex.Store({
           commit("CHANGED_ORDER", response.data);
         });
     },
+    updateOrderStatus({ commit }, payload) {
+      commit("ADD_ORDER");
+      axios
+        .post(
+          `${"http://192.168.1.13:5000"}/updateorderstatus/` +
+            payload["order_id"],
+          payload
+        )
+        .then(response => {
+          console.log(response.data);
+        });
+    },
     "SOCKET_my response"({ commit }, payload) {
       commit("SET_DATA", payload);
     },
@@ -350,6 +367,10 @@ export default new Vuex.Store({
     SOCKET_SERVED({ commit, state }, payload) {
       if (payload == state.orderID) commit("SET_ORDER_STATUS", "SERVED");
     },
+    SOCKET_CALLING_WAITER({ commit, state }, payload) {
+      if (payload == state.orderID)
+        commit("SET_ORDER_STATUS", "CALLING WAITER");
+    },
     SOCKET_orderChanged({ commit, dispatch, state }, payload) {
       if (payload == state.orderID) {
         commit("SET_ORDER_STATUS", "CHANGED BY WAITER");
@@ -357,7 +378,7 @@ export default new Vuex.Store({
       }
     },
     SOCKET_orderEnd({ commit, state }, payload) {
-      console.log("orderENDD!!!")
+      console.log("orderENDD!!!");
       if (payload == state.orderID) {
         commit("SET_ORDER_STATUS", "ORDER_END");
         commit("CLEAR_ALL");

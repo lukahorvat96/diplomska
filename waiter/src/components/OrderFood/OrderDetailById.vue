@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-subtitle>
-      <h2>Order ID: {{ orderID }}</h2>
+      <h2>Order number: {{ orderID }}</h2>
     </v-card-subtitle>
     <v-divider></v-divider>
     <v-card-text>

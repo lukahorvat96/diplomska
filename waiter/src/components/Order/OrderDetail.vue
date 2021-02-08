@@ -1,7 +1,7 @@
 <template>
   <v-card class="yellow_back">
     <v-card-text>
-      <h3>Order ID: {{ order.order_id }}</h3>
+      <h3>Order number: {{ order.order_id }}</h3>
       <p>Start: {{ order.order_start }}</p>
       <p class="font-weight-black">Order status: {{ order.order_status }}</p>
       <p class="font-weight-black">Cook status: {{ order.cook_status }}</p>

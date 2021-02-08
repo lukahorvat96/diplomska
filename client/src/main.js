@@ -20,6 +20,13 @@ Vue.use(
       store,
       actionPrefix: "SOCKET_",
       mutationPrefix: "SOCKET_"
+    },
+    data() {
+      return {
+        myStyle: {
+          backgroundColor: "#05d"
+        }
+      };
     }
   })
 );

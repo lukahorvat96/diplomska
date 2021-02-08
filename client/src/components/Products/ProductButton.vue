@@ -1,7 +1,7 @@
 <template>
   <v-card-actions v-if="isNotInCart">
     <!--ITEM NOT IN CARD-->
-    <p class="text-h6 mb-5 mt-5">Count: 0x</p>
+    <h3>Count: 0x</h3>
     <v-spacer></v-spacer>
     <div>
       <v-btn elevation="2" color="green" tile @click="addToCart(product)"
@@ -12,7 +12,7 @@
 
   <v-card-actions v-else>
     <!--ITEM ALREADY IN CARD -->
-    <p class="text-h6 mb-5 mt-5" v-if="setQuantity()">Count: {{ quantity }}x</p>
+    <h3 v-if="setQuantity()">Count: {{ quantity }}x</h3>
     <v-spacer></v-spacer>
     <div>
       <v-btn elevation="2" tile @click="addToCart(product)">+</v-btn>
@@ -146,5 +146,19 @@ export default {
   }
 };
 </script>
-
-<style></style>
+<style>
+@font-face {
+  font-family: "Proxima";
+  src: local("Proxima"), url(../../fonts/Proxima.ttf) format("truetype");
+}
+.proxima-font {
+  font-family: "Proxima";
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+h3 {
+  font-family: "Proxima";
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+</style>

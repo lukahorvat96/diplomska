@@ -1,13 +1,7 @@
 <template>
-  <v-app id="inspire">
+  <v-app :style="myStyle" id="wrapper">
     <div class="text-center">
       <v-dialog v-model="showDialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-            Click Me
-          </v-btn>
-        </template>
-
         <v-card>
           <v-card-title class="headline grey lighten-2">
             Privacy Policy
@@ -35,190 +29,180 @@
       </v-dialog>
     </div>
 
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list dense flat rounded>
-        <v-list-item :to="{ name: 'Home' }">
-          <v-list-item-action>
-            <v-icon small>fas fa-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
-
-        <v-list-item :to="{ name: 'Drink' }">
-          <v-list-item-action>
-            <v-icon small>fas fa-glass-cheers</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>All drinks</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <!-- <v-list-group value="true" no-action>
-          <template v-slot:activator>
+    <v-navigation-drawer v-model="drawer" app class="mx-auto">
+      <v-list dense>
+        <v-list-item-group mandatory>
+          <v-list-item :to="{ name: 'Home' }">
             <v-list-item-action>
-              <v-icon small>fas fa-glass-whiskey</v-icon>
+              <v-icon small>fas fa-home</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Beverages</v-list-item-title>
+              <v-list-item-title>Dashboard</v-list-item-title>
             </v-list-item-content>
-          </template>
-        </v-list-group> -->
-        <v-list-item :to="{ name: 'HotDrink' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Hot Drinks</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'BottledBeverage' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Bottled beverages</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'NaturalBeverage' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Natural Beverages</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          </v-list-item>
+          <v-divider></v-divider>
 
-        <v-list-group value="true" no-action>
-          <template v-slot:activator>
+          <v-list-item :to="{ name: 'Drink' }">
             <v-list-item-action>
-              <!-- <v-icon small>fas fa-beer</v-icon> -->
+              <v-icon small>fas fa-glass-cheers</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Beers</v-list-item-title>
-            </v-list-item-content>
-          </template>
-          <v-list-item :to="{ name: 'BottledBeer' }">
-            <v-list-item-content>
-              <v-list-item-title> Bottled </v-list-item-title>
+              <v-list-item-title>All drinks</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item :to="{ name: 'DraughtBeer' }">
+          <v-list-item :to="{ name: 'HotDrink' }">
+            <v-list-item-action> </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title> Draught </v-list-item-title>
+              <v-list-item-title>Hot Drinks</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item :to="{ name: 'Cider' }">
+          <v-list-item :to="{ name: 'BottledBeverage' }">
+            <v-list-item-action> </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title> Cider </v-list-item-title>
+              <v-list-item-title>Bottled beverages</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-list-group>
-        <v-list-item :to="{ name: 'Wine' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Wines</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Gin' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Gin</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Vodka' }">
-          <v-list-item-action>
-            <!-- <v-icon small>fas fa-wine-glass-alt</v-icon> -->
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Vodka</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
+          <v-list-item :to="{ name: 'NaturalBeverage' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Natural Beverages</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-        <v-list-item :to="{ name: 'Food' }">
-          <v-list-item-action>
-            <v-icon small>fas fa-utensils</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>All foods</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Starter' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Starters</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Soup' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Soups</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Salad' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Salads</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Pasta' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Pasta</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Rissoto' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Rissoto</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Pizza' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Pizzas</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'Meat' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Meat</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'PadThai' }">
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Pad Thai</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
+          <v-list-group mandatory no-action>
+            <template v-slot:activator>
+              <v-list-item-action> </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Beers</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item :to="{ name: 'BottledBeer' }">
+              <v-list-item-content>
+                <v-list-item-title> Bottled </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item :to="{ name: 'DraughtBeer' }">
+              <v-list-item-content>
+                <v-list-item-title> Draught </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item :to="{ name: 'Cider' }">
+              <v-list-item-content>
+                <v-list-item-title> Cider </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+          <v-list-item :to="{ name: 'Wine' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Wines</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Gin' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Gin</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Vodka' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Vodka</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
 
-        <v-list-item :to="{ name: 'Cart' }">
-          <v-list-item-action>
-            <v-icon small>fas fa-shopping-cart</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Cart</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item :to="{ name: 'Food' }">
+            <v-list-item-action>
+              <v-icon small>fas fa-utensils</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>All foods</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Starter' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Starters</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Soup' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Soups</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Salad' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Salads</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Pasta' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Pasta</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Rissoto' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Rissoto</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Pizza' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Pizzas</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Meat' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Meat</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'PadThai' }">
+            <v-list-item-action> </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Pad Thai</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+
+          <v-list-item :to="{ name: 'Cart' }">
+            <v-list-item-action>
+              <v-icon small>fas fa-shopping-cart</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Cart</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
+      <template v-slot:append>
+     <div class="order_status" v-if="checkOrder()">
+         <h4> Status: {{ orderStatus }} </h4>
+      </div>
+      </template>
+
     </v-navigation-drawer>
 
-    <v-app-bar app color="indigo" dark>
+    <v-app-bar app color="grey darken-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn elevation="2" color="black" tile @click="callWaiter()">
+      <v-btn
+        elevation="2"
+        color="gray darken-4"
+        tile
+        class="proxima_nova-font"
+        @click="callWaiter()"
+      >
         Call waiter!
       </v-btn>
       <router-link class="routerLink" :to="{ name: 'Cart' }">
-        <v-btn elevation="2" color="red" tile>
+        <v-btn elevation="2" color="red" tile class="priceButton">
           Total price: {{ totalprice }} €
         </v-btn>
       </router-link>
@@ -227,14 +211,14 @@
     <v-main>
       <router-view> </router-view>
     </v-main>
-    <v-footer color="indigo" app>
-      <span class="white--text"></span>
-      <!-- <v-btn v-on:click="clickButton('DELA!!!!')">Pošlji websocket</v-btn> -->
-      <!-- <p>{{ SomeData }}</p> -->
+    <v-footer  padless>
       <v-spacer></v-spacer>
-      <div class="font-weight-bold" v-if="checkOrder()">
-        Order status: {{ orderStatus }}
-      </div>
+
+      <v-btn v-for="icon in icons" :key="icon" class="mx-2" icon>
+        <v-icon size="24px">
+          {{ icon }}
+        </v-icon>
+      </v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -248,7 +232,8 @@ export default {
     return {
       drawer: null,
       someData: null,
-      showDialog: false
+      showDialog: false,
+      icons: ["mdi-facebook", "mdi-instagram"]
     };
   },
   components: {
@@ -308,10 +293,46 @@ export default {
   font-family: "Callovia";
   src: local("Callovia"), url(./fonts/Callovia.ttf) format("truetype");
 }
+@font-face {
+  font-family: "Proxima";
+  src: local("Proxima"), url(./fonts/Proxima.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Proxima_nova";
+  src: local("Proxima_nova"), url(./fonts/Proxima_nova.ttf) format("truetype");
+}
 .callovia-font {
   font-family: "Callovia", Helvetica, sans-serif;
+}
+.proxima-font {
+  font-family: "Proxima";
+}
+.proxima_nova-font {
+  font-family: "Proxima_nova";
 }
 .routerLink {
   text-decoration: none;
 }
+.mx-auto {
+  font-family: "Proxima_nova";
+}
+.priceButton {
+  font-family: "Proxima_nova";
+  width: 200px;
+}
+.order_status {
+  font-family: "Proxima_nova";
+  margin-left: 5%;
+  margin-bottom: 3%;
+}
+#wrapper {
+  width: auto;
+  height: auto;
+  background-color: rgb(243, 243, 243);
+  /* background-image: url(https://thumbs.dreamstime.com/z/wood-texture-table-top-counter-bar-blur-light-gold-bokeh-cafe-restaurant-background-montage-product-display-design-145736850.jpg); */
+  /* margin: 0 auto;
+  margin-top: 200px;
+  border-radius: 10px; */
+}
 </style>
+// rgb(241, 241, 241);// rgb(241, 241, 241);

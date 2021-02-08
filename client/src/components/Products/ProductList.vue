@@ -7,7 +7,7 @@
         :key="product.id"
         :cols="cols"
       >
-        <product-detail :product="product"></product-detail>
+        <product-detail class="proxima-font" :product="product"></product-detail>
       </v-col>
     </v-row>
   </v-container>
@@ -52,5 +52,18 @@ export default {
 <style lang="scss" scoped>
 .example {
   padding-right: 10px;
+}
+</style>
+<style scoped>
+@font-face {
+  font-family: "Proxima";
+  src: local("Proxima"), url(../../fonts/Proxima.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Proxima_nova";
+  src: local("Proxima_nova"), url(../../fonts/Proxima_nova.ttf) format("truetype");
+}
+.proxima-font {
+  font-family: "Proxima_nova";
 }
 </style>

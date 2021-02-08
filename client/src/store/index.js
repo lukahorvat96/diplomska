@@ -73,11 +73,11 @@ export default new Vuex.Store({
   mutations: {
     [ALL_DRINKS](state, payload) {
       state.drinks = payload;
-      //state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
+      state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
     },
     [ALL_FOODS](state, payload) {
       state.foods = payload;
-      //state.drinks.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
+      //state.foods.sort((t1, t2) => (t1.name < t2.name ? -1 : 1));
     },
     [ALL_BOTTLED_BEERS](state, payload) {
       state.bottledbeer = payload;
@@ -358,6 +358,19 @@ export default new Vuex.Store({
           console.log(response.data);
         });
     },
+    // finishOrder({ commit, state }, payload) {
+    //   commit("ADD_ORDER");
+    //   //payment option
+    //   axios
+    //     .post(
+    //       `${"http://192.168.1.13:5000"}/finishorder/` + state.orderID,
+    //       payload
+    //     )
+    //     .then(response => {
+    //       console.log(response.data);
+    //     });
+    //   commit("SET_ORDER_STATUS", "UPDATED");
+    // },
     "SOCKET_my response"({ commit }, payload) {
       commit("SET_DATA", payload);
     },

@@ -1,27 +1,71 @@
 <template>
   <v-container grid-list-lg>
-    <h1>DRINKS IN CARD</h1>
-    <cart-list :items="allDrinksInCart"></cart-list>
-    <h1>FOODS IN CARD</h1>
+    <!-- <div class="text-center">
+      <v-dialog v-model="paymentDialog" width="500">
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Payment option
+          </v-card-title>
+
+          <v-card-text>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="showDialog = false">
+              > I accept
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div> -->
+    <div id="container">
+      <h1>CART</h1>
+      <v-spacer />
+      <v-btn
+        v-if="showPlaceOrder"
+        elevation="2"
+        color="gray darken-4"
+        tile
+        dark
+        class="button"
+        @click="addDrinksToDB()"
+      >
+        PLACE ORDER
+      </v-btn>
+      <v-btn
+        v-if="showRequestReseipe"
+        elevation="2"
+        color="gray darken-4"
+        tile
+        dark
+        class="button"
+        @click="finishOrder()"
+      >
+        REQUEST RESEIPE
+      </v-btn>
+    </div>
+    <div v-if="notOrdered">
+      <h3>Order number: {{ orderNumber }}</h3>
+    </div>
+    <v-divider />
+    <div v-if="emptyDrinksCart">
+      <h2>DRINKS</h2>
+      <cart-list :items="allDrinksInCart"></cart-list>
+    </div>
+    <v-divider />
+    <h2>FOODS</h2>
+
     <cart-list :items="allFoodsInCart"></cart-list>
-    <v-btn
-      v-if="showPlaceOrder"
-      elevation="2"
-      color="red"
-      tile
-      @click="addDrinksToDB()"
-    >
-      PLACE ORDER
-    </v-btn>
-    <v-btn
-      v-if="showRequestReseipe"
-      elevation="2"
-      color="red"
-      tile
-      @click="finishOrder()"
-    >
-      REQUEST RESEIPE
-    </v-btn>
     <!-- <p>RESPONSE: {{ response }}</p> -->
   </v-container>
 </template>
@@ -38,8 +82,9 @@ export default {
     return {
       cart: [],
       response: "",
-      dialog: false,
-      orderID: null
+      // paymentDialog: false,
+      orderID: null,
+      dialog: false
     };
   },
   created() {
@@ -50,8 +95,16 @@ export default {
     allDrinksInCart() {
       return this.$store.getters.allDrinksInCart;
     },
+    emptyDrinksCart() {
+      if (this.$store.getters.allDrinksInCart.length != 0) return true;
+      else return false;
+    },
     allFoodsInCart() {
       return this.$store.getters.allFoodsInCart;
+    },
+    emptyFoodsCart() {
+      if (this.$store.getters.allFoodsInCart.length != 0) return true;
+      else return false;
     },
     showPlaceOrder() {
       var cart = this.$store.getters.allProductsInCart;
@@ -66,6 +119,13 @@ export default {
         return thereIsSomethingChanged;
       }
       return false;
+    },
+    notOrdered() {
+      if (this.$store.getters.getOrderID != null) return true;
+      else return false;
+    },
+    orderNumber() {
+      return this.$store.getters.getOrderID;
     },
     showRequestReseipe() {
       if (this.showPlaceOrder == false && this.$store.state.orderPlaced == true)
@@ -99,8 +159,41 @@ export default {
     },
     finishOrder() {
       //this.$store.commit(CLEAR_CART);
+      // this.paymentDialog = true;
       return false;
     }
   }
 };
 </script>
+<style scoped>
+h1 {
+  margin-bottom: 0%;
+  margin-left: 1%;
+}
+h2 {
+  margin-left: 1%;
+  margin-top: 1%;
+}
+h3 {
+  margin-left: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.foods {
+  margin-top: 2%;
+}
+#leftThing {
+  width: 25%;
+}
+#rightThing {
+  width: 25%;
+}
+.button {
+  width: 20%;
+}
+#container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+</style>

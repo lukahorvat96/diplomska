@@ -1,20 +1,18 @@
 <template>
-  <v-container>
+  <v-container class="action">
     <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+      <v-col>
+        <v-img :src="require('../assets/Untitled-2.png')" contain height="900" />
       </v-col>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to CLIENT
+      <!-- <v-col >
+        <h1 class="display-2 font-weight-bold ">
+          Welcome to asd
         </h1>
-      </v-col>
+        <v-btn color="red">
+          explorer
+        </v-btn>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>
@@ -77,3 +75,20 @@ export default {
   })
 };
 </script>
+<style>
+/* #wrapper {
+  width: auto;
+  height: auto;
+  background-color: rgb(243, 243, 243);
+  background-image: url(https://adventuresincooking.com/wp-content/uploads/2016/08/Greek-Salad-by-Eva-Kosmas-Flores-5.jpg);
+  /* margin: 0 auto;
+  margin-top: 200px;
+  border-radius: 10px; 
+}  */
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+</style>

@@ -11,7 +11,7 @@
         {{ product.name }}
       </v-card-title>
       <v-card-text class="text--primary">
-        <div class="my-4">Description: {{ product.description }}</div>
+        <div class="my-4">Description: {{ description }}</div>
 
         <p class="text-h5 mb-6">{{ product.price }}$</p>
         <v-divider class="mx-4"></v-divider>
@@ -32,7 +32,7 @@
         {{ product.name }}
       </v-card-title>
       <v-card-text class="text--primary">
-        <div class="my-4">Description: {{ product.description }}</div>
+        <div class="my-4">Description: {{ description }}</div>
 
         <p>Size: {{ product.size }}</p>
         <p class="text-h5 mb-6">{{ product.price }}$</p>
@@ -59,6 +59,10 @@ export default {
       console.log(this.product.type_id);
       if (this.product.type_id >= 15) return true;
       return false;
+    },
+    description() {
+      if (this.product.description == null) return "/";
+      else return this.product.description;
     }
   }
 };

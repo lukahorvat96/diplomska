@@ -7,7 +7,10 @@
         :key="product.id"
         :cols="cols"
       >
-        <product-detail class="proxima-font" :product="product"></product-detail>
+        <product-detail
+          class="proxima-font"
+          :product="product"
+        ></product-detail>
       </v-col>
     </v-row>
   </v-container>

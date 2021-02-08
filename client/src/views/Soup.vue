@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <h1>Foods</h1>
+    <h1>SOUPS</h1>
+    <v-divider />
     <product-list :products="allFoods"></product-list>
   </v-container>
 </template>
@@ -22,3 +23,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+h1 {
+  margin-bottom: 2%;
+  margin-left: 1%;
+}
+</style>

@@ -181,16 +181,15 @@
         </v-list-item-group>
       </v-list>
       <template v-slot:append>
-     <div class="order_status" v-if="checkOrder()">
-         <h4> Status: {{ orderStatus }} </h4>
-      </div>
+        <div class="order_status" v-if="checkOrder()">
+          <h4>Status: {{ orderStatus }}</h4>
+        </div>
       </template>
-
     </v-navigation-drawer>
 
     <v-app-bar app color="grey darken-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title class="callovia-font">RESTAURANT</v-toolbar-title>
+      <v-toolbar-title class="blacksword-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         elevation="2"
@@ -211,7 +210,7 @@
     <v-main>
       <router-view> </router-view>
     </v-main>
-    <v-footer  padless>
+    <v-footer padless>
       <v-spacer></v-spacer>
 
       <v-btn v-for="icon in icons" :key="icon" class="mx-2" icon>
@@ -301,6 +300,10 @@ export default {
   font-family: "Proxima_nova";
   src: local("Proxima_nova"), url(./fonts/Proxima_nova.ttf) format("truetype");
 }
+@font-face {
+  font-family: "Blacksword";
+  src: local("Blacksword"), url(./fonts/Blacksword.ttf) format("truetype");
+}
 .callovia-font {
   font-family: "Callovia", Helvetica, sans-serif;
 }
@@ -309,6 +312,10 @@ export default {
 }
 .proxima_nova-font {
   font-family: "Proxima_nova";
+}
+.blacksword-font {
+  font-family: "Blacksword";
+  width: 350px;
 }
 .routerLink {
   text-decoration: none;
@@ -329,6 +336,7 @@ export default {
   width: auto;
   height: auto;
   background-color: rgb(243, 243, 243);
+  font-family: "Proxima_nova";
   /* background-image: url(https://thumbs.dreamstime.com/z/wood-texture-table-top-counter-bar-blur-light-gold-bokeh-cafe-restaurant-background-montage-product-display-design-145736850.jpg); */
   /* margin: 0 auto;
   margin-top: 200px;

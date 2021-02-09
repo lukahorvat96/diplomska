@@ -1,10 +1,11 @@
 <template>
-  <v-card class="yellow_back">
+  <v-card elevation="10" tile class="yellow_back">
     <v-card-text>
       <h3>Order number: {{ order.order_id }}</h3>
       <p>Start: {{ order.order_start }}</p>
       <p class="font-weight-black">Order status: {{ order.order_status }}</p>
-      <p class="font-weight-black">Cook status: {{ order.cook_status }}</p>
+      <p class="font-weight-black">Chef status: {{ order.cook_status }}</p>
+      <p class="font-weight-black">Payment: {{ order.payment }}</p>
       <p>Table ID: {{ order.table_id }}</p>
     </v-card-text>
     <router-link
@@ -29,7 +30,7 @@
       {{ showServed() }}
     </v-btn>
     <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
-      PRINT THE RECEPIE
+      PRINT THE INVOICE
     </v-btn>
   </v-card>
   <!-- <v-card :loading="loading ? 'blue': null">
@@ -82,14 +83,16 @@ export default {
       ) {
         const latest = {
           order_id: this.order.order_id,
-          order_status: "CONFIRMED"
+          order_status: "CONFIRMED",
+          user_id: this.$store.state.loginUsernameID
         };
         this.$store.dispatch("updateOrderStatus", latest);
       }
       if (this.order.order_status == "CONFIRMED") {
         const latest = {
           order_id: this.order.order_id,
-          order_status: "SERVED"
+          order_status: "SERVED",
+          user_id: this.$store.state.loginUsernameID
         };
         this.$store.dispatch("updateOrderStatus", latest);
       }

@@ -2,7 +2,11 @@
   <v-container class="action">
     <v-row class="text-center">
       <v-col>
-        <v-img :src="require('../assets/Untitled-2.png')" contain height="900" />
+        <v-img
+          :src="require('../assets/Untitled-2.png')"
+          contain
+          height="900"
+        />
       </v-col>
 
       <!-- <v-col >

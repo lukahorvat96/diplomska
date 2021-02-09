@@ -1,6 +1,7 @@
 <template>
   <v-container v-if="login" grid-list-lg>
     <h1>ORDERS FOOD</h1>
+    <v-divider />
     <order-list :orders="allOrders"></order-list>
   </v-container>
 </template>
@@ -25,3 +26,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+h1 {
+  margin-bottom: 2%;
+  margin-left: 1%;
+}
+</style>

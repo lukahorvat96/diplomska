@@ -1,9 +1,9 @@
 <template>
-  <v-card class="yellow_back">
+  <v-card elevation="10" tile class="yellow_back">
     <v-card-text>
       <h3>Order number: {{ order.order_id }}</h3>
       <p>Start: {{ order.order_start }}</p>
-      <p class="font-weight-black">Cook status: {{ order.cook_status }}</p>
+      <p class="font-weight-black">Chef status: {{ order.cook_status }}</p>
       <p>Table ID: {{ order.table_id }}</p>
     </v-card-text>
     <router-link

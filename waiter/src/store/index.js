@@ -51,7 +51,8 @@ export default new Vuex.Store({
     loginUsername: "",
     loginUsernameID: null,
     isWaiter: false,
-    isCooker: false
+    isCooker: false,
+    ordersDone: 0
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -135,6 +136,7 @@ export default new Vuex.Store({
       state.loginMessege = null;
       state.isWaiter = false;
       state.isCooker = false;
+      state.ordersDone = 0;
     }
   },
   actions: {
@@ -228,7 +230,6 @@ export default new Vuex.Store({
     },
     endOrder({ commit, state }, payload) {
       commit("ADD_ORDER");
-      console.log("ORDER ID: " + payload);
       const latest = {
         user_id: state.loginUsernameID
       };
@@ -241,6 +242,7 @@ export default new Vuex.Store({
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
+      state.ordersDone += 1;
     },
     checkLogin({ commit }, payload) {
       commit("ADD_ORDER");
@@ -354,6 +356,9 @@ export default new Vuex.Store({
     },
     loginUsername: state => {
       return state.loginUsername;
+    },
+    getOrdersDone: state => {
+      return state.ordersDone;
     }
   }
 });

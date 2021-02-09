@@ -1,33 +1,33 @@
 <template>
   <v-container grid-list-lg>
-    <!-- <div class="text-center">
+    <div class="text-center">
       <v-dialog v-model="paymentDialog" width="500">
         <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Payment option
+          <v-card-title class="headline grey darken-1 proxima_nova-font">
+            PAYMENT
           </v-card-title>
-
-          <v-card-text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <v-card-text class="proxima_nova-font">
+            <br />
+            How do you want to pay for this order?
+            <br />
+            Price: <b>{{ totalprice }}$</b>
+            <br />
+            Order number: {{ orderNumber }}
           </v-card-text>
-
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="showDialog = false">
-              > I accept
+            <v-btn color="red" text @click="payingWithCard()">
+              With CARD
+            </v-btn>
+            <v-btn color="red" text @click="payingWithCash()">
+              With CASH
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </div> -->
+    </div>
     <div id="container">
       <h1>CART</h1>
       <v-spacer />
@@ -57,21 +57,27 @@
     <div v-if="notOrdered">
       <h3>Order number: {{ orderNumber }}</h3>
     </div>
-    <v-divider />
-    <div v-if="emptyDrinksCart">
-      <h2>DRINKS</h2>
-      <cart-list :items="allDrinksInCart"></cart-list>
+    <div v-else>
+      <h3>No order placed</h3>
     </div>
     <v-divider />
-    <h2>FOODS</h2>
-
-    <cart-list :items="allFoodsInCart"></cart-list>
-    <!-- <p>RESPONSE: {{ response }}</p> -->
+    <div v-if="orderEnd">
+      <div v-if="emptyDrinksCart">
+        <h2>DRINKS</h2>
+        <cart-list :items="allDrinksInCart"></cart-list>
+      </div>
+      <div v-if="emptyFoodsCart">
+        <v-divider />
+        <h2>FOODS</h2>
+        <cart-list :items="allFoodsInCart"></cart-list>
+      </div>
+    </div>
   </v-container>
 </template>
 
 <script>
 //import { CLEAR_CART } from "@/store/mutation-types";
+import { SET_ORDER_STATUS } from "@/store/mutation-types";
 import CartList from "../components/Cart/CartList";
 export default {
   name: "cart",
@@ -82,9 +88,8 @@ export default {
     return {
       cart: [],
       response: "",
-      // paymentDialog: false,
       orderID: null,
-      dialog: false
+      paymentDialog: false
     };
   },
   created() {
@@ -107,6 +112,7 @@ export default {
       else return false;
     },
     showPlaceOrder() {
+      if (this.$store.state.orderEnd == true) return false;
       var cart = this.$store.getters.allProductsInCart;
       if (cart.length > 0 && this.$store.state.orderPlaced == false)
         return true;
@@ -128,9 +134,17 @@ export default {
       return this.$store.getters.getOrderID;
     },
     showRequestReseipe() {
+      if (this.$store.state.orderEnd == true) return false;
+      if (this.$store.getters.allProductsInCart.length == 0) return false;
       if (this.showPlaceOrder == false && this.$store.state.orderPlaced == true)
         return true;
       return false;
+    },
+    totalprice() {
+      return this.$store.getters.getTotalPrice;
+    },
+    orderEnd() {
+      return !this.$store.state.orderEnd;
     }
   },
   methods: {
@@ -146,21 +160,25 @@ export default {
         this.cart[i].isOrdered = true;
       }
       this.cart = [];
-
-      //
-      // this.response = this.$store.state.response;
-      //this.cart = [];
-      // this.$store.state.drink_cart = [];
-
-      //--this.$socket.emit("newOrderInDatabese");
       this.$router.push("/");
-      //--console.log("newOrderInDatabese");
-      //;
     },
     finishOrder() {
-      //this.$store.commit(CLEAR_CART);
-      // this.paymentDialog = true;
-      return false;
+      this.$store.commit(SET_ORDER_STATUS, "PAYMENT OPTION");
+      this.paymentDialog = true;
+    },
+    payingWithCard() {
+      const latest = {
+        order_id: this.$store.state.orderID,
+        order_payment: "CARD"
+      };
+      this.$store.dispatch("finishOrder", latest);
+    },
+    payingWithCash() {
+      const latest = {
+        order_id: this.$store.state.orderID,
+        order_payment: "CASH"
+      };
+      this.$store.dispatch("finishOrder", latest);
     }
   }
 };

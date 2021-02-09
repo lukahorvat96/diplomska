@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card elevation="10" tile>
     <v-card-title class="headline" dark="1">
       {{ product.name }}
     </v-card-title>

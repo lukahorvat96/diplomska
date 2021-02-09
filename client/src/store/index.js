@@ -68,7 +68,8 @@ export default new Vuex.Store({
     orderID: null,
     totalPrice: 0,
     orderPlaced: false,
-    orderStatus: ""
+    orderStatus: "",
+    orderEnd: false
   },
   mutations: {
     [ALL_DRINKS](state, payload) {
@@ -165,7 +166,7 @@ export default new Vuex.Store({
       state.loading = true;
     },
     [ADD_ORDER_SUCCESS](state, payload) {
-      state.orderStatus = "PLACED";
+      state.orderPlaced = true;
       state.orderID = payload;
     },
     [CLEAR_CART](state) {
@@ -177,7 +178,6 @@ export default new Vuex.Store({
     [CLEAR_ALL](state) {
       state.cart_product = [];
       state.someData = null;
-      state.orderID = null;
       state.totalPrice = 0;
       state.orderPlaced = false;
     }
@@ -313,7 +313,17 @@ export default new Vuex.Store({
       //axios.post(`${'http://192.168.1.13:5000'}/ /1`, payload).then(response => {
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
-      commit("SET_ORDER_STATUS", "PLACED");
+      commit("SET_ORDER_STATUS", "PLACED BY CLIENT");
+    },
+    addOrderOnCall({ commit }, payload) {
+      commit("ADD_ORDER");
+      axios
+        .post(`${"http://192.168.1.13:5000"}/addorderoncall/1`, payload)
+        .then(response => {
+          console.log(response.data);
+          commit("ADD_ORDER_SUCCESS", response.data);
+        });
+      commit("SET_ORDER_STATUS", "CALLING WAITER");
     },
     orderStatus({ commit, state }) {
       commit("ADD_ORDER");
@@ -334,7 +344,7 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response.data);
         });
-      commit("SET_ORDER_STATUS", "UPDATED");
+      commit("SET_ORDER_STATUS", "UPDATED ORDER");
     },
     checkOrder({ commit, state }) {
       //prejem spremeb iz baze zaradi srpemeb na strani natakarja
@@ -358,24 +368,27 @@ export default new Vuex.Store({
           console.log(response.data);
         });
     },
-    // finishOrder({ commit, state }, payload) {
-    //   commit("ADD_ORDER");
-    //   //payment option
-    //   axios
-    //     .post(
-    //       `${"http://192.168.1.13:5000"}/finishorder/` + state.orderID,
-    //       payload
-    //     )
-    //     .then(response => {
-    //       console.log(response.data);
-    //     });
-    //   commit("SET_ORDER_STATUS", "UPDATED");
-    // },
+    finishOrder({ commit, state }, payload) {
+      commit("ADD_ORDER");
+      //payment option
+      axios
+        .post(
+          `${"http://192.168.1.13:5000"}/finishorder/` + state.orderID,
+          payload
+        )
+        .then(response => {
+          console.log(response.data);
+        });
+      state.orderEnd = true;
+      commit("CLEAR_ALL");
+      commit("SET_ORDER_STATUS", "WAITING FOR INVOICE");
+    },
     "SOCKET_my response"({ commit }, payload) {
       commit("SET_DATA", payload);
     },
     SOCKET_CONFIRMED({ commit, state }, payload) {
-      if (payload == state.orderID) commit("SET_ORDER_STATUS", "CONFIRMED");
+      if (payload == state.orderID)
+        commit("SET_ORDER_STATUS", "CONFIRMED BY WAITER");
     },
     SOCKET_SERVED({ commit, state }, payload) {
       if (payload == state.orderID) commit("SET_ORDER_STATUS", "SERVED");
@@ -393,8 +406,10 @@ export default new Vuex.Store({
     SOCKET_orderEnd({ commit, state }, payload) {
       console.log("orderENDD!!!");
       if (payload == state.orderID) {
-        commit("SET_ORDER_STATUS", "ORDER_END");
         commit("CLEAR_ALL");
+        commit("SET_ORDER_STATUS", "ORDER_END");
+        state.orderID = null;
+        state.orderEnd = false;
       }
     }
   },
@@ -481,6 +496,7 @@ export default new Vuex.Store({
       return state.orderID;
     },
     getTotalPrice: state => {
+      if (state.orderEnd == true) return 0;
       return state.totalPrice;
     },
     allFoodsInCart: state => {

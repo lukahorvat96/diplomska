@@ -1,35 +1,66 @@
 <template>
-  <v-app :style="myStyle" id="wrapper">
+  <v-app id="wrapper">
     <div class="text-center">
       <v-dialog v-model="showDialog" width="500">
         <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Privacy Policy
+          <v-card-title class="headline grey darken-1 proxima_nova-font">
+            INFO
           </v-card-title>
 
-          <v-card-text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <v-card-text v-if="orderStatus == 'PLACED'" class="proxima_nova-font">
+            <br />
+            The order has been <b>placed</b>. Wait for the waiter and chef to
+            confirm this.
+          </v-card-text>
+          <v-card-text
+            v-if="orderStatus == 'UPDATED'"
+            class="proxima_nova-font"
+          >
+            <br />
+            Order has been <b>updated</b>. Wait for the waiter and chef to
+            confirm this.
+          </v-card-text>
+          <v-card-text
+            v-if="orderStatus == 'CHANGED'"
+            class="proxima_nova-font"
+          >
+            <br />
+            The order was <b>changed</b> by the waiter. Check the cart to see
+            what’s different. The reason may be a lack of ingredients.
+            <br />
+            <br />
+            It is <b>IMPORTANT</b> that you must place your order again if you
+            agree to the changes.
+          </v-card-text>
+          <v-card-text
+            v-if="orderStatus == 'CONFIRMED'"
+            class="proxima_nova-font"
+          >
+            <br />
+            The order was confirmed by the waiter and chef. Wait for us to serve
+            you.
+          </v-card-text>
+          <v-card-text
+            v-if="orderStatus == 'INVOICE'"
+            class="proxima_nova-font"
+          >
+            <br />
+            The waiter will bring you the bill as soon as possible.
           </v-card-text>
 
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="showDialog = false">
-              > I accept
+            <v-btn color="red" text @click="showDialog = false">
+              I understand
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </div>
 
-    <v-navigation-drawer v-model="drawer" app class="mx-auto">
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
         <v-list-item-group mandatory>
           <v-list-item :to="{ name: 'Home' }">
@@ -202,7 +233,7 @@
       </v-btn>
       <router-link class="routerLink" :to="{ name: 'Cart' }">
         <v-btn elevation="2" color="red" tile class="priceButton">
-          Total price: {{ totalprice }} €
+          Total price: {{ totalprice }}$
         </v-btn>
       </router-link>
     </v-app-bar>
@@ -265,13 +296,32 @@ export default {
       this.$socket.emit("dodal_v_bazo", data);
     },
     checkOrder() {
+      if (this.$store.getters.getOrderStatus == "UPDATED ORDER") {
+        this.showDialog = true;
+        this.$store.state.orderStatus = "UPDATED";
+      }
       if (this.$store.getters.getOrderStatus == "CHANGED BY WAITER") {
         this.$router.push("/");
+        this.showDialog = true;
         this.$store.state.orderStatus = "CHANGED";
+      }
+      if (this.$store.getters.getOrderStatus == "CONFIRMED BY WAITER") {
+        this.$router.push("/");
+        this.showDialog = true;
+        this.$store.state.orderStatus = "CONFIRMED";
+      }
+      if (this.$store.getters.getOrderStatus == "PLACED BY CLIENT") {
+        this.$router.push("/");
+        this.showDialog = true;
+        this.$store.state.orderStatus = "PLACED";
+      }
+      if (this.$store.getters.getOrderStatus == "WAITING FOR INVOICE") {
+        this.$router.push("/");
+        this.showDialog = true;
+        this.$store.state.orderStatus = "INVOICE";
       }
       if (this.$store.getters.getOrderStatus == "ORDER_END") {
         this.$router.push("/");
-        this.showDialog = true;
         this.$store.state.orderStatus = "";
       }
       return true;
@@ -279,9 +329,14 @@ export default {
     callWaiter() {
       const latest = {
         order_id: this.$store.state.orderID,
-        order_status: "CALLING WAITER"
+        order_status: "CALLING WAITER",
+        order_placed: this.$store.state.orderPlaced
       };
-      this.$store.dispatch("updateOrderStatus", latest);
+      if (this.$store.state.orderPlaced == false)
+        this.$store.dispatch("addOrderOnCall", latest);
+      if (this.$store.state.orderPlaced == true) {
+        this.$store.dispatch("updateOrderStatus", latest);
+      }
     }
   }
 };
@@ -319,9 +374,6 @@ export default {
 }
 .routerLink {
   text-decoration: none;
-}
-.mx-auto {
-  font-family: "Proxima_nova";
 }
 .priceButton {
   font-family: "Proxima_nova";

@@ -2,22 +2,24 @@
   <div v-if="value">
     <v-dialog v-model="value" persistent width="500">
       <v-card>
-        <v-card-title class="headline indigo">
+        <v-card-title class="headline grey darken-1 proxima_nova-font">
           Log in
         </v-card-title>
 
-        <v-card-actions class="justify-center">
+        <v-card-actions class="proxima_nova-font">
           <v-card-text>
             <v-form>
               <v-text-field
                 v-model="username"
                 label="Username"
+                color="red"
                 required
               ></v-text-field>
               <v-text-field
                 v-model="password"
                 type="password"
                 label="Password"
+                color="red"
                 required
               ></v-text-field>
               <!-- <v-checkbox
@@ -30,7 +32,7 @@
           ></v-checkbox> -->
             </v-form>
             <p class="city">{{ messege }}</p>
-            <v-btn class="mr-4" @click="login">
+            <v-btn color="red" class="mr-4" @click="login">
               Log in
             </v-btn>
           </v-card-text>
@@ -40,20 +42,22 @@
   </div>
   <div v-else>
     <v-container>
-      <v-row class="text-center">
-        <v-col cols="12">
+      <v-row class="action">
+        <v-col>
           <v-img
-            :src="require('../assets/logo.svg')"
+            :src="require('../assets/waiter.png')"
             class="my-3"
             contain
-            height="200"
+            height="900"
+            v-if="isWaiter"
           />
-        </v-col>
-
-        <v-col class="mb-4">
-          <h1 class="display-2 font-weight-bold mb-3">
-            Welcome to {{ messege }} view
-          </h1>
+          <v-img
+            :src="require('../assets/chef.png')"
+            class="my-3"
+            contain
+            height="900"
+            v-if="isChef"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -124,6 +128,12 @@ export default {
     },
     messege() {
       return this.$store.getters.loginMessage;
+    },
+    isWaiter() {
+      return this.$store.getters.isWaiter;
+    },
+    isChef() {
+      return this.$store.getters.isCooker;
     }
   },
   methods: {
@@ -141,5 +151,11 @@ export default {
 .city {
   color: #f44336;
   font-weight: 600;
+}
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
 }
 </style>

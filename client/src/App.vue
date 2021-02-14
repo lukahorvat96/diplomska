@@ -213,6 +213,7 @@
       </v-list>
       <template v-slot:append>
         <div class="order_status" v-if="checkOrder()">
+          <h4>Table ID: {{ tableID }}</h4>
           <h4>Status: {{ orderStatus }}</h4>
         </div>
       </template>
@@ -287,6 +288,9 @@ export default {
     orderStatus() {
       if (this.$store.getters.getOrderStatus == "") return "NO ORDER PLACED";
       return this.$store.getters.getOrderStatus;
+    },
+    tableID() {
+      return this.$store.getters.getTableID;
     }
   },
   methods: {

@@ -1,0 +1,10 @@
+1:) ENUM spremeni v bazi za role in payment -  tip atibuta
+nimam v 3tje normani obliki
+
+Order_status  ENUM
+Cook_status ENUM
+
+2.) izbira miza; checkbox ali ima fixno oznako (priklemljena/)
+3.) Natakar vidi samo naroèila , katera so potrjena z njegove stvari
+4.) REST API pošljemo na spletni vmesnik kjer lauf blagajnad
+- zakjljuèi raèun sprmenei gumb! INVOICE

@@ -1,0 +1,16 @@
+1.) 1.oseba množine? opisujem kod da smo "mi" delali?
+V uvodu  kakšna je vaša motivacija in kako sem problem sem rešeil
+2.) kazalo ali je ok? 
+pri ideji bi opisal kako bi sistem deloval v restavraciji ali naredim novo poglavje na koncu? Realizacija sistema v restavracije
+3.) kaj je narobe pri literaturi?
+tri pogledu 	CLIENT-SERVER aplikacijo	RESTFUL vmesnik servira podatke odjemalcu
+ostala uporabljaena orodja
+Diskusija
+- teoretièno opredeiliv kako 
+a hoète met fikse taplce ali telefoni? se je potrebno opredeliti
+en server za celo slovenijo
+varnostne ugotovitve
+v ralnem èasu 
+
+4.) ali naj spustim tehnologije za na koncu ali kako? zadnjiè je bilo reèeno da sem šel preveè podrobno
+5.) Literatura in citiranje manjkata za opisane tehnologije

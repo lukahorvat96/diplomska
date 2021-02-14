@@ -60,6 +60,7 @@ export default {
   methods: {
     updateOrder() {
       this.$store.dispatch("updateOrderProductById", this.orderID);
+      this.$router.go(-1);
     }
     // check() {
     //   if (this.$store.state.checking == false) {

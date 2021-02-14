@@ -301,10 +301,14 @@ export default new Vuex.Store({
         commit("ALL_PADTHAI", response.data);
       });
     },
-    addOrder({ commit }, payload) {
+    addOrder({ commit, state }, payload) {
       commit("ADD_ORDER");
       axios
-        .post(`${"http://192.168.1.13:5000"}/addorder/1`, payload)
+        .post(
+          `${"http://192.168.1.13:5000"}/addorder/` +
+            state.table_details[0]["table_id"],
+          payload
+        )
         .then(response => {
           console.log(response.data);
           commit("ADD_ORDER_SUCCESS", response.data);
@@ -515,6 +519,12 @@ export default new Vuex.Store({
     },
     getOrderStatus: state => {
       return state.orderStatus;
+    },
+    getTableID: state => {
+      return state.table_details[0]["table_id"];
+    },
+    getTableName: state => {
+      return state.table_details[0]["table_name"];
     }
   }
 });

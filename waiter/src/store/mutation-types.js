@@ -16,3 +16,4 @@ export const NEW_ORDER = "NEW_ORDER";
 export const CHECK_LOGIN = "CHECK_LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ALL_ORDERS_PRODUCTS = "ALL_ORDERS_PRODUCTS";
+export const CLEAR_ORDERS = "CLEAR_ORDERS";

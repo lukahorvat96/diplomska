@@ -20,7 +20,8 @@ import {
   ORDER_BY_ID,
   NEW_ORDER,
   CHECK_LOGIN,
-  LOGOUT
+  LOGOUT,
+  CLEAR_ORDERS
 } from "./mutation-types";
 
 export default new Vuex.Store({
@@ -106,6 +107,10 @@ export default new Vuex.Store({
       state.orders = payload["orders"];
       state.ordersFood = payload["ordersfood"];
     },
+    [CLEAR_ORDERS](state) {
+      state.orders = [];
+      state.ordersFood = [];
+    },
     [ORDER_BY_ID](state, payload) {
       state.orderById = [];
       state.orderById = payload;
@@ -123,9 +128,9 @@ export default new Vuex.Store({
           state.loginUsername = payload["username"];
           state.loginUsernameID = payload["user_id"];
         }
-        if (payload["result"] == "Cooker") {
+        if (payload["result"] == "Cook") {
           state.isCooker = true;
-          state.loginMessege = "cooker";
+          state.loginMessege = "cook";
           state.loginUsername = payload["username"];
           state.loginUsernameID = payload["user_id"];
         }
@@ -181,9 +186,12 @@ export default new Vuex.Store({
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //})
     },
-    allOrdersWithoutEnd({ commit }) {
+    allOrdersWithoutEnd({ commit, state }) {
       axios
-        .get(`${"http://192.168.1.13:5000"}/ordersWithoutEnd`)
+        .get(
+          `${"http://192.168.1.13:5000"}/ordersWithoutEnd/` +
+            state.loginUsernameID
+        )
         .then(response => {
           commit("ALL_ORDERS", response.data);
         });
@@ -204,7 +212,7 @@ export default new Vuex.Store({
     },
     updateOrderStatus({ commit }, payload) {
       commit("ADD_ORDER");
-      console.log(payload)
+      console.log(payload);
       axios
         .post(
           `${"http://192.168.1.13:5000"}/updateorderstatus/` +
@@ -217,7 +225,7 @@ export default new Vuex.Store({
     },
     updateOrderCookStatus({ commit }, payload) {
       commit("ADD_ORDER");
-      console.log("updatinggggg")
+      console.log("updatinggggg");
       axios
         .post(
           `${"http://192.168.1.13:5000"}/updateordercookstatus/` +
@@ -243,6 +251,7 @@ export default new Vuex.Store({
       //  commit(ADD_ORDER_SUCCESS, response.data)
       //}),
       state.ordersDone += 1;
+      commit("CLEAR_ORDERS");
     },
     checkLogin({ commit }, payload) {
       commit("ADD_ORDER");
@@ -270,12 +279,14 @@ export default new Vuex.Store({
       commit("NEW_ORDER", payload);
     },
     SOCKET_checkDatabesOrders({ dispatch }) {
-      console.log("SOCKET_checkDatabesOrders");
       dispatch("allOrdersWithoutEnd");
       // dispatch("allOrdersFoodWithoutEnd");
     },
     SOCKET_orderEnd({ dispatch }) {
-      console.log("SOCKET_checkDatabesOrders");
+      dispatch("allOrdersWithoutEnd");
+      // dispatch("allOrdersFoodWithoutEnd");
+    },
+    SOCKET_orderChanged({ dispatch }) {
       dispatch("allOrdersWithoutEnd");
       // dispatch("allOrdersFoodWithoutEnd");
     }
@@ -327,7 +338,7 @@ export default new Vuex.Store({
     allOrdersDrinksById: state => {
       var order_drinks = [];
       for (var i = 0; i < state.orderById.length; i++)
-        if (state.orderById[i].type_id < 15){
+        if (state.orderById[i].type_id < 15) {
           order_drinks.push(state.orderById[i]);
           console.log("state: " + state.orderById[i]);
         }

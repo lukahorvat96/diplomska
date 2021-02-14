@@ -27,6 +27,16 @@
     >
       {{ showServed() }}
     </v-btn>
+    <v-btn
+      class="mr-2"
+      v-show="orderStatusSNotConfirmed"
+      v-on:click="updateOrderStatusUnconfirm()"
+      elevation="2"
+      color="red"
+      tile
+    >
+      UNCONFIRM
+    </v-btn>
     <!-- <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
       ORDER DONE
     </v-btn> -->
@@ -52,7 +62,18 @@ export default {
       if (
         // this.order.order_status == "Not served" ||
         this.order.cook_status == "" ||
-        this.order.cook_status == "CONFIRMED"
+        this.order.cook_status == "CONFIRMED" ||
+        this.order.cook_status == "UPDATED"
+      )
+        return true;
+      else return false;
+    },
+    orderStatusSNotConfirmed() {
+      console.log("STATUS: " + this.order.order_status);
+      if (
+        // this.order.order_status == "Not served" ||
+        this.order.cook_status == "" ||
+        this.order.cook_status == "UPDATED"
       )
         return true;
       else return false;
@@ -80,6 +101,13 @@ export default {
         };
         this.$store.dispatch("updateOrderCookStatus", latest);
       }
+    },
+    updateOrderStatusUnconfirm() {
+      const latest = {
+        order_id: this.order.order_id,
+        cook_status: "UNCONFIRMED"
+      };
+      this.$store.dispatch("updateOrderCookStatus", latest);
     },
     endOrder() {
       this.$store.dispatch("endOrder", this.order.order_id);

@@ -1,0 +1,7 @@
+Glavni del
+Opis problema
+Predlagana rešitev
+Načrtovanje aplikacije
+Razvoj aplikacije 
+Delovanje/uporaba aplikacije
+Diskusija

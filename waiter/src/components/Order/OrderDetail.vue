@@ -30,7 +30,7 @@
       {{ showServed() }}
     </v-btn>
     <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
-      PRINT THE INVOICE
+      INVOICE
     </v-btn>
   </v-card>
   <!-- <v-card :loading="loading ? 'blue': null">

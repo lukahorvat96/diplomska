@@ -440,7 +440,7 @@ def updateOrder(orderID):
     for detail in data:
         result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['product_id']) + " AND productorder.Order_id=" + str(orderID))
         productType = SQLqueryProductType("SELECT producttype.ProductType_type FROM producttype, product WHERE producttype.ProductType_id = product.ProductType_id AND product.Product_id = "+str(detail['product_id']))
-        print("PRODUCT TYPE: "+ str(productType[0]['product_type']))
+        print("PRODUCT TYPE: -"+ str(productType[0]['product_type'])+"-")
         if len(result) == 0:
             print("DODAJAM V BAZO!")
             query = '''INSERT INTO `productorder` ( Product_id, 
@@ -450,8 +450,8 @@ def updateOrder(orderID):
             value = (detail['product_id'],orderID,detail['totalPrice'],detail['quantity'])
             rowcount = SQLinsert (query,value)
             print("ROW: "+ str(rowcount) + " DODANO V BAZO: " + str(orderID) + " PRODUCT ID: " + str(detail['product_id']))
-            if(productType[0]['product_type'] == 'Food'):
-                isFood+=1
+            if(productType[0]['product_type'] == "Food"):
+                isFood = isFood + 1
         else:
             if ((result[0]['product_quantity']) != detail['quantity'] ):
                 query = "UPDATE productorder SET productorder.Product_total_price = %s, productorder.Product_quantity = %s WHERE Order_id = %s AND Product_id = %s"
@@ -461,8 +461,8 @@ def updateOrder(orderID):
                 mydb.get_db().commit()
                 mycursor.close()
                 print(mycursor.rowcount, "POSDOBLJENO V BAZI; PRODUCT ID: " + str(detail['product_id']) + " NEW QUAN: "+ str(detail['quantity']))
-                if(productType[0]['product_type'] == 'Food'):
-                    isFood+=1
+                if(productType[0]['product_type'] == "Food"):
+                    isFood = isFood + 1
     print("IS FOOD: "+str(isFood))
     if(isFood != 0):
         query = "UPDATE `order` SET Order_status = %s, Cook_status = %s WHERE Order_id = %s"

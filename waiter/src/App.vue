@@ -71,7 +71,9 @@
       <v-toolbar-title class="blacksword-font">RESTAURANT</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="login" class="orders">
-        Waiting: {{ ordersWaiting }}<br />Done: {{ ordersDone }}
+        <div v-if="waiter">
+          Waiting: {{ ordersWaiting }}<br />Done: {{ ordersDone }}
+        </div>
       </div>
     </v-app-bar>
 

@@ -322,7 +322,8 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 
 %\noindent\textbf{Povzetek:} 
 \noindent 
-Pride na koncu.
+Slovenija velja za državo z veliko število restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji je bilo nekaj projektov s podobnimi idejami, vendar z napačnimi cilji zaradi katerih so bili neuspešni. Eden izmed razlogov, da jim ni uspelo, je bilo sabotiranje sistemov s strani natakarjev, saj so misli da bo tehnologija zamenjala njegove službe. V zavedanju teh problematik smo se odločil narediti diplomski nalogo na to temo. Rezultat je aplikacija katero lahko uporabimo kot pregledovalnik hrane in pijače, ki jo ponuja restavracija, ali pa kot sistem za naročanje. Njen glavni namen je olajšati delo natakarjem in kuharjem. S tem bi pridobili na času, kar bi izbošljšalo kvaliteto in hitrost postrežbe ter izdelave hrane in pijače. 
+V diplomski nalogi najprej opišemo kako smo prišli do ideje, sam razvoj in delovanje aplikacije. Na koncu smo naredili tudi primerjavo s trenutno konkurenco na trgu oziroma z aplikacijo, ki vemo da ni uspela. 
 
 \noindent\textbf{Ključne besede:} \tkeywords.
 % prazna stran
@@ -356,17 +357,15 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
 
 \chapter{Uvod}
-Slovenija velja za državo z veliko število restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji je bilo nekaj projektov s podobnimi idejami, vendar z napačnimi cilji zaradi katerih so bili neuspešni. Eden izmed razlogov da jim ni uspelo je bilo sabotiranje sistemov s strani natakarjev, saj so misli da bo tehnologija zamenjala njegove službe. V zavedanju teh problematik smo se odločil narediti diplomski nalogo na to temo. 
+Tehnologije v sedanjem času predstavljajo velik napredek na vseh področij. Na strani gostinstva ni drastičnih napredkov, saj sem to ugotovil kar na osnovi lastnih izkušen. Kot študent fakultete za računalništvo in informatiko sem opravljal delo v eni izmed restavracij, saj biti študent z dodatnim zaslužkom ni dilema. Opravljal sem delo dostavljavca hrane v eni izmed bližnji restavraciji, hkrati pa opazoval potek dela v kuhinji in strežbi. Kasneje sem napredoval v strežbo in kot programer hitro opazil stvari, ki bi se jih dalo izboljšati. Najbolj me je motilo nezadovoljstvo strank ob veliki zasedenosti restavracije. Preprosto en človek ne uspe postreči več kot eno mizo na enkrat. Zato sem si zamislil sistem za naročanje hrane, ki ne bi bil namenjen zamenjavi ljudi v strežbi, vendar kot pregledovalnik (angl. Menu) ali pa kot sistem za naročanju hrane in pijače. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi preprosto naročila z uporabo aplikacije na tablici, ki bi bila vedno dosegljiva na vsaki mizi. 
+\section {Problematika}
+Z izdelavo spletne aplikacije sem želel zagotoviti lažje delovanje restavracij predvsem olajšati delo natakarjem, ki bi se potem lažje osredotočili na kakovost postrežbe pijač in jedi. Izboljšati sem želel čas postrežbe gostov, kar bi prizaneslo tudi k večjemu število postreženih gostov v nekem časovnem obdobju. Naredil sem analizo, ki si jo lahko pogledate v članku 3.2. Vsekakor ni moja aplikacija namenjena zamenjavi delovnih mest, vendar samo pohitritvi strežbe. To bi vplivalo tudi na zmanjšanje časa, ki ga gost porabi v primeru, da je natakar zelo zaseden. Obstajajo tablice, katere uporabljajo natakarji pri sprejemanju naročil, ki predvsem pomagajo, da si ne rabijo vsega zapomniti in da lahko pobirajo zaporedna naročila. Iz lastnih izkušenj vem, da z uporabo spomina pride hitreje do napak, saj si preprosto ne moreš vsega zapomniti. Težava je tudi v tem, da moraš za vsako pobrano naročilo do blagajne, da naročilo ne čaka in čimprej pride do kuharja oziroma natakarja, ki pripravlja pijače. Po navadi največ pri pobiranju naročil vzamejo  gosti, ki se radi premišljujejo zadnje minute, kar ni nič narobe. Ko sem opravljal delo natakarja sem se spraševal zakaj ne bi ta čas raje posvetil strežbi oziroma pripravi naročil, kot pa pobiranju naročil strank, ki ne vedo kaj bi. Ta aplikacija bi še dodatno zmanjšala čas pobiranja naročil, saj natakar včasih pride prehitro ali pa prepozno, vendar z uporabo aplikacije bi bilo naročanje vedno na voljo. 
 
-Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi bil namenjen zamenjavi ljudi v strežbi, temveč kot pregledovalnik (angl. Menu) oziroma naročanju hrane in pijače. Aplikacija za stranke bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Natakarju bi s tem omogoči več časa, katerega bi lahko posvetil pripravi pijače, kvaliteti postrežbe in ostalih dolžnosti. Tudi stranke, katere sedaj veljajo za bolj zahtevne in neučakane na vseh področij, bi bile hitreje in bolj kvalitetno postrežene. Tako bi imeli poleg restavracij z hitro prehrano tudi restavracije s hitro postrežbo. 
+\section {Ideja}
+Aplikacijo sem si zamislil v treh pogledih, in sicer uporabnik oziroma gost, natakar in kuhar. Gost bi imel na voljo pregled vseh pijač in jedi, ki jih restavracija ponuja. S tem bi pripomogel k ekologiji, saj restavracije ne bi več potrebovale papirnatih menijev. Natakar in kuhar bi imela pregled nad naročili. Naročilo bi razdelil v dva dela, da ima tako natakar kot kuhar nadzor samo nad svojimi naročili. S tem bi omogočil, da se lahko kreira statistika za vsakega posebej.
 
-Aplikacija bi bila sestavljena iz treh osnovnih pogledov, ki bi bili namenjeni gostu, natakarju in kuharju. 
-
-
-\chapter{Struktura in razvoj aplikacije}
-
-
-\section{Podatkovna baza}
+\chapter{Uporabljene tehnologije in programske opreme}
+V diplomski nalogi sem se srečeval predvsem z naslednjimi programskimi jeziki: JavaScript, Python, SQL. Vse podrobnosti pa so opisane v spodnjih poglavjih.
 
 \section {Vue.js}
 JavaScript je programski jezik, zaradi katerega so spletne strani postale dinamične in bolj zmogljive. Z njem smo programsko kodo, ki je bila na strežniškem delu, preselili v brskalnik. Tako smo na začetku dobili veliko JavaScript programske kode povezane z različnimi HTML in CSS datotekami brez kakršne koli formalne organizacije (poznano kot «script»). Zaradi tega smo razvijalci začeli uporabljati JavaScript Frameworks, saj poenostavijo izdelavo aplikacij.

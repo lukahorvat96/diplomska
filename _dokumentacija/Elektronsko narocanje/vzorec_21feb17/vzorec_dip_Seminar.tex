@@ -364,40 +364,40 @@ Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi bil name
 Aplikacija bi bila sestavljena iz treh osnovnih pogledov, ki bi bili namenjeni gostu, natakarju in kuharju. 
 
 \chapter{Struktura in razvoj aplikacije}
-Aplikacija je sestavljena iz treh pogledov, in sicer uporabnik oziroma gost, natakar in kuhar katere fukcionalosti lahko vidite na sliki~\ref{FunkVloge}.
-\begin{figure}[h]
+Aplikacija je sestavljena iz treh pogledov, in sicer uporabnik oziroma gost, natakar in kuhar katere fukcionalosti prikazuje slika~\ref{FunkVloge}.
+
+
+Gost lahko odda, spremeni ali zaključi naročilo. Za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. V restavraciji je lahko večje število miz.
+Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko neomejeno število natakarjev, ki streže istočasno. 
+Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
+
+\begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=9cm]{Funkcije_po_vlogah.jpg}
+\includegraphics[width=7cm]{Funkcije_po_vlogah.jpg}
 \end{center}
-\caption{Funkcionalnosti aplikacije po vlogah}
+\caption{Diagram primerov uporabe spretnega naročanja}
 \label{FunkVloge}
 \end{figure}
 
-Gost lahko odda, spremeni ali zaključi naročilo. Za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. V restavraciji je lahko neomejeno število miz.
-Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko neomejeno število natakarjev, ki streže istočasno. 
-Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitve je v podatkovnem modelu.
-
-
 Za delovanje sistema sem uporabil podatkovno bazo, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje koncept moje aplikacije.
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=15cm]{Struktura_aplikacije.png}
-\end{center}
-\caption{Struktura aplikacije}
-\label{StrukApk}
-\end{figure}
 
 Podatkovna baza je namenjena shranjevanju vseh podatkov, ki so pomembni, da se ne izgubijo oziroma se razlikujejo za vsako restavracijo. 
 Strežnik je kot neke vrste RESTful vmesnik, ki servira podatke iz podatkovne baze odjemalcu. 
 Odjemaleca sta v našem primeru dve ločeni spletni aplikaciji, in sicer za gosta ter natakarja oziroma kuharja, ki je skupen.
 
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=15cm]{Struktura_aplikacije.png}
+\caption{Struktura aplikacije}
+\label{StrukApk}
+\end{figure}
 
 \section{Podatkovna baza}
-Najprej smo se lotili izdelave podatkovne baze katero fizično obliko lahko vidite na sliki~\ref{Database_physical}. Sestavljena je iz šestih tabel katere so bolj podrobno opisane spodaj.
+Najprej smo izdelali podatkovno bazo katero fizično obliko lahko vidite na sliki~\ref{Database_physical}. Sestavljena je iz šestih tabel katere so bolj podrobno opisane spodaj.
 
-\begin{figure}[h]
+\begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=10cm]{Database_physical}
+\includegraphics[width=0.5\textwidth]{Database_physical}
 \end{center}
 \caption{Fizična oblika podatkovne baze}
 \label{Database_physical}
@@ -423,7 +423,7 @@ Najbolj zahtevno je napolniti podatkovno bazo, katero delo smo si olajšali s po
 
 
 \section{Strežnik}
-Strežnik smo izdelali po zahtevah RESTful arhitekture, ki vsebuje 6 načel. 
+Strežniški del aplikacije smo izdelali po zahtevah RESTful arhitekture, ki vsebuje 6 načel. 
 
 1.) Client-server - omogoča razširljivost uporabniškega dela na več platformah s poenostavitvijo strežniških komponent. 
 
@@ -459,10 +459,10 @@ Strežnik smo napisali v programske jeziku Python in knjižnici Flask. Zaradi te
 Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django spletnim vmesnikov je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django. 
 
 \section{Odjemalec}
-Aplikacija napisana v programskem jeziku JavaScript in Frame Vue. Gre za moderen, odziven in reaktiven vmesnik, ki deluje v realnem času. Ne bi potreboali JavaScript zaradi RESTful arhitekutre, ki omogoča katerokoli platformo na strani odjemalca.
 
-Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna točka reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. 
+Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, JS) ali pa v namenski mobilni aplikaciji. Mi smo se odločili za programskem jezik JavaScript in knjižnico Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna točka reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. To prednost sem izkoristil in dodal še knjižnico Vuex, ki služi kot centralizirana baza podatkov za vse komponente v aplikaciji. Podatke i
 
+Da bi to dosegli ne bi potreboali JavaScript zaradi RESTful arhitekutre, ki omogoča katerokoli platformo na strani odjemalca.
 
 \subsection {Kaj je reaktivnost?}
 Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Dober primer reaktivnosti je npr. funkcija SUM, ki jo uporabljamo v Excelu. Slika~\ref{Excel-SUM} prikazuje primer v Excelu.

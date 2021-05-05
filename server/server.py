@@ -262,7 +262,8 @@ def allFoods():
 
 @app.route('/drinks')
 def allDrinks():
-    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink'"))
+    return jsonify(SQLqueryProduct("SELECT * FROM product, producttype WHERE \
+    product.ProductType_id=producttype.ProductType_id AND producttype.ProductType_type='Drink'"))
 
 @app.route('/bottledbeer')
 def allBeers():

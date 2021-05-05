@@ -424,19 +424,37 @@ Za izvoz podatkovne baze smo uporabili MySQL. To je eden od odprtokodnih sistemo
 Najbolj zahtevno je bilo napolniti podatkovno bazo, katero delo smo si olajšali s pomočjo phpMyAdmin. To je ime za spletni vmesnik, ki omogoča upravljane z MySQL podatkovnimi bazami. Program je vključen v XAMPP in sicer znotraj aplikacije MySQL. Je zelo močno orodje in predvsem enostavno za uporabo.
 
 \section{Strežnik}
-Strežniški del aplikacije smo izdelali po zahtevah RESTful arhitekture, ki vsebuje 6 načel. 
+Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno na je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Zato smo izbrali REST arhitekturo, ki zahteva določena načela, katera so bolj podrobno opisana spodaj. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. 
 
-1.)\textit{ Client-server} - zahteva ločitev odjemalca od strežnika kar onemogča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežiški del razvijaj ali zamenjujeje neodvisno.
+1.)\textit{ Client-server} - zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (naročnik, kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omogoča določeno število hkratnih poizvedb. V naši aplikaciji te omejitve nismo nikoli presegli.
 
-2.) Stateless - vsaka zahteva od odjemalca mora vsebovati vse potrebne podatke, da pridobi odogovor. Strežnik ne shranjuje lokalno nobenih podatkov od odjemalca, vendar jih glede na zahtevek samo prebere ali pa zapiše v podatkovno bazo.
+2.)\textit{Stateless} - vse interakcije med strežnikom in odjemalcem morajo biti brez stanja (stateless). Strežnik ne sme shranjevati nobenih status oziroma more vsako zahtevo od odjemalca tretirati kot popolnoma novo. V programski kodi našega strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vse kar odjemalec zahteva se prebere iz podatkovne baze in vrne odjemalcu. 
 
-3.) Cachable - vsak odgovor od strežnika more biti označen kot cacheable or non-cacheable. S tem odjemalec ne zahteva od strežnika eno in isto zadevo, razen če v primeru, da je prišlo do sprememb v podatkih.
+3.)\textit{Cachable} - predpomnjenje prinaša izboljšanje zmogljivosti na strani odjemalca in boljši obseg razširljivosti strežnika, ker se obremenitev zmanjša. V REST aplikacijah se predpomnjenje uporabi za vire, ki to potrebujejo. Sami tega nismo uporabili, saj nimamo tako zahtevnih virov.
 
-4.) Uniform interface - zahteva enoten vmensika API med strežnikom in odjemalcem za določene vire, ki imajo lahko samo en logični URI. Arhitertura omogoča, da se vsak del razvija neodvisno. Zato so tukaj še štiri podnačela, ki vodijo do enotnega vmesnika. kar pomeni da morajo uporabljeni morajo biti standardi oziroma globalni koncepti npr. HTTP standart za opis komunikacije -  - ali gre za GET, POST,...  Mi smo to zagotovili s serviranjem podatkov odjemalcu v JSON formata, ki ga je mogoče uporabiti v vseh programskih jezikih.
+4.)\textit{Layered system} - slojevit sistem, sestavljen iz hierarhičnih slovej z namenom omejevanja komponent.
 
-5.) Layered system - slojevit sistem, sestavljen iz hierarhičnih slovej z namenom omejevanja komponent.
+5.)\textit{Code on demand (optional)} -  opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca.
 
-6.) Code on demand (optional) -  opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca.
+6.)\textit{Uniform interface} - zahteva enoten vmesnik (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov je potrebno uporabiti točno določena podatkovna formata XML in JSON. 
+
+Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik najprej podatke prebere iz podatkovne baze s pomočjo MySQL knjižnice in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki LALAL je prikazana funkcija za branje podatkov iz podatkovne baze. Spremenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. in izpisovanje na povezavo z imenom drinks.  
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{drinks_1.jpg}
+\end{center}
+\caption{Funkcija, ki kliče}
+\label{Database_physical}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{drinks_2.jpg}
+\end{center}
+\caption{Funkcija, ki kliče}
+\label{Database_physical}
+\end{figure}
 
 Vsa zgoraj našteta navodila smo morali upoštevati pri izdelavi strežnika. Tako smo dobili vmesnik, ki na zahtevo odjemalca servira podatke v JSON formatu. Primer na sliki~\ref{ServerEX}, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi urejanje in brisanje podatkov v podatkovni bazi, vendar zato more biti ustrezna HTTP metoda POST. Spremljanje zahtevkov, ki prihajajo na strežnik, je mogoče preko CLI vmesnika, slika ~\ref{ServerEX2}, ki v primeru nepopolnosti servirajo ustrezno napako.
 

@@ -424,105 +424,58 @@ Za izvoz podatkovne baze smo uporabili MySQL. To je eden od odprtokodnih sistemo
 Najbolj zahtevno je bilo napolniti podatkovno bazo, katero delo smo si olajšali s pomočjo phpMyAdmin. To je ime za spletni vmesnik, ki omogoča upravljane z MySQL podatkovnimi bazami. Program je vključen v XAMPP in sicer znotraj aplikacije MySQL. Je zelo močno orodje in predvsem enostavno za uporabo.
 
 \section{Strežnik}
-Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno na je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Zato smo izbrali REST arhitekturo, ki zahteva določena načela, katera so bolj podrobno opisana spodaj. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. 
+Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno nam je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Izbrali smo REST arhitekturo, ki zahteva določena načela \cite{RESTAPI}, katera so bolj podrobno opisana spodaj. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. 
 
-1.)\textit{ Client-server} - zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (naročnik, kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omogoča določeno število hkratnih poizvedb. V naši aplikaciji te omejitve nismo nikoli presegli.
+1.)\textit{ Client-server} - zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (gost in natakar/kuhar), kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
 
-2.)\textit{Stateless} - vse interakcije med strežnikom in odjemalcem morajo biti brez stanja (stateless). Strežnik ne sme shranjevati nobenih status oziroma more vsako zahtevo od odjemalca tretirati kot popolnoma novo. V programski kodi našega strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vse kar odjemalec zahteva se prebere iz podatkovne baze in vrne odjemalcu. 
+2.)\textit{Stateless} - vse interakcije med strežnikom in odjemalcem morajo biti brez stanja (stateless). Strežnik ne sme shranjevati nobenih stanj oziroma more vsako zahtevo od odjemalca tretirati kot popolnoma novo. V programski kodi našega strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vse kar odjemalec zahteva se prebere iz podatkovne baze in vrne odjemalcu. 
 
 3.)\textit{Cachable} - predpomnjenje prinaša izboljšanje zmogljivosti na strani odjemalca in boljši obseg razširljivosti strežnika, ker se obremenitev zmanjša. V REST aplikacijah se predpomnjenje uporabi za vire, ki to potrebujejo. Sami tega nismo uporabili, saj nimamo tako zahtevnih virov.
 
-4.)\textit{Layered system} - slojevit sistem, sestavljen iz hierarhičnih slovej z namenom omejevanja komponent.
+4.)\textit{Layered system} - slojevit sistem, sestavljen iz hierarhičnih slojev kjer npr. za API vmesnik uporabimo strežnik A, za shranjevanje podatkov strežnik B ter strežnik C za avtenticiranje zahtev. S tem odjemalec ne more ugotoviti ali komunicira s končnim strežnikom ali s posrednikom.
 
-5.)\textit{Code on demand (optional)} -  opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca.
+5.)\textit{Code on demand (optional)} -  opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca. To smo vpeljali s pomočjo spletnih vtičnikov (websocket), kjer so bolj podrobno opisani spodaj.
 
-6.)\textit{Uniform interface} - zahteva enoten vmesnik (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov je potrebno uporabiti točno določena podatkovna formata XML in JSON. 
+6.)\textit{Uniform interface} - zahteva enoten vmesnik (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov je potrebno uporabiti točno določena podatkovna formata XML ali JSON. 
 
-Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik najprej podatke prebere iz podatkovne baze s pomočjo MySQL knjižnice in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki LALAL je prikazana funkcija za branje podatkov iz podatkovne baze. Spremenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. in izpisovanje na povezavo z imenom drinks.  
+Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django spletnim vmesnikov je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
 
+Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik najprej podatke prebere iz podatkovne baze s pomočjo MySQL knjižnice in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze. Spremenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti /drinks. Naš strežnik vsebuje kar 34 relativni povezav in 600 vrstic programske kode.
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{drinks_1.jpg}
 \end{center}
-\caption{Funkcija, ki kliče}
-\label{Database_physical}
+\caption{Funkcija, ki prebere podatke iz podatkovne baze}
+\label{Drinks_DB_function}
 \end{figure}
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{drinks_2.jpg}
 \end{center}
-\caption{Funkcija, ki kliče}
-\label{Database_physical}
+\caption{Funkcija, ki na na relativno stran /drinks oglasi podatke}
+\label{Drinks_URI}
 \end{figure}
 
-Vsa zgoraj našteta navodila smo morali upoštevati pri izdelavi strežnika. Tako smo dobili vmesnik, ki na zahtevo odjemalca servira podatke v JSON formatu. Primer na sliki~\ref{ServerEX}, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi urejanje in brisanje podatkov v podatkovni bazi, vendar zato more biti ustrezna HTTP metoda POST. Spremljanje zahtevkov, ki prihajajo na strežnik, je mogoče preko CLI vmesnika, slika ~\ref{ServerEX2}, ki v primeru nepopolnosti servirajo ustrezno napako.
+Tako smo dobili vmesnik, ki na zahtevo odjemalca servira podatke v JSON formatu. Primer na sliki~\ref{ServerEX}, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi sprejemanje podatkov, vendar more biti zato ustrezna HTTP metoda. POST metodo smo uporabljali predvsem pri posredovanju podatkov strežniku, kateri so bili potrebni za zapis v podatkovno bazo. Spremljanje zahtevkov, ki prihajajo na strežnik je mogoče preko CLI vmesnika, slika ~\ref{ServerEX2}, ki v primeru nepopolnosti servirajo ustrezno napako.
 
-\begin{figure}
+\begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11cm]{Server_example.jpg}
+\includegraphics[width=10cm]{Server_example.jpg}
 \end{center}
 \caption{Primer serviranja podatkov na strežniku}
 \label{ServerEX}
 \end{figure}
-\begin{figure}
+
+\begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=10cm]{Server_example_2.jpg}
+\includegraphics[width=12cm]{Server_example_2.jpg}
 \end{center}
 \caption{Primer spremljanja zahtevkov, ki prihajajo na strežnik}
 \label{ServerEX2}
 \end{figure}
 
-Strežnik smo napisali v programske jeziku Python in knjižnici Flask. Zaradi težav s sinhronizacijo podatkov v realnem času na strani odjemalca smo znotraj Flask uporabil še WebSocket. To je napredna tehnologija, ki omogoča odpiranje dvosmerne interaktivne komunikacijske seje med odjemalcem in strežnikom. Primer uporabe je npr. pogovor preko družbenih omrežjih. V naši aplikaciji so s tem lahko vsi odjemalci hkrati obveščani o spremembah na strani podatkovne baze. 
-
-Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django spletnim vmesnikov je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django. 
-
-
-Zahtevek:
-
-\begin{verbatim}
-C:\Users\lukah>curl -I http://192.168.1.13:5000/drinks
-HTTP/1.0 200 OK
-Content-Type: application/json
-Content-Length: 5066
-Access-Control-Allow-Origin: *
-Server: Werkzeug/0.16.0 Python/3.7.3
-Date: Tue, 02 Mar 2021 20:23:57 GMT
-\end{verbatim}
-
-\begin{verbatim}
-C:\Users\lukah>curl http://192.168.1.13:5000/drinks 
-  {
-    "product_id": 1,
-    "name": "Somersby Apple",
-    "price": 3,
-    "size": "0.33L",
-    "calorie": "207",
-    "picture": "somersby-apple.png",
-    "description": null,
-    "type_id": 1
-  },
-  {
-    "product_id": 2,
-    "name": "Heineken",
-    "price": 2,
-    "size": "0.25L",
-    "calorie": "110",
-    "picture": "heineken.png",
-    "description": null,
-    "type_id": 2
-  },
-  {
-    "product_id": 3,
-    "name": "Heineken",
-    "price": 3.5,
-    "size": "0.5L",
-    "calorie": "220",
-    "picture": "heineken.png",
-    "description": null,
-    "type_id": 2
-  },
-\end{verbatim}
+Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potrebovali implementirat še spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca, ki zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga za obveščanje odjemalcov o spremembah v podatkovni bazi. Za to smo uporabljali predvsem funkcijo emit, ki pomeni oddajanje. Omogoča tudi dodajanje podatkov in izbiranje načina razpršenega oddajanja (broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se le te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo emit, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
 
 \section{Odjemalec}
 
@@ -569,7 +522,7 @@ Tako kot vsak programski jezik ima tudi Vue svoje dodatke, ki pomagajo pri razvo
 
 
 \chapter {Delovanje aplikacije}
-\section{Vmesnik za gosat}
+\section{Vmesnik za gosta}
 \section{Vmesnik za natakarja}
 \section{Vmesnik za kuharja}
 

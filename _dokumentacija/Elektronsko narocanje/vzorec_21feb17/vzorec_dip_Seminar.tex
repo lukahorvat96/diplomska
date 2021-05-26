@@ -361,7 +361,7 @@ Slovenija velja za državo z veliko število restavracij, vendar le malo iz med 
 
 Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi bil namenjen zamenjavi ljudi v strežbi, temveč kot pregledovalnik (angl. Menu) oziroma naročanju hrane in pijače. Aplikacija za stranke bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Natakar bi tako imel več časa, katerega bi lahko posvetil pripravi pijače, kvaliteti postrežbe in ostalih dolžnosti. Tudi stranke, katere sedaj veljajo za bolj zahtevne in neučakane na vseh področij, bi bile hitreje in bolj kvalitetno postrežene. Tako bi imeli poleg restavracij z hitro prehrano tudi restavracije s hitro postrežbo. 
 
-Aplikacija bi bila sestavljena iz treh osnovnih pogledov, ki bi bili namenjeni gostu, natakarju in kuharju. 
+Aplikacija podpira tri uporabniške vloge, in sicer gost, natakar in kuhar. 
 
 \chapter{Razvoj in struktura aplikacije}
 
@@ -371,22 +371,20 @@ Uporabili smo strukturo novodbih aplikacij katero sestavljajo podatkovna baza, s
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=11cm]{Skica1.jpg}
-\caption{Struktura aplikacije}
+\includegraphics[width=11cm]{Skica1.png}
+\caption{Visokonivojska arhitektura}
 \label{StrukApk}
 \end{figure}
 
 Podatkovna baza je namenjena shranjevanju vseh podatkov, ki so pomembni, da se ne izgubijo oziroma se razlikujejo za vsako restavracijo. 
-Strežnik je kot neke vrste RESTful vmesnik, ki servira podatke iz podatkovne baze odjemalcu. 
-Odjemaleca sta v našem primeru dve ločeni spletni aplikaciji, in sicer za gosta ter natakarja oziroma kuharja, ki je skupen.
+Strežnik implementira RESTful vmesnik, ki odjemalcu servira podatke iz podatkovne baze. Odjemalec sta v našem primeru dve aplikaciji implementirani s pomočjo spletnih tehnologij.
 
-Gost lahko odda, spremeni ali zaključi naročilo. Za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. V restavraciji je lahko večje število miz.
-Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko večje število natakarjev, ki streže istočasno. 
-Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
+Odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. Gost lahko odda, spremeni ali zaključi naročilo. 
+Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11cm]{Skica2.jpg}
+\includegraphics[width=12cm]{Skica2.png}
 \end{center}
 \caption{Diagram primerov uporabe spretnega naročanja}
 \label{FunkVloge}
@@ -395,52 +393,51 @@ Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravl
  
 
 \section{Podatkovna baza}
-Na podlagi izdelanega diagrama zahtev oziroma fukcij smo izdelali fizično obliko podatkovne baze (slika~\ref{Database_physical}), katero smo kasneje pretvorili v MySQL. Podatkovna baza je sestavljena je iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
+Na podlagi izdelanega diagrama zahtev oziroma fukcij smo izdelali logičen podatkovni model (slika~\ref{Database_physical}), katerega smo kasneje realizirali s pomočjo SUPB MySQL. Podatkovna baza je sestavljena je iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.85\textwidth]{Database_physical}
 \end{center}
-\caption{Fizična oblika podatkovne baze}
+\caption{Logični podatkovni model}
 \label{Database_physical}
 \end{figure}
 
-\textit{ProductType} tabela je namenjana zapisom vrsti jedi t.i. predjedi, glavne jedi, sokovi, piva,… Sestavljena je iz atributov ID, Name in Type. Atribut Type je namenjen razlikovanju hrane in pijače. To nam je pomagalo pri razločevanju artiklov v naročilu, saj kuhar ne potrebuje pregleda nad naročili, ki vsebujejo samo pijače. 
+\textit{ProductType} tabela je namenjana zapisom vrsti jedi t.i. predjedi, glavne jedi, sokovi, piva,… Sestavljena je iz atributov ID, Name in Type. Atribut Type je namenjen razlikovanju hrane in pijače. Uporabljen je za razločevanje artiklov v naročilu, saj kuhar ne potrebuje pregleda nad naročili, ki vsebujejo samo pijače. 
 
-\textit{Product} tabela je namenjena opisu hrane in pijače ter je sestavljena iz atributov: ID, Name, Price, Size, Calorie, Picture in Description.  V atribut Picture se zapiše ime slike, ki se prikaže v aplikaciji. Vse slike smo shranjevali v datoteki na lokalnem strežniku Apache.
+\textit{Product} tabela je namenjena opisu hrane in pijače ter je sestavljena iz atributov: ID, Name, Price, Size, Calorie, Picture in Description.  V atribut Picture se zapiše ime slike, ki se prikaže v aplikaciji. Vse slike smo shranjevali v datotečnem sistemu spletnega strežnika.
 
 \textit{ProductOrder} tabela je namenjena količini in končni ceni vsake hrane in pijače v naročilu. Sestavljena je iz atributov: TotalPrice in Quantity. Zapis ne more obstajati če nima definiranega naročila. Tabela je nastala zaradi razmerja M:N t.i. mnogo-proti-mnogo med tabelo Product in Order.
 
-\textit{Order} tabela je namenjena zapisovanju naročila in njegovih podrobnosti. Sestavljena je iz atributov: ID, Start, End, OrderStatus, CookStatus, Payment. Vsebuje tudi tuji ključ ID od table Table, ki je zelo pomemben saj določuje na katero mizo je vezano naročilo. Atributa OrderStatus in CookStatus sta nemanjena sporočanju statusa naročila med vlogami. Uporabil sem ENUM za vrsto parametra, saj gre za vrednosti, ki se ne spreminjajo.
+\textit{Order} tabela je namenjena zapisovanju naročila in njegovih podrobnosti. Sestavljena je iz atributov: ID, Start, End, OrderStatus, CookStatus, Payment. Vsebuje tudi tuji ključ ID od table Table, ki določa, na katero mizo je vezano naročilo. Atributa OrderStatus in CookStatus sta nemanjena sporočanju statusa naročila med vlogami. Uporabil sem ENUM za vrsto parametra, saj gre za vrednosti, ki se ne spreminjajo.
 
 \textit{Table} tabela je namenjena shranjevanju miz v restavracijah. Sestavljajo jo atributi: ID, Name in Position, v katerega se lahko bolj podrobno opiše lokacijo mize.
 
 \textit{User} tabela je namenjena predvsem aplikativnem delu za natakarje in kuharje. Sestavljna je iz atributov: ID, Role, Name in Password. 
 
-Strukturo podatkovne baze smo naredili s pomočjo programa Toad DataModler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access, Mircrosoft SQL Server,... 
+Strukturo podatkovne baze smo naredili s pomočjo programa Toad DataModler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access, Mircrosoft SQL Server,... 
 
-Za izvoz podatkovne baze smo uporabili MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih sistemih npr. Windows, Linux, OS X,… Prva verzija je bil razvita leta 1995 s strani Michael Widenius in David Axmark. Kratica My izhaja iz imena prve hčerke očeta Michaela.  
+Podatkovni model smo implementirali na fizičnem nivoju v SUPB MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih sistemih npr. Windows, Linux, OS X,… Prva verzija je bil razvita leta 1995 s strani Michael Widenius in David Axmark. Kratica My izhaja iz imena prve hčerke očeta Michaela.  
 
-Najbolj zahtevno je bilo napolniti podatkovno bazo, katero delo smo si olajšali s pomočjo phpMyAdmin. To je ime za spletni vmesnik, ki omogoča upravljane z MySQL podatkovnimi bazami. Program je vključen v XAMPP in sicer znotraj aplikacije MySQL. Je zelo močno orodje in predvsem enostavno za uporabo.
 
 \section{Strežnik}
-Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno nam je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Izbrali smo REST arhitekturo, ki zahteva določena načela \cite{RESTAPI}, katera so bolj podrobno opisana spodaj. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. 
+Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno nam je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Izbrali smo REST arhitekturo zaradi načel, ki so opisana spodaj \cite{RESTAPI}j. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. Načela arhitekure REST so sledeča:
 
-1.)\textit{ Client-server} - zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (gost in natakar/kuhar), kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
+1.)\textit{ Odjemalec-strežnik (ang. Client-server)} zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (gost in natakar/kuhar), kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
 
-2.)\textit{Stateless} - vse interakcije med strežnikom in odjemalcem morajo biti brez stanja (stateless). Strežnik ne sme shranjevati nobenih stanj oziroma more vsako zahtevo od odjemalca tretirati kot popolnoma novo. V programski kodi našega strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vse kar odjemalec zahteva se prebere iz podatkovne baze in vrne odjemalcu. 
+2.)\textit{ Brez stanja (ang. Stateless)} morajo biti vse interakcije med strežnikom in odjemalcem. Strežnik ne sme shranjevati nobenih stanj oziroma more vsako zahtevo od odjemalca tretirati kot popolnoma novo. V programski kodi našega strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vse kar odjemalec zahteva se prebere iz podatkovne baze in vrne odjemalcu. 
 
-3.)\textit{Cachable} - predpomnjenje prinaša izboljšanje zmogljivosti na strani odjemalca in boljši obseg razširljivosti strežnika, ker se obremenitev zmanjša. V REST aplikacijah se predpomnjenje uporabi za vire, ki to potrebujejo. Sami tega nismo uporabili, saj nimamo tako zahtevnih virov.
+3.)\textit{ Predpomnjenje (ang. Cachable)} prinaša izboljšanje zmogljivosti na strani odjemalca in boljši obseg razširljivosti strežnika, ker se obremenitev zmanjša. V REST aplikacijah se predpomnjenje uporabi za vire, ki to potrebujejo. Sami tega nismo uporabili, saj nimamo tako zahtevnih virov.
 
-4.)\textit{Layered system} - slojevit sistem, sestavljen iz hierarhičnih slojev kjer npr. za API vmesnik uporabimo strežnik A, za shranjevanje podatkov strežnik B ter strežnik C za avtenticiranje zahtev. S tem odjemalec ne more ugotoviti ali komunicira s končnim strežnikom ali s posrednikom.
+4.)\textit{ Večslojni sistem (ang. Layered system)} je sestavljen iz hierarhičnih slojev kjer npr. za API vmesnik uporabimo strežnik A, za shranjevanje podatkov strežnik B ter strežnik C za avtenticiranje zahtev. S tem odjemalec ne more ugotoviti ali komunicira s končnim strežnikom ali s posrednikom.
 
-5.)\textit{Code on demand (optional)} -  opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca. To smo vpeljali s pomočjo spletnih vtičnikov (websocket), kjer so bolj podrobno opisani spodaj.
+5.)\textit{ Izvajanje programske kode na zahtevo (ang. Code on demand)} je opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca. To smo vpeljali s pomočjo spletnih vtičnikov (websocket), kjer so bolj podrobno opisani spodaj.
 
-6.)\textit{Uniform interface} - zahteva enoten vmesnik (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov je potrebno uporabiti točno določena podatkovna formata XML ali JSON. 
+6.)\textit{ Enotni vmesnik (ang. Uniform interface)} (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov se lahko uporabi poljuben format, vendar najbolj pogosta sta XML in JSON. 
 
-Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django spletnim vmesnikov je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
+Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django ogrodjem, je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
 
-Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik najprej podatke prebere iz podatkovne baze s pomočjo MySQL knjižnice in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze. Spremenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti /drinks. Naš strežnik vsebuje kar 34 relativni povezav in 600 vrstic programske kode.
+Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti /drinks. Naš strežnik vsebuje kar 34 relativni povezav in 600 vrstic programske kode.
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{drinks_1.jpg}
@@ -457,7 +454,7 @@ Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podat
 \label{Drinks_URI}
 \end{figure}
 
-Tako smo dobili vmesnik, ki na zahtevo odjemalca servira podatke v JSON formatu. Primer na sliki~\ref{ServerEX}, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi sprejemanje podatkov, vendar more biti zato ustrezna HTTP metoda. POST metodo smo uporabljali predvsem pri posredovanju podatkov strežniku, kateri so bili potrebni za zapis v podatkovno bazo. Spremljanje zahtevkov, ki prihajajo na strežnik je mogoče preko CLI vmesnika, slika ~\ref{ServerEX2}, ki v primeru nepopolnosti servirajo ustrezno napako.
+Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v JSON formatu. Primer na sliki~\ref{ServerEX}, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi sprejemanje podatkov, vendar more biti zato ustrezna metoda HTTP. Metoda POST metodo smo uporabljali predvsem pri posredovanju podatkov strežniku, kateri so bili potrebni za zapis v podatkovno bazo. Spremljanje zahtevkov, ki prihajajo na strežnik, je mogoče preko vmesnika CLI, slika ~\ref{ServerEX2}, ki v primeru nepopolnosti prikaže ustrezno napako.
 
 \begin{figure}[!htb]
 \begin{center}

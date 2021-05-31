@@ -303,6 +303,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
   {\bf SQL} & structured query language & strukturirani povpraševalni jezik za delo s podatkovnimi bazami  \\
   {\bf CLI}   & command-line interface              & znakovni uporabniški vmesnik \\
   {\bf REST}   & representational state transfer              & aktualni prenos stanja \\
+  {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -365,7 +366,20 @@ Aplikacija podpira tri uporabniške vloge, in sicer gost, natakar in kuhar.
 
 \chapter{Razvoj in struktura aplikacije}
 
-Razvoj aplikacije je potekal v treh delih in sicer zamisel strukture, izdelava diagrama primerov uporabe in implementacija.
+Razvoj aplikacije je potekal v treh delih in sicer analiza problematike oziroma izdelava diagrama primerov uporabe, zamisel strukture in implementacija.
+
+Iz analize zahtev smo za lažji pregled nad vsemi funkcionalnostmi izdelali diagram primerov uporabe, ki ga prikazuje slika~\ref{FunkVloge}.
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12cm]{Skica2.png}
+\end{center}
+\caption{Diagram primerov uporabe spretnega naročanja}
+\label{FunkVloge}
+\end{figure}
+Aplikacija oziroma odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. Gost lahko odda, spremeni ali zaključi naročilo. 
+Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
+
 
 Uporabili smo strukturo novodbih aplikacij katero sestavljajo podatkovna baza, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
 
@@ -379,16 +393,6 @@ Uporabili smo strukturo novodbih aplikacij katero sestavljajo podatkovna baza, s
 Podatkovna baza je namenjena shranjevanju vseh podatkov, ki so pomembni, da se ne izgubijo oziroma se razlikujejo za vsako restavracijo. 
 Strežnik implementira RESTful vmesnik, ki odjemalcu servira podatke iz podatkovne baze. Odjemalec sta v našem primeru dve aplikaciji implementirani s pomočjo spletnih tehnologij.
 
-Odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. Gost lahko odda, spremeni ali zaključi naročilo. 
-Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=12cm]{Skica2.png}
-\end{center}
-\caption{Diagram primerov uporabe spretnega naročanja}
-\label{FunkVloge}
-\end{figure}
 
  
 
@@ -435,7 +439,7 @@ Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalc
 
 6.)\textit{ Enotni vmesnik (ang. Uniform interface)} (API) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo (HATEOAS), ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov se lahko uporabi poljuben format, vendar najbolj pogosta sta XML in JSON. 
 
-Za to zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django ogrodjem, je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
+Zato zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django ogrodjem, je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
 
 Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti /drinks. Naš strežnik vsebuje kar 34 relativni povezav in 600 vrstic programske kode.
 \begin{figure}[!htb]
@@ -476,7 +480,7 @@ Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potreb
 
 \section{Odjemalec}
 
-Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, JS) ali pa v namenski mobilni aplikaciji. Mi smo se odločili za knjižnico in ogrodje Vue, ki je implementirano v programskem jezik JavaScript.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem skupna reaktivnost, vendar v drugačnem pomenu besede. Gre za to, da se aplikacija postopno prilagaja glede na vrednosti podatkov. To prednost smo izkoristili s poločjo ostalih knjižnik, ki so nam olajšale izdelavo. Uporabili smo naslednje:
+Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, JS) ali pa v namenski mobilni aplikaciji. Mi smo se odločili za knjižnico in ogrodje Vue, ki je implementirano v programskem jezik JavaScript.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam olajšale izdelavo. Uporabili smo naslednje:
 \begin{description}
 \item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v projekt. Zadeva izgleda nekako tako, da preko CLI vmesnika izbereš kakšen projekt želiš. Imaš seveda že privzete nastavitve, vendar omogoča tudi nastavljanje po meri. Sam sem uporabil Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
@@ -487,23 +491,24 @@ Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, 
 
 \end{description}
 
-\subsection {Knjižnica Vue in reaktivnost}
+Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz večih pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse fukcionalosti in delovanje ene in druge aplikacije je opisano v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti izgled obeh aplikacij.
 
-Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo.
-
-Vue se torej v primerjavi z navadnim JavaScriptom sprehodi skozi podatke in njihove lastnosti (angl. Properties) pretvori v fukciji Getter in Setter, ki sta nevidni uporabniku \cite{delovanjeReaktivnost}. Poglejte si sliko~\ref{VueReacitivity} za lažjo predstavo. 
-
-Torej funkcija Getter pokliče instanco Watcher z namenom odvisnosti do drugih komponent. To pomeni, če je podatek označen kot odvisen (angl.  Dependency) bodo nekateri deli programske kode oziroma funkcije poklicane vsakič, ko se spremeni vrednost podatka. Funkcija Setter pa obvesti instanco Watcher, vsakič ko se podatku spremeni lastnost. Ta poskrbi, da se pokliče funkcija upodabljanja (angl. Render) tiste komponente, ki potem prikaže spremembe v samem pogledu aplikacije. 
-
-\begin{figure}[h]
+\begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=13cm]{Vue-reactivity.jpg}
+\includegraphics[width=12cm]{gost_1.jpg}
 \end{center}
-\caption{Kateri dialekt uporabljati?}
-\label{VueReacitivity}
+\caption{Spletni vmesnik za gosta}
+\label{Gost}
 \end{figure}
 
-
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12cm]{natakar-gost_1.jpg}
+\end{center}
+\caption{Spetni vmesnik za natakarja in kuharja}
+\label{NatakarGost}
+\end{figure}
+Za uspešno obratovanje restavracije je pomembno čim hitrejša komunikacija, zato smo uporabili sp
 
 
 \chapter {Delovanje aplikacije}

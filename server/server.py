@@ -3,6 +3,9 @@ from datetime import datetime
 from flask_cors import CORS
 from flask_socketio import SocketIO, send, emit
 from flaskext.mysql import MySQL
+from flask_login import LoginManager
+from flask_login import login_user
+from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
 app = Flask(__name__)
@@ -13,6 +16,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['JSON_SORT_KEYS'] = False #unordered json object
 
+
 #import mysql.connector
 import json
 
@@ -22,6 +26,33 @@ import json
 #   passwd="",
 #   database="newprojectdb"
 # )
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+db = SQLAlchemy()
+db.init_app(app)
+class User(db.Model):
+    __tablename__ = 'user'
+    userid = db.Column(db.String, primary_key=True)
+    password = db.Column(db.String)
+    authenticated = db.Column(db.Boolean, default=False)
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+    def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return self.email
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(user_id)
 
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -556,6 +587,7 @@ def finshOrder(orderID):
 @app.route('/users', methods=['POST']) #GET requests will be blocked
 def checkUsername():
     new = {}
+    print (db)
     data =  request.get_json(force=True) 
     print("User: " + str(data['username']) + " Password: " + str(data['password']))
     result = SQLqueryUser("SELECT * FROM user WHERE user.User_name = %s", data)
@@ -567,6 +599,11 @@ def checkUsername():
     hashed = bcrypt.hashpw(passwordDB, bcrypt.gensalt())
     if bcrypt.checkpw(str.encode(data['password']), hashed):
         print("Password Match :)")
+        user = User.query.get(result[0]['user_id'])
+        user.authenticated = True
+        db.session.add(user)
+        db.session.commit()
+        login_user(user, remember=True)
         new['result'] = result[0]['user_role']
         new['user_id'] = result[0]['user_id']
         new['username'] = result[0]['user_name']
@@ -575,6 +612,7 @@ def checkUsername():
         print("Password Does not Match :(")
         new['result'] = "False"
         return new
+
 
 if __name__ == '__main__':
     socketio.run(app)

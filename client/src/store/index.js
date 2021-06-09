@@ -185,13 +185,11 @@ export default new Vuex.Store({
   actions: {
     allDrinks({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/drinks`).then(response => {
-        //console.log(response.data)
         commit("ALL_DRINKS", response.data);
       });
     },
     allFoods({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/foods`).then(response => {
-        //console.log(response.data)
         commit("ALL_FOODS", response.data);
       });
     },

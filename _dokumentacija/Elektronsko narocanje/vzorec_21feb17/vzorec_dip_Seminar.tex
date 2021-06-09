@@ -304,6 +304,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
   {\bf CLI}   & command-line interface              & znakovni uporabniški vmesnik \\
   {\bf REST}   & representational state transfer              & aktualni prenos stanja \\
   {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
+  {\bf SPA}   &  single-page application              & aplikacija na eni strani \\
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -381,7 +382,7 @@ Aplikacija oziroma odjemalec ima tri uporabniške poglede, ki so gost, natakar i
 Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
 
 
-Uporabili smo strukturo novodbih aplikacij katero sestavljajo podatkovna baza, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
+Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
 
 \begin{figure}[!htb]
 \centering
@@ -390,7 +391,7 @@ Uporabili smo strukturo novodbih aplikacij katero sestavljajo podatkovna baza, s
 \label{StrukApk}
 \end{figure}
 
-Podatkovna baza je namenjena shranjevanju vseh podatkov, ki so pomembni, da se ne izgubijo oziroma se razlikujejo za vsako restavracijo. 
+Podatkovna baza je namenjena shranjevanju vseh podatkov, da se ne izgubijo ter se razlikujejo za vsako restavracijo. 
 Strežnik implementira RESTful vmesnik, ki odjemalcu servira podatke iz podatkovne baze. Odjemalec sta v našem primeru dve aplikaciji implementirani s pomočjo spletnih tehnologij.
 
 
@@ -425,7 +426,7 @@ Podatkovni model smo implementirali na fizičnem nivoju v SUPB MySQL. To je eden
 
 
 \section{Strežnik}
-Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno nam je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Izbrali smo REST arhitekturo zaradi načel, ki so opisana spodaj \cite{RESTAPI}j. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. Načela arhitekure REST so sledeča:
+Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalcem. Ko smo izdelali podatkovno bazo smo začeli z izdelavo strežniškega dela. Najbolj pomembno nam je bilo, da je sistem zanesljiv, saj brez njega odjemalec ne more delovati. Izbrali smo REST arhitekturo zaradi načel, ki so opisana spodaj \cite{RESTAPI}. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo URI povezav oglašuje na relativnih povezavah.  Strežnik smo napisali v programskem jeziku Python ter s pomočjo knjižnic Flask, MySQL, SocketIO in CORS, kateri nameni so bolj podrobno opisani spodaj. Načela arhitekure REST so sledeča:
 
 1.)\textit{ Odjemalec-strežnik (ang. Client-server)} zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V naši aplikaciji imamo kar dva odjemalca (gost in natakar/kuhar), kar pa za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
 
@@ -480,7 +481,7 @@ Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potreb
 
 \section{Odjemalec}
 
-Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, JS) ali pa v namenski mobilni aplikaciji. Mi smo se odločili za knjižnico in ogrodje Vue, ki je implementirano v programskem jezik JavaScript.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam olajšale izdelavo. Uporabili smo naslednje:
+Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, JS) ali pa v namenski mobilni aplikaciji. Mi smo se odločili za knjižnico in ogrodje Vue, ki je implementirano v programskem jezik JavaScript.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi SPA projektov, saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam olajšale izdelavo aplikacije. Uporabili smo naslednje:
 \begin{description}
 \item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v projekt. Zadeva izgleda nekako tako, da preko CLI vmesnika izbereš kakšen projekt želiš. Imaš seveda že privzete nastavitve, vendar omogoča tudi nastavljanje po meri. Sam sem uporabil Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
@@ -491,11 +492,12 @@ Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, 
 
 \end{description}
 
-Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz večih pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse fukcionalosti in delovanje ene in druge aplikacije je opisano v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti izgled obeh aplikacij.
+
+Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz večih pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije je opisano v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti izgled obeh aplikacij.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{gost_1.jpg}
+\includegraphics[width=12.5cm]{gost_1.jpg}
 \end{center}
 \caption{Spletni vmesnik za gosta}
 \label{Gost}
@@ -508,7 +510,29 @@ Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je na
 \caption{Spetni vmesnik za natakarja in kuharja}
 \label{NatakarGost}
 \end{figure}
-Za uspešno obratovanje restavracije je pomembno čim hitrejša komunikacija, zato smo uporabili sp
+
+
+
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila,... Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov precej bolj zanesljiva in točna. Slika~\ref{SocketIO_1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12cm]{socketio_1.jpg}
+\end{center}
+\caption{Spletni vtičniki v aplikaciji za gosta}
+\label{SocketIO_1}
+\end{figure}
+
+
+Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knižnjice preberemo na strani odjemalca. 
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12cm]{axios_1.jpg}
+\end{center}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{axios_1}
+\end{figure}
 
 
 \chapter {Delovanje aplikacije}

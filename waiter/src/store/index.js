@@ -280,15 +280,12 @@ export default new Vuex.Store({
     },
     SOCKET_checkDatabesOrders({ dispatch }) {
       dispatch("allOrdersWithoutEnd");
-      // dispatch("allOrdersFoodWithoutEnd");
     },
     SOCKET_orderEnd({ dispatch }) {
       dispatch("allOrdersWithoutEnd");
-      // dispatch("allOrdersFoodWithoutEnd");
     },
     SOCKET_orderChanged({ dispatch }) {
       dispatch("allOrdersWithoutEnd");
-      // dispatch("allOrdersFoodWithoutEnd");
     }
   },
   getters: {

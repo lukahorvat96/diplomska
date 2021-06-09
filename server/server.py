@@ -3,6 +3,7 @@ from datetime import datetime
 from flask_cors import CORS
 from flask_socketio import SocketIO, send, emit
 from flaskext.mysql import MySQL
+import bcrypt
 
 app = Flask(__name__)
 #app.config['SECRET_KEY'] = 'secret!'
@@ -203,9 +204,9 @@ def SQLqueryOrderProduct(query):
         content = {}
     return payload
 
-def SQLqueryUser(query):
+def SQLqueryUser(query, data):
     mycursor = mydb.get_db().cursor()
-    myresult = mycursor.execute(query)
+    myresult = mycursor.execute(query,(data['username']))
     myresult = mycursor.fetchall()
     mycursor.close()
     payload = []
@@ -554,22 +555,26 @@ def finshOrder(orderID):
 
 @app.route('/users', methods=['POST']) #GET requests will be blocked
 def checkUsername():
+    new = {}
     data =  request.get_json(force=True) 
     print("User: " + str(data['username']) + " Password: " + str(data['password']))
-    query = "SELECT * FROM user WHERE user.User_name = '" + str(data['username']) + "' AND user.User_password = '" + str(data['password'])+"'"
-    result = SQLqueryUser(query)
-    new = {}
+    result = SQLqueryUser("SELECT * FROM user WHERE user.User_name = %s", data)
     if(len(result) == 0):
+        print("User Does not Exist")
         new['result'] = "False"
         return new
-    else:
+    passwordDB = str.encode(result[0]['user_password'])
+    hashed = bcrypt.hashpw(passwordDB, bcrypt.gensalt())
+    if bcrypt.checkpw(str.encode(data['password']), hashed):
+        print("Password Match :)")
         new['result'] = result[0]['user_role']
         new['user_id'] = result[0]['user_id']
         new['username'] = result[0]['user_name']
         return new
-    # print("LEN: " + str(len(result)))
-    # print("Result: " + str(result))
-    # return ""
+    else:
+        print("Password Does not Match :(")
+        new['result'] = "False"
+        return new
 
 if __name__ == '__main__':
     socketio.run(app)

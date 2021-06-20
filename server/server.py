@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, send, emit
 from flaskext.mysql import MySQL
 from flask_login import LoginManager
 from flask_login import login_user
+from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
@@ -15,7 +16,7 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['JSON_SORT_KEYS'] = False #unordered json object
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 #import mysql.connector
 import json
@@ -27,40 +28,33 @@ import json
 #   database="newprojectdb"
 # )
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-db = SQLAlchemy()
-db.init_app(app)
-class User(db.Model):
-    __tablename__ = 'user'
-    userid = db.Column(db.String, primary_key=True)
-    password = db.Column(db.String)
-    authenticated = db.Column(db.Boolean, default=False)
-    def is_active(self):
-        """True, as all users are active."""
-        return True
-    def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
-        return self.email
-    def is_authenticated(self):
-        """Return True if the user is authenticated."""
-        return self.authenticated
-    def is_anonymous(self):
-        """False, as anonymous users aren't supported."""
-        return False
-
-@login_manager.user_loader
-def user_loader(user_id):
-    return User.query.get(user_id)
-
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_DB'] = 'newprojectdb'
- 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/newprojectdb'
+
 mydb = MySQL(app)
 mydb.init_app(app)
+
+db = SQLAlchemy(app)
+class User(UserMixin, db.Model):
+    user_id = db.Column(db.Integer, primary_key=True)
+    user_role = db.Column(db.String)
+    user_name = db.Column(db.String)
+    user_password = db.Column(db.String)
+    def get_id(self):
+           return (self.user_id)
+
+db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(int(user_id))
+
 
 print(" * SERVER IS STARTING........")
 
@@ -584,7 +578,7 @@ def finshOrder(orderID):
     # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
 
 
-@app.route('/users', methods=['POST']) #GET requests will be blocked
+@app.route('/login', methods=['POST']) #GET requests will be blocked
 def checkUsername():
     new = {}
     print (db)
@@ -599,11 +593,14 @@ def checkUsername():
     hashed = bcrypt.hashpw(passwordDB, bcrypt.gensalt())
     if bcrypt.checkpw(str.encode(data['password']), hashed):
         print("Password Match :)")
-        user = User.query.get(result[0]['user_id'])
-        user.authenticated = True
-        db.session.add(user)
-        db.session.commit()
+        user = User.query.filter_by(user_name=result[0]['user_name']).first()
+        # user = User(result[0]['user_id'])
         login_user(user, remember=True)
+        # user = User.query.get(     )
+        # user.authenticated = True
+        # db.session.add(user)
+        # db.session.commit()
+        
         new['result'] = result[0]['user_role']
         new['user_id'] = result[0]['user_id']
         new['username'] = result[0]['user_name']
@@ -612,6 +609,12 @@ def checkUsername():
         print("Password Does not Match :(")
         new['result'] = "False"
         return new
+
+
+@app.route('/logout') #GET requests will be blocked
+def logout():
+    logout_user()
+    return "User logout successfully"
 
 
 if __name__ == '__main__':

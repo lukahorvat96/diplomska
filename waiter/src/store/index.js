@@ -256,10 +256,14 @@ export default new Vuex.Store({
     checkLogin({ commit }, payload) {
       commit("ADD_ORDER");
       axios
-        .post(`${"http://192.168.1.13:5000"}/users`, payload)
+        .post(`${"http://192.168.1.13:5000"}/login`, payload)
         .then(response => {
           commit("CHECK_LOGIN", response.data);
         });
+    },
+    logoutUser({ commit }) {
+      commit("ADD_ORDER");
+      axios.get(`${"http://192.168.1.13:5000"}/logout`);
     },
     updateOrderProductById({ commit, state }, orderID) {
       commit("ADD_ORDER");

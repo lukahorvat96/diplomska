@@ -113,6 +113,7 @@ export default {
     //   this.$socket.emit("dodal_v_bazo_waiter", data);
     // }
     logout: function() {
+      this.$store.dispatch("logoutUser");
       this.$store.commit(LOGOUT);
     }
   },

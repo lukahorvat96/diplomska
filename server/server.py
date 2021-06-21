@@ -145,6 +145,28 @@ def SQLqueryOrder(query):
         content = {}
     return payload
 
+def SQLqueryOrder2(query, data):
+    mycursor = mydb.get_db().cursor()
+    myresult = mycursor.execute(query, data)
+    myresult = mycursor.fetchall()
+    mycursor.close()
+    payload = []
+    content = {}
+    for result in myresult:
+        content = {
+            'order_id': result[0], 
+            'order_start': result[1], 
+            'order_end': result[2], 
+            'table_id': result[3],
+            'user_id': result[4],
+            'order_status': result[5],
+            'cook_status': result[6],
+            'payment': result[7]
+            }
+        payload.append(content)
+        content = {}
+    return payload
+
 def SQLqueryLastID():
     mycursor = mydb.get_db().cursor()
     myresult = mycursor.execute("SELECT LAST_INSERT_ID()")
@@ -187,9 +209,9 @@ def SQLqueryAllOrdersProducts(query):
         content = {}
     return payload
 
-def SQLqueryAllProductByID(query):
+def SQLqueryAllProductByID(query, data):
     mycursor = mydb.get_db().cursor()
-    myresult = mycursor.execute(query)
+    myresult = mycursor.execute(query, data)
     myresult = mycursor.fetchall()
     mycursor.close()
     payload = []
@@ -211,9 +233,9 @@ def SQLqueryAllProductByID(query):
         content = {}
     return payload
 
-def SQLqueryOrderProduct(query):
+def SQLqueryOrderProduct(query, productid, orderid):
     mycursor = mydb.get_db().cursor()
-    myresult = mycursor.execute(query)
+    myresult = mycursor.execute(query, (productid, orderid))
     myresult = mycursor.fetchall()
     mycursor.close()
     payload = []
@@ -247,9 +269,9 @@ def SQLqueryUser(query, data):
         content = {}
     return payload
 
-def SQLqueryOrderStatus(query):
+def SQLqueryOrderStatus(query, data):
     mycursor = mydb.get_db().cursor()
-    myresult = mycursor.execute(query)
+    myresult = mycursor.execute(query, data)
     myresult = mycursor.fetchall()
     mycursor.close()
     payload = []
@@ -262,9 +284,9 @@ def SQLqueryOrderStatus(query):
         content = {}
     return payload
     
-def SQLqueryProductType(query):
+def SQLqueryProductType(query, data):
     mycursor = mydb.get_db().cursor()
-    myresult = mycursor.execute(query)
+    myresult = mycursor.execute(query, data)
     myresult = mycursor.fetchall()
     mycursor.close()
     payload = []
@@ -362,7 +384,7 @@ def allPadThai():
 @app.route('/ordersWithoutEnd/<int:user_id>', methods=['GET'])
 def allOrdersWithoutEnd(user_id):
     new = {}
-    new['orders'] = SQLqueryOrder('SELECT * FROM `order` WHERE Order_status != "FINISHED" AND ( User_id IS NULL OR User_id = '+str(user_id) +')')
+    new['orders'] = SQLqueryOrder2('SELECT * FROM `order` WHERE Order_status != "FINISHED" AND ( User_id IS NULL OR User_id = %s )', user_id)
     new['ordersfood'] = SQLqueryOrder("SELECT DISTINCT `order`.`Order_id`, `order`.`Order_start`, `order`.`Order_end`, `order`.`Table_id`, `order`.`User_id`, `order`.`Order_status`, `order`.`Cook_status`, `order`.`Payment` FROM `order`, productorder, product, producttype WHERE `order`.Order_id = productorder.Order_id AND productorder.Product_id = product.Product_id AND product.ProductType_id = producttype.ProductType_id AND producttype.ProductType_type = 'Food' AND `order`.`Order_status` != 'FINISHED'")
     return new
  
@@ -370,13 +392,13 @@ def allOrdersWithoutEnd(user_id):
 def allOrdersFoodWithoutEnd():
     return jsonify(SQLqueryOrder("SELECT `order`.`Order_id`, `order`.`Order_start`, `order`.`Order_end`, `order`.`Table_id`, `order`.`User_id`, `order`.`Order_status`, `order`.`Cook_status`, `order`.`Payment` FROM `order`, productorder, product, producttype WHERE `order`.Order_id = productorder.Order_id AND productorder.Product_id = product.Product_id AND product.ProductType_id = producttype.ProductType_id AND producttype.ProductType_type = 'Food' AND `order`.`Order_end` IS NULL"))
 
-@app.route('/order/<int:order>', methods=['GET']) #GET requests will be blocked
+@app.route('/orderstatus/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderStatus(order):
-    return jsonify(SQLqueryOrderStatus("SELECT order_status FROM `order` WHERE order.order_id = "+str(order)))
+    return jsonify(SQLqueryOrderStatus("SELECT order_status FROM `order` WHERE order.order_id = %s", order))
 
 @app.route('/orders/<int:order>', methods=['GET']) #GET requests will be blocked
 def getOrderById(order):
-    return jsonify(SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(order)))
+    return jsonify(SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = %s", order))
 
 @app.route('/allordersproducts') #GET requests will be blocked
 def getAllOrdersProducts():
@@ -424,7 +446,7 @@ def updateOrderWaiter(orderID):
     # print("ORDER DATA: "+ str(data) + "\norderID: " + str(orderID))
     #če je quantity enak orderqunatity #1 še ne obstaja v bazi; #2 je že v bazi - preveri!
     #SELECT * FROM productorder where productorder.Product_id = 4 AND productorder.Order_id=33
-    result = SQLqueryOrder("SELECT * FROM `order` where Order_id=" + str(orderID))
+    result = SQLqueryOrder2("SELECT * FROM `order` where Order_id= %s", orderID)
     #print(str(result))
     # if (result[0]['order_status'] != "Not served" ):
     query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
@@ -433,13 +455,13 @@ def updateOrderWaiter(orderID):
     mycursor.execute(query,value)
     mydb.get_db().commit()
     mycursor.close()
-    productinorder = SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = "+str(orderID))
+    productinorder = SQLqueryAllProductByID("SELECT * FROM product, productorder WHERE product.Product_id= productorder.Product_id AND productorder.Order_id = %s", orderID)
     for product in productinorder:
         ordered = False
         for detail in data:
             if(product['product_id'] == detail['product_id']):
                 ordered = True
-                result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['product_id']) + " AND productorder.Order_id=" + str(orderID))
+                result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id = %s AND productorder.Order_id= %s", detail['product_id'], orderID)
                 if ((result[0]['product_quantity']) != detail['quantity'] ):
                     query = "UPDATE productorder SET productorder.Product_total_price = %s, productorder.Product_quantity = %s WHERE Order_id = %s AND Product_id = %s"
                     value = (detail['totalPrice'],detail['quantity'],orderID,detail['product_id'])
@@ -465,8 +487,8 @@ def updateOrder(orderID):
     data =  request.get_json(force=True) 
     isFood = 0
     for detail in data:
-        result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id =" + str(detail['product_id']) + " AND productorder.Order_id=" + str(orderID))
-        productType = SQLqueryProductType("SELECT producttype.ProductType_type FROM producttype, product WHERE producttype.ProductType_id = product.ProductType_id AND product.Product_id = "+str(detail['product_id']))
+        result = SQLqueryOrderProduct("SELECT * FROM productorder where productorder.Product_id = %s AND productorder.Order_id= %s", detail['product_id'], orderID)
+        productType = SQLqueryProductType("SELECT producttype.ProductType_type FROM producttype, product WHERE producttype.ProductType_id = product.ProductType_id AND product.Product_id = %s", detail['product_id'])
         print("PRODUCT TYPE: -"+ str(productType[0]['product_type'])+"-")
         if len(result) == 0:
             print("DODAJAM V BAZO!")

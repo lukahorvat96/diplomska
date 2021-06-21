@@ -330,7 +330,7 @@ export default new Vuex.Store({
     orderStatus({ commit, state }) {
       commit("ADD_ORDER");
       axios
-        .get(`${"http://192.168.1.13:5000"}/order/` + state.orderID)
+        .get(`${"http://192.168.1.13:5000"}/orderstatus/` + state.orderID)
         .then(response => {
           console.log(response.data);
           commit("SET_ORDER_STATUS", response.data);

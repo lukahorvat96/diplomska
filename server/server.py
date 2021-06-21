@@ -633,7 +633,7 @@ def checkUsername():
         return new
 
 
-@app.route('/logout') #GET requests will be blocked
+@app.route('/logout') 
 def logout():
     logout_user()
     return "User logout successfully"

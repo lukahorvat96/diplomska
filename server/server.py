@@ -532,8 +532,8 @@ def updateOrder(orderID):
 @app.route('/updateorderstatus/<int:orderID>', methods=['POST']) #GET requests will be blocked
 def updateOrderStatus(orderID):
     data =  request.get_json(force=True) 
-    query = "UPDATE `order` SET Order_status = %s, User_id = %s WHERE Order_id = %s"
-    value = (data['order_status'],data['user_id'],orderID)
+    query = "UPDATE `order` SET Order_status = %s WHERE Order_id = %s"
+    value = (data['order_status'],orderID)
     mycursor = mydb.get_db().cursor()
     mycursor.execute(query,value)
     mydb.get_db().commit()

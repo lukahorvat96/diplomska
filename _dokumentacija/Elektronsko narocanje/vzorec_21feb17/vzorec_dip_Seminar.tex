@@ -442,7 +442,9 @@ Strežnik v naši aplikaciji predstavlja vmesnik med podatkovno bazo in odjemalc
 
 Zato zahtevo nam je knjižnica Flask zelo poenostavila izdelavo strežnika. Flask je eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (angl. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. V primerjavi z Django ogrodjem, je za enak primer veliko bolj ekspliciten. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v Django.
 
-Vsak relativna povezav URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti /drinks. Naš strežnik vsebuje kar 34 relativni povezav in 600 vrstic programske kode.
+Vsaka relativna povezava URI na strežniku predstavlja svoje vir podatkov iz podatkovne baze. Te podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka query predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti drinks. Naš strežnik vsebuje 34 relativni povezav in 600 vrstic programske kode.
+
+
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{drinks_1.jpg}
@@ -478,6 +480,23 @@ Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v JSON forma
 \end{figure}
 
 Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potrebovali še spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca, ki zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga za obveščanje odjemalcov o spremembah v podatkovni bazi. Za to smo uporabljali funkcijo \sn{emit}, ki pomeni oddajanje. Omogoča dodajanje podatkov in izbiranje načina razpršenega oddajanja (ang. broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se le te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo \sn{emit}, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
+
+
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+
+
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+
+
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{multi-partner-sync.png}
+\end{center}
+\caption{Funkcija, ki na na relativno stran /drinks oglasi podatke}
+\label{Drinks_URI}
+\end{figure}
 
 \section{Odjemalec}
 

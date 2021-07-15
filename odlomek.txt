@@ -1,0 +1,7 @@
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+
+
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+
+
+Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   

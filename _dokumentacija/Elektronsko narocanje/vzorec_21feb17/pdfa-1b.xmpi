@@ -9,10 +9,10 @@ xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/">
 </rdf:Description> 
 <rdf:Description rdf:about="" 
 xmlns:xap="http://ns.adobe.com/xap/1.0/"> 
-<xap:CreateDate>2020-12-31T13:19:48+01:00</xap:CreateDate> 
+<xap:CreateDate>2021-07-18T21:39:05+02:00</xap:CreateDate> 
 <xap:CreatorTool>TeX</xap:CreatorTool> 
-<xap:ModifyDate>2020-12-31T13:19:48+01:00</xap:ModifyDate> 
-<xap:MetadataDate>2020-12-31T13:19:48+01:00</xap:MetadataDate> 
+<xap:ModifyDate>2021-07-18T21:39:05+02:00</xap:ModifyDate> 
+<xap:MetadataDate>2021-07-18T21:39:05+02:00</xap:MetadataDate> 
 </rdf:Description> 
 <rdf:Description rdf:about="" 
 xmlns:pdfx="http://ns.adobe.com/pdfx/1.3/"> 
@@ -39,7 +39,7 @@ xmlns:dc="http://purl.org/dc/elements/1.1/">
 </dc:description> 
 <dc:creator> 
 <rdf:Bag> 
-<rdf:li>Luka Horvat, matjaz.kralj@fri.uni-lj.si</rdf:li> 
+<rdf:li>Luka Horvat, lh8069@fri.uni-lj.si</rdf:li> 
 </rdf:Bag> 
 </dc:creator> 
 <dc:subject> 

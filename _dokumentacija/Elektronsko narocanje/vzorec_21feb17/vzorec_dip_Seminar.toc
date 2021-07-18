@@ -5,24 +5,14 @@
 \contentsline {chapter}{Abstract}{}{chapter*.3}
 \select@language {slovene}
 \contentsline {chapter}{\numberline {1}Uvod}{1}{chapter.1}
-\contentsline {chapter}{\numberline {2}Uporabljene tehnologije in programske opreme}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Vue.js}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Kaj je reaktivnost?}{4}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Delovanje reaktivnost v Vue}{4}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Vue CLI in Vuex}{5}{subsection.2.1.3}
-\contentsline {chapter}{\numberline {3}Test}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Vizija}{8}{section.3.1}
-\contentsline {chapter}{\numberline {4}Osnovni gradniki \LaTeX {a}}{9}{chapter.4}
-\contentsline {chapter}{\numberline {5}Matemati\IeC {\v c}no okolje in sklicevanje na besedilne konstrukte}{11}{chapter.5}
-\contentsline {chapter}{\numberline {6}Plovke: slike in tabele}{13}{chapter.6}
-\contentsline {section}{\numberline {6.1}Formati slik}{14}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Podnapisi k slikam in tabelam}{16}{subsection.6.1.1}
-\contentsline {chapter}{\numberline {7}Struktura strokovnih besedil}{17}{chapter.7}
-\contentsline {chapter}{\numberline {8}Pogoste napake pri pisanju v sloven\IeC {\v s}\IeC {\v c}ini}{19}{chapter.8}
-\contentsline {chapter}{\numberline {9}Koristni nasveti pri pisanju v \LaTeX {u}}{21}{chapter.9}
-\contentsline {section}{\numberline {9.1}Pisave v \LaTeX u}{22}{section.9.1}
-\contentsline {chapter}{\numberline {10}Kaj pa literatura?}{25}{chapter.10}
-\contentsline {section}{\numberline {10.1}Izbiranje virov za spisek literature}{27}{section.10.1}
-\contentsline {chapter}{\numberline {11}Sistem STUDIS in PDF/A}{29}{chapter.11}
-\contentsline {chapter}{\numberline {12}Sklepne ugotovitve}{31}{chapter.12}
-\contentsline {chapter}{Literatura}{33}{chapter.12}
+\contentsline {chapter}{\numberline {2}Razvoj in struktura aplikacije}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Podatkovna baza}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Stre\IeC {\v z}nik}{7}{section.2.2}
+\contentsline {section}{\numberline {2.3}Odjemalec}{12}{section.2.3}
+\contentsline {chapter}{\numberline {3}Delovanje aplikacije}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}Vmesnik za gosta}{19}{section.3.1}
+\contentsline {section}{\numberline {3.2}Vmesnik za natakarja}{19}{section.3.2}
+\contentsline {section}{\numberline {3.3}Vmesnik za kuharja}{19}{section.3.3}
+\contentsline {chapter}{\numberline {4}Diskusija}{21}{chapter.4}
+\contentsline {chapter}{\numberline {5}Sklepne ugotovitve}{23}{chapter.5}
+\contentsline {chapter}{Literatura}{25}{chapter.5}

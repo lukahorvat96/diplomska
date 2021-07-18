@@ -480,22 +480,18 @@ Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v JSON forma
 \end{figure}
 
 Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potrebovali še spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca, ki zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga za obveščanje odjemalcov o spremembah v podatkovni bazi. Za to smo uporabljali funkcijo \sn{emit}, ki pomeni oddajanje. Omogoča dodajanje podatkov in izbiranje načina razpršenega oddajanja (ang. broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se le te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo \sn{emit}, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
+	
 
+Aplikacija omogoča urejanje določenimi podatki, zato smo morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, ki ne zadostuje. Zahtevki, ki se pošiljajo na strežnik morajo biti omogočeni samo avtoriziranim odjemalcem, da ne pride do napadov kot npr. s posrednikom (ang. man-in-the-middle). Zato smo uporabili HTTP piškotke (ang. cookies), ki so izdelani za spletne brskalnike in so namenjeni za sledenje, prilagajanje in shranjevanje informacij o posamezni seji uporabnika. Vsi piškotki so shranjeni na strani odjemalca in so kriptografsko zaščiteni. S tem odjemalcu preprečujemo spreminjanje podatkov v piškotkih oz. lahko nedovoljene spremembe podatkov na strežniku delektiramo. Uporabili smo Flask-Login, ki omogoča vse funkcionalnost za upravljanje uporabniških sej. 
 
-Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
-
-
-Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
-
-
-Poleg tega smo implementirali zaščito pred spreminanjem podatkov v podatkovni bazi. Ker aplikacija vsebuje nadzor nad določenimi podatki smo zato morali zagotoviti ustrezno varnost za urejanje le teh. Prvi nivo varnosti je avtorizacija odjemalca, kar pa seveda ni dovolj. Zahtevki za   
+Na sliki~\ref{Cookies} je prikazano delovanje HTTP piškotkov. Strežnik ob prvem zahtevku, torej ob uspešni prijavi, odjemalcu vrne piškotek. Odjemalec ob vsakem nadaljnjem zahtevku doda piškotek s katerim strežnik overi zahtevo odjemalca.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{multi-partner-sync.png}
+\includegraphics[width=14cm]{cookie-how1.png}
 \end{center}
-\caption{Funkcija, ki na na relativno stran /drinks oglasi podatke}
-\label{Drinks_URI}
+\caption{Delovanje HTTP piškotkov med odjemalcem in strežnikom}
+\label{Cookies}
 \end{figure}
 
 \section{Odjemalec}
@@ -512,7 +508,7 @@ Odjemlaca bi načeloma lahko implementirali v spletnih tehnologijah (HTML, CSS, 
 \end{description}
 
 
-Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz večih pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije je opisano v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti izgled obeh aplikacij.
+Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz večih pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti prvi izgled obeh aplikacij.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -529,7 +525,6 @@ Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je na
 \caption{Spetni vmesnik za natakarja in kuharja}
 \label{NatakarGost}
 \end{figure}
-
 
 
 Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila,... Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov precej bolj zanesljiva in točna. Slika~\ref{SocketIO_1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.

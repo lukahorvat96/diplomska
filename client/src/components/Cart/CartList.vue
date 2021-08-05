@@ -10,7 +10,7 @@
 
 <script>
 // import CartDetail from "./CartDetail";
-import DrinkButton from "../Products/ProductDetail.vue"
+import DrinkButton from "../Products/ProductDetail.vue";
 export default {
   name: "CartList",
   props: {

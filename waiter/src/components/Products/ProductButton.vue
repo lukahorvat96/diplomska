@@ -61,10 +61,8 @@ export default {
   methods: {
     addToCart(product) {
       var priceBefore = product.price * this.quantity;
-      console.log("before: " + priceBefore);
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * product.price;
-      console.log("TotalPrice: " + totalPrice);
       if (this.quantity == 1) {
         this.$store.state.totalPrice += totalPrice;
         product.quantity = Number(this.quantity);
@@ -73,19 +71,16 @@ export default {
       } else {
         this.$store.state.totalPrice -= priceBefore;
         this.$store.state.totalPrice += totalPrice;
-        console.log("After totalPriceState: " + this.$store.state.totalPrice);
         //this.$store.commit(DELETE_FROM_CART, product.product_id);
         product.quantity = Number(this.quantity);
         product.totalPrice = Number(totalPrice);
         this.$store.commit(ADD_TO_CART, product);
       }
-      console.log("POVEČANO: " + this.quantity);
     },
     removeFromCart(product) {
       var priceBefore = product.price * this.quantity;
       this.quantity = this.quantity - 1;
       var totalPrice = this.quantity * product.price;
-      console.log(this.quantity);
       if (this.quantity != 0) {
         //this.$store.commit(DELETE_FROM_CART, product.product_id);
         product.quantity = Number(this.quantity);
@@ -103,9 +98,7 @@ export default {
       );
       this.cart = this.$store.state.orderById;
       if (this.index >= 0) {
-        console.log("QUA1:");
         this.quantity = this.cart[this.index].quantity;
-        console.log("QUAN: " + this.quantity);
         return true;
       }
       return false;

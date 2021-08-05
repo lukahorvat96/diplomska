@@ -30,7 +30,7 @@
             <br />
             <br />
             It is <b>IMPORTANT</b> that you must place your order again if you
-            agree to the changes.
+            want to add something else.
           </v-card-text>
           <v-card-text
             v-if="orderStatus == 'CONFIRMED'"
@@ -275,14 +275,9 @@ export default {
   },
   computed: {
     totalprice() {
-      // var drinkCard = this.$store.getters.allDrinksInCart;
-      // var totalDrinkPrice = 0;
-      // for (var i = 0; i < drinkCard.length; i++)
-      //   totalDrinkPrice = totalDrinkPrice + drinkCard[i].totalPrice;
       return this.$store.getters.getTotalPrice;
     },
     SomeData() {
-      console.log("SOME DATA: " + this.$store.getters.getSomeData);
       return this.$store.getters.getSomeData;
     },
     orderStatus() {
@@ -295,8 +290,6 @@ export default {
   },
   methods: {
     clickButton: function(data) {
-      // $socket is socket.io-client instance
-      console.log("POSLANO: " + data);
       this.$socket.emit("dodal_v_bazo", data);
     },
     checkOrder() {

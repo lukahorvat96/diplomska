@@ -66,10 +66,8 @@ export default {
   methods: {
     addToCart(product) {
       var priceBefore = product.price * this.quantity;
-      console.log("before: " + priceBefore);
       this.quantity = this.quantity + 1;
       var totalPrice = this.quantity * product.price;
-      console.log("TotalPrice: " + totalPrice);
       this.disableMinus = false;
       if (this.quantity == 1) {
         this.$store.state.totalPrice += totalPrice;
@@ -81,7 +79,6 @@ export default {
       } else {
         this.$store.state.totalPrice -= priceBefore;
         this.$store.state.totalPrice += totalPrice;
-        console.log("After totalPriceState: " + this.$store.state.totalPrice);
         //this.$store.commit(DELETE_FROM_CART, product.product_id);
         product.quantity = Number(this.quantity);
         product.totalPrice = Number(totalPrice);
@@ -89,7 +86,6 @@ export default {
         product.isOrdered = this.alreadyOrdered;
         this.$store.commit(ADD_TO_CART, product);
       }
-      console.log("POVEČANO: " + this.quantity);
       if (this.orderPlaced == true && this.orderedQuantity2 == this.quantity)
         this.disableMinus = true;
     },
@@ -127,8 +123,6 @@ export default {
         }
         this.quantity = this.cart[this.index].quantity;
         this.orderedQuantity2 = this.cart[this.index].orderedQuantity;
-        console.log("QUAN: " + this.quantity);
-        console.log("ORD QUAN: " + this.orderedQuantity2);
         if (
           this.alreadyOrdered == true &&
           this.orderedQuantity2 == this.quantity
@@ -139,7 +133,8 @@ export default {
       return false;
     },
     removeFromCartAll(product) {
-      this.$store.state.totalPrice -= this.product.price * this.product.quantity;
+      this.$store.state.totalPrice -=
+        this.product.price * this.product.quantity;
       this.$store.commit(DELETE_FROM_CART, product.product_id);
       this.quantity = 0;
     }

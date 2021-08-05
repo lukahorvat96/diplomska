@@ -136,8 +136,11 @@ export default new Vuex.Store({
     },
     [CHANGED_ORDER](state, payload) {
       var totalPrice = 0;
-      for (var i = 0; i < payload.length; i++)
+      for (var i = 0; i < payload.length; i++) {
         totalPrice += payload[i].quantity * payload[i].price;
+        payload[i].isOrdered = true;
+        payload[i].orderedQuantity = Number(payload[i].quantity);
+      }
       state.cart_product = payload;
       state.totalPrice = totalPrice;
     },
@@ -145,7 +148,6 @@ export default new Vuex.Store({
       const index = state.cart_product.findIndex(
         p => p.product_id === payload.product_id
       );
-      console.log("INDEX V BAZI: " + index);
       if (index == -1) state.cart_product.push(payload);
       if (index != -1) {
         Vue.set(state.cart_product, index, payload);
@@ -195,31 +197,26 @@ export default new Vuex.Store({
     },
     allBottledBeer({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/bottledbeer`).then(response => {
-        console.log(response.data);
         commit("ALL_BOTTLED_BEERS", response.data);
       });
     },
     allDraughtBeers({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/draughtbeer`).then(response => {
-        console.log(response.data);
         commit("ALL_DRAUGHT_BEERS", response.data);
       });
     },
     allCider({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/cider`).then(response => {
-        console.log(response.data);
         commit("ALL_CIDER", response.data);
       });
     },
     allWine({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/wine`).then(response => {
-        console.log(response.data);
         commit("ALL_WINE", response.data);
       });
     },
     allHotDrinks({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/hotdrink`).then(response => {
-        console.log(response.data);
         commit("ALL_HOTDRINK", response.data);
       });
     },
@@ -227,7 +224,6 @@ export default new Vuex.Store({
       axios
         .get(`${"http://192.168.1.13:5000"}/bottledbeverage`)
         .then(response => {
-          console.log(response.data);
           commit("ALL_BOTTLEDBEVERAGE", response.data);
         });
     },
@@ -235,67 +231,56 @@ export default new Vuex.Store({
       axios
         .get(`${"http://192.168.1.13:5000"}/naturalbeverage`)
         .then(response => {
-          console.log(response.data);
           commit("ALL_NATURALBEVERAGE", response.data);
         });
     },
     allGin({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/gin`).then(response => {
-        console.log(response.data);
         commit("ALL_GIN", response.data);
       });
     },
     allVodka({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/vodka`).then(response => {
-        console.log(response.data);
         commit("ALL_VODKA", response.data);
       });
     },
     allStarters({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/starter`).then(response => {
-        console.log(response.data);
         commit("ALL_STARTER", response.data);
       });
     },
     allSoups({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/soup`).then(response => {
-        console.log(response.data);
         commit("ALL_SOUP", response.data);
       });
     },
     allSalads({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/salad`).then(response => {
-        console.log(response.data);
         commit("ALL_SALAD", response.data);
       });
     },
     allPasta({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/pasta`).then(response => {
-        console.log(response.data);
         commit("ALL_PASTA", response.data);
       });
     },
     allRissoto({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/rissoto`).then(response => {
-        console.log(response.data);
         commit("ALL_RISSOTO", response.data);
       });
     },
     allPizzas({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/pizza`).then(response => {
-        console.log(response.data);
         commit("ALL_PIZZA", response.data);
       });
     },
     allMeat({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/meat`).then(response => {
-        console.log(response.data);
         commit("ALL_MEAT", response.data);
       });
     },
     allPadThai({ commit }) {
       axios.get(`${"http://192.168.1.13:5000"}/padthai`).then(response => {
-        console.log(response.data);
         commit("ALL_PADTHAI", response.data);
       });
     },
@@ -406,7 +391,6 @@ export default new Vuex.Store({
       }
     },
     SOCKET_orderEnd({ commit, state }, payload) {
-      console.log("orderENDD!!!");
       if (payload == state.orderID) {
         commit("CLEAR_ALL");
         commit("SET_ORDER_STATUS", "ORDER_END");
@@ -488,9 +472,6 @@ export default new Vuex.Store({
     allProductsInCart: state => {
       return state.cart_product;
     },
-    // getDrinkCartQuantity: (state, getters) => {
-    //   return state.cart_product.findIndex(p => p.product_id === getters);
-    // },
     getSomeData: state => {
       return state.someData;
     },

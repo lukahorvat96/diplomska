@@ -21,7 +21,6 @@ export default {
       return this.$store.getters.getAllOrdersWithoutEnd;
     },
     socketNewOrder() {
-      console.log("There is new order! CHECK DB");
       return this.$store.getters.newOrderStatus;
     },
     login() {

@@ -37,7 +37,6 @@ export default {
   }),
   computed: {
     isFood() {
-      console.log(this.product.type_id);
       if (this.product.type_id >= 15) return true;
       return false;
     }

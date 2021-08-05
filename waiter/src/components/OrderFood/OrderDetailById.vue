@@ -41,14 +41,6 @@ export default {
     updateOrder() {
       this.$store.dispatch("updateOrderProductById", this.orderID);
     }
-    // check() {
-    //   if (this.$store.state.checking == false) {
-    //     this.$store.dispatch("allOrdersProductById", this.orderID);
-    //     console.log("CHAKING: " + this.$store.checking)
-    //     this.$store.state.checking = true;
-    //   }
-    //   return true;
-    // }
   }
 };
 </script>

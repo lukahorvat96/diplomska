@@ -64,7 +64,8 @@ export default {
 }
 @font-face {
   font-family: "Proxima_nova";
-  src: local("Proxima_nova"), url(../../fonts/Proxima_nova.ttf) format("truetype");
+  src: local("Proxima_nova"),
+    url(../../fonts/Proxima_nova.ttf) format("truetype");
 }
 .proxima-font {
   font-family: "Proxima_nova";

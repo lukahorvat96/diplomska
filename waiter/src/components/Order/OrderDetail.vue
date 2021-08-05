@@ -50,13 +50,12 @@ export default {
   },
   computed: {
     orderStatusServed() {
-      console.log("STATUS: " + this.order.order_status);
       if (
         // this.order.order_status == "Not served" ||
         this.order.order_status == "CONFIRMED" ||
         this.order.order_status == "PLACED" ||
         this.order.order_status == "UPDATED" ||
-        this.order.order_status == "CALLING WAITER" 
+        this.order.order_status == "CALLING WAITER"
       )
         return true;
       else return false;
@@ -68,7 +67,7 @@ export default {
         this.order.order_status == "PLACED" ||
         this.order.order_status == "UPDATED" ||
         this.order.order_status == "UPDATED" ||
-        this.order.order_status == "CALLING WAITER" 
+        this.order.order_status == "CALLING WAITER"
       )
         return "CONFIRM";
       if (this.order.order_status == "CONFIRMED") return "SERVED";

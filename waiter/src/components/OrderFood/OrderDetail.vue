@@ -37,14 +37,7 @@
     >
       UNCONFIRM
     </v-btn>
-    <!-- <v-btn v-on:click="endOrder()" elevation="2" color="red" tile>
-      ORDER DONE
-    </v-btn> -->
   </v-card>
-  <!-- <v-card :loading="loading ? 'blue': null">
-    <template slot="progress">
-      <v-progress-linear color="blue" indeterminate></v-progress-linear>
-    </template> -->
 </template>
 
 <script>
@@ -58,7 +51,6 @@ export default {
   },
   computed: {
     orderStatusServed() {
-      console.log("STATUS: " + this.order.order_status);
       if (
         // this.order.order_status == "Not served" ||
         this.order.cook_status == "" ||
@@ -69,7 +61,6 @@ export default {
       else return false;
     },
     orderStatusSNotConfirmed() {
-      console.log("STATUS: " + this.order.order_status);
       if (
         // this.order.order_status == "Not served" ||
         this.order.cook_status == "" ||

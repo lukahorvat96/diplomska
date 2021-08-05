@@ -60,16 +60,9 @@ export default {
   methods: {
     updateOrder() {
       this.$store.dispatch("updateOrderProductById", this.orderID);
+      this.$store.dispatch("allOrdersProductById", this.orderID);
       this.$router.go(-1);
     }
-    // check() {
-    //   if (this.$store.state.checking == false) {
-    //     this.$store.dispatch("allOrdersProductById", this.orderID);
-    //     console.log("CHAKING: " + this.$store.checking)
-    //     this.$store.state.checking = true;
-    //   }
-    //   return true;
-    // }
   }
 };
 </script>

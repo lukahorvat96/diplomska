@@ -35,7 +35,7 @@ const routes = [
     name: "OrdersFoodDetail",
     component: OrderFoodDetailById,
     props: true
-  },
+  }
 ];
 
 const router = new VueRouter({

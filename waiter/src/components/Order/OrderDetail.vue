@@ -116,6 +116,5 @@ export default {
 
 .yellow_back {
   color: yellow;
-  elevation: 5;
 }
 </style>

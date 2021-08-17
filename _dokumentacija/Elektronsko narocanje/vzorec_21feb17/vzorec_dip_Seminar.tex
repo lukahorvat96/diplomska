@@ -305,6 +305,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
   {\bf REST}   & representational state transfer              & aktualni prenos stanja \\
   {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
   {\bf SPA}   &  single-page application              & aplikacija na eni strani \\
+  {\bf SUPB}   &  database management system              & sistem za upravljanje s podatkovno bazo \\
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -368,41 +369,40 @@ Aplikacija podpira tri uporabniške vloge, in sicer gost, natakar in kuhar.
 
 \chapter{Načrtovanje in razvoj aplikacije}
 
-Razvoj aplikacije je potekal v treh delih in sicer analiza problematike oziroma izdelava diagrama primerov uporabe, zamisel strukture in implementacija.
-Aplikacija oziroma odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. 
+Razvoj aplikacije je potekal v treh delih in sicer analiza zahtev oziroma izdelava diagrama primerov uporabe, zamisel strukture in implementacija.
+Rešitev sestavljajo dve aplikaciji implementirani s pomočjo spletnih tehnologij. Ena aplikacija je namenjena gostom, druga pa natakarjem in kuharjem. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. 
+
+Gost lahko odda, spremeni ali zaključi naročilo. Funkcionalnosti gosta so: dodajanje in brisanje artiklov iz naročila, oddajanje, urejanje in pregledovanje naročila, spremljanje statusa naročila in možnost za zahtevanje računa. Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko več natakarjev, ki streže istočasno. Funkcionalnosti natakarja so: dodajanje in brisanje artiklov iz naročila, urejanje in pregledovanje naročila, spremljanje statusa naročila, spremljanje statistke naročil in možnost tiskanja računa za določeno naročilo. Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu. Funkcionalnosti kuharja so: pregledovanje in potrjevanje naročila ter spremljanje statistke naročil.
+
 Iz analize zahtev smo za lažji pregled nad vsemi funkcionalnostmi izdelali diagram primerov uporabe, ki ga prikazuje slika~\ref{FunkVloge}.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=8cm]{Skica2.png}
+\includegraphics[width=11.5cm]{Skica2.png}
 \end{center}
 \caption{Diagram primerov uporabe spretnega naročanja}
 \label{FunkVloge}
 \end{figure}
-Gost lahko odda, spremeni ali zaključi naročilo. Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
 
 
-Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
+Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in aplikacija oziroma odjemalec. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
+Podatkovna baza je namenjena shranjevanju vseh podatkov za posamezno restavracijo. Strežnik implementira RESTful vmesnik, ki odjemalcu oziroma aplikaciji posreduje podatke iz podatkovne baze. 
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=11cm]{Skica1.png}
+\includegraphics[width=10.5cm]{Skica1-new.png}
 \caption{Visokonivojska arhitektura}
 \label{StrukApk}
 \end{figure}
 
-Podatkovna baza je namenjena shranjevanju vseh podatkov, da se ne izgubijo ter se razlikujejo za vsako restavracijo. 
-Strežnik implementira RESTful vmesnik, ki odjemalcu servira podatke iz podatkovne baze. Odjemalec sta v našem primeru dve aplikaciji implementirani s pomočjo spletnih tehnologij.
 
-
- 
 
 \section{Podatkovna baza}
-Na podlagi izdelanega diagrama zahtev oziroma fukcij smo izdelali logičen podatkovni model (slika~\ref{Database_physical}), katerega smo kasneje realizirali s pomočjo SUPB MySQL. Podatkovna baza je sestavljena je iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
+Na podlagi izdelanega diagrama zahtev oziroma funkcij smo najprej izdelali logičen podatkovni model (slika~\ref{Database_physical}). Podatkovna baza je sestavljena je iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=0.85\textwidth]{Database_physical}
+\includegraphics[width=12.5cm]{Database_physical}
 \end{center}
 \caption{Logični podatkovni model}
 \label{Database_physical}
@@ -422,7 +422,7 @@ Na podlagi izdelanega diagrama zahtev oziroma fukcij smo izdelali logičen podat
 
 Strukturo podatkovne baze smo naredili s pomočjo programa Toad DataModler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access, Mircrosoft SQL Server,... 
 
-Podatkovni model smo implementirali na fizičnem nivoju v SUPB MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih sistemih npr. Windows, Linux, OS X,… Prva verzija je bil razvita leta 1995 s strani Michael Widenius in David Axmark. Kratica My izhaja iz imena prve hčerke očeta Michaela.  
+Podatkovni model smo implementirali na fizičnem nivoju v SUPB  (angl. database management system oz. DBMS) MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
 
 
 \section{Strežnik}

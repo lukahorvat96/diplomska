@@ -363,23 +363,23 @@ Slovenija velja za državo z veliko število restavracij, vendar le malo iz med 
 
 Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi bil namenjen zamenjavi ljudi v strežbi, temveč kot pregledovalnik (angl. Menu) oziroma naročanju hrane in pijače. Aplikacija za stranke bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločila ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Natakar bi tako imel več časa, katerega bi lahko posvetil pripravi pijače, kvaliteti postrežbe in ostalih dolžnosti. Tudi stranke, katere sedaj veljajo za bolj zahtevne in neučakane na vseh področij, bi bile hitreje in bolj kvalitetno postrežene. Tako bi imeli poleg restavracij z hitro prehrano tudi restavracije s hitro postrežbo. 
 
+
 Aplikacija podpira tri uporabniške vloge, in sicer gost, natakar in kuhar. 
 
-\chapter{Razvoj in struktura aplikacije}
+\chapter{Načrtovanje in razvoj aplikacije}
 
 Razvoj aplikacije je potekal v treh delih in sicer analiza problematike oziroma izdelava diagrama primerov uporabe, zamisel strukture in implementacija.
-
+Aplikacija oziroma odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. 
 Iz analize zahtev smo za lažji pregled nad vsemi funkcionalnostmi izdelali diagram primerov uporabe, ki ga prikazuje slika~\ref{FunkVloge}.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{Skica2.png}
+\includegraphics[width=8cm]{Skica2.png}
 \end{center}
 \caption{Diagram primerov uporabe spretnega naročanja}
 \label{FunkVloge}
 \end{figure}
-Aplikacija oziroma odjemalec ima tri uporabniške poglede, ki so gost, natakar in kuhar. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo za mizo naročati skupaj. Gost lahko odda, spremeni ali zaključi naročilo. 
-Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
+Gost lahko odda, spremeni ali zaključi naročilo. Natakar lahko sprejme, zavrne, uredi ali zaključi naročilo.  V restavraciji je lahko več natakarjev, ki streže istočasno.  Kuhar lahko sprejeme, zavrne ali sporoči, da jed za neko naročilo že pripravljena. Restavracija ima lahko več kuharjev, vendar samo en kuhar hkrati lahko uporablja aplikacijo. Omejitev je v podatkovnem modelu.
 
 
 Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in odjemalca. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.

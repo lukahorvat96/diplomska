@@ -51,7 +51,7 @@
         class="button"
         @click="finishOrder()"
       >
-        REQUEST RESEIPE
+        REQUEST RECEIPT
       </v-btn>
     </div>
     <div v-if="notOrdered">

@@ -379,9 +379,9 @@ Iz analize zahtev smo za lažji pregled nad vsemi funkcionalnostmi izdelali diag
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=11.5cm]{Skica2.png}
-\end{center}
 \caption{Diagram primerov uporabe spretnega naročanja}
 \label{FunkVloge}
+\end{center}
 \end{figure}
 
 
@@ -403,12 +403,12 @@ Na podlagi izdelanega diagrama zahtev oziroma funkcij smo najprej izdelali logi�
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12.5cm]{Database_physical}
-\end{center}
 \caption{Logični podatkovni model}
 \label{Database_physical}
+\end{center}
 \end{figure}
 
-\textit{ProductType} tabela je namenjana zapisom za vrste jedi (predjed, glavna jed, sladica) ali pijač (sokovi, piva, vina,...). Sestavljena je iz atributov ID, Name in Type. Atribut Type je namenjen razlikovanju hrane in pijače. Uporabljen je za razločevanje artiklov v naročilu, saj kuhar ne potrebuje pregleda nad naročili, ki vsebujejo samo pijačo. 
+\textit{ProductType} tabela je namenjana zapisom za vrste jedi (predjed, glavna jed, sladica) ali pijač (sokovi, piva, vina, ...). Sestavljena je iz atributov ID, Name in Type. Atribut Type je namenjen razlikovanju hrane in pijače. Uporabljen je za razločevanje artiklov v naročilu, saj kuhar ne potrebuje pregleda nad naročili, ki vsebujejo samo pijačo. 
 
 \textit{Product} tabela je namenjena opisu hrane in pijače ter je sestavljena iz atributov: ID, Name, Price, Size, Calorie, Picture in Description.  V atribut Picture se zapiše ime slike, ki se prikaže v aplikaciji. Vse slike smo shranjevali v datotečnem sistemu spletnega strežnika.
 
@@ -450,35 +450,35 @@ Vsaka relativna povezava URI na strežniku predstavlja svoje vir podatkov iz pod
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{drinks_1.jpg}
-\end{center}
 \caption{Funkcija, ki prebere podatke iz podatkovne baze}
 \label{Drinks_DB_function}
+\end{center}
 \end{figure}
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{drinks_2.jpg}
-\end{center}
 \caption{Funkcija, ki na relativno stran /drinks oglasi podatke}
 \label{Drinks_URI}
+\end{center}
 \end{figure}
 
 Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v JSON formatu. Na sliki~\ref{ServerEX} je primer testiranja zahtevka v programu Postman, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (HTTP metoda GET). Strežnik omogoča tudi sprejemanje podatkov za kar se uporabljati metodi PUT in POST. Mi smo uporabljali metodo POST za posredovanju podatkov strežniku, ki so bili potrebni za zapis v podatkovno bazo. Spremljanje zahtevkov na strani strežnika je mogoče v konzolnem vmesniku CLI, ki se ga uporablja pri zagonu strežnika, slika~\ref{ServerEX2}.
 
-\begin{figure}[!htb]
+\begin{figure}[!htb]   
 \begin{center}
 \includegraphics[width=10cm]{Server_example.jpg}
-\end{center}
 \caption{Primer serviranja podatkov na strežniku s programom Postman}
 \label{ServerEX}
+\end{center}
 \end{figure}
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12cm]{Server_example_2.jpg}
-\end{center}
 \caption{Primer spremljanja zahtevkov, ki prihajajo na strežnik}
 \label{ServerEX2}
+\end{center}
 \end{figure}
 
 Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potrebovali še spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca, ki zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga za obveščanje odjemalcov o spremembah v podatkovni bazi. Za to smo uporabljali funkcijo \sn{emit}, ki pomeni oddajanje. Omogoča dodajanje podatkov in izbiranje načina razpršenega oddajanja (ang. broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se le te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo \sn{emit}, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
@@ -491,9 +491,9 @@ Na sliki~\ref{Cookies} je prikazano delovanje HTTP piškotkov. Strežnik ob prve
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{cookie-how1.png}
-\end{center}
 \caption{Delovanje HTTP piškotkov med odjemalcem in strežnikom}
 \label{Cookies}
+\end{center}
 \end{figure}
 
 \section{Odjemalec}
@@ -515,46 +515,104 @@ Odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je na
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12.5cm]{gost_1.jpg}
-\end{center}
 \caption{Spletni vmesnik za gosta}
 \label{Gost}
+\end{center}
 \end{figure}
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12cm]{natakar-gost_1.jpg}
-\end{center}
 \caption{Spetni vmesnik za natakarja in kuharja}
 \label{NatakarGost}
+\end{center}
 \end{figure}
 
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila,... Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikovhitrejša in učinkovitejša. Slika~\ref{SocketIO_1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila, ... Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikovhitrejša in učinkovitejša. Slika~\ref{SocketIO_1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12cm]{socketio_1.jpg}
-\end{center}
 \caption{Seznam vtičnikov, ki so uporabljeni na strani gosta}
+\end{center}
 \label{SocketIO_1}
 \end{figure}
 
 
-Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knižnjice preberemo na strani odjemalca. 
+Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knižnjice pridobimo na stran odjemalca. 
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=11cm]{axios_1.jpg}
-\end{center}
 \caption{Način uporabe Axios v aplikaciji za gosta}
+\end{center}
 \label{axios_1}
 \end{figure}
 
 
 \chapter {Delovanje aplikacije}
+Za prikaz delovanja smo si pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili strežnik in obe aplikaciji. Vse fukcionalosti posameze aplikacije so opisane spodaj.
+
 \section{Vmesnik za gosta}
+Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico, slika~\ref{Gost}, kateri bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel. V zgornjem desnem kotu se nahaja gumb za klic natakarja in števec cene artiklov v nakupovalni košarici. V spodnjem levem kotu se nahaja status in ID številka naročila. Meni na levi strani je pravzaprav seznam vseh vrst hrane in pijače, ki kažejo na podstrani artiklov, slika~\ref{Gost_3}. To uporabniku predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše artikle ali spreminja njihovo količino. Nakupovalna košarica (ang. cart) je skupno mesto vseh artiklov potencialnih za naročilo, slika~\ref{Gost_4}.
+
+Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika preusmeri na prvo stran in izpiše pojavno sporočilo prikazano na sliki~\ref{Gost_5}. Ko je naročilo oddano, uporabnik lahko ponovno dodaja artikle v košarico, vendar je že oddanim artiklom onemogočeno zmanjšati količino ali jih izbrisati. Naročilo še je sprejeto ko ga natakar potrdi, s tem se spremeni statusa naročila in prikaže se pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga more uporabnik pregledati in ponovno oddati. Tudi v tem primeru je obveščen uporabnik s statusom in pojavnim sporočilom, slika~\ref{Gost_8}. Naročilo se zaključi z klikom na gumb zahtevaj račun (ang. request receipt), ki odpre pojavno okno prikazano na sliki~\ref{Gost_7}, kjer je potrebno izbrati način plačila (gotovina, kartica).
+
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12.5cm]{gost_3.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_3}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12.5cm]{gost_4.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_4}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=9cm]{gost_5.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_5}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=9cm]{gost_6.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_6}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=9cm]{gost_8.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_8}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=9cm]{gost_7.jpg}
+\caption{Način uporabe Axios v aplikaciji za gosta}
+\label{Gost_7}
+\end{center}
+\end{figure}
+
+
 \section{Vmesnik za natakarja}
 \section{Vmesnik za kuharja}
+
 
 \chapter {Diskusija}
 

@@ -555,23 +555,25 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 Za prikaz delovanja smo si pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili strežnik in obe aplikaciji. Vse fukcionalosti posameze aplikacije so opisane spodaj.
 
 \section{Vmesnik za gosta}
-Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico, slika~\ref{Gost}, kateri bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel. V zgornjem desnem kotu se nahaja gumb za klic natakarja in števec cene artiklov v nakupovalni košarici. V spodnjem levem kotu se nahaja status in ID številka naročila. Meni na levi strani je pravzaprav seznam vseh vrst hrane in pijače, ki kažejo na podstrani artiklov, slika~\ref{Gost_3}. To uporabniku predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše artikle ali spreminja njihovo količino. Nakupovalna košarica (ang. cart) je skupno mesto vseh artiklov potencialnih za naročilo, slika~\ref{Gost_4}.
-
-Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika preusmeri na prvo stran in izpiše pojavno sporočilo prikazano na sliki~\ref{Gost_5}. Ko je naročilo oddano, uporabnik lahko ponovno dodaja artikle v košarico, vendar je že oddanim artiklom onemogočeno zmanjšati količino ali jih izbrisati. Naročilo še je sprejeto ko ga natakar potrdi, s tem se spremeni statusa naročila in prikaže se pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga more uporabnik pregledati in ponovno oddati. Tudi v tem primeru je obveščen uporabnik s statusom in pojavnim sporočilom, slika~\ref{Gost_8}. Naročilo se zaključi z klikom na gumb zahtevaj račun (ang. request receipt), ki odpre pojavno okno prikazano na sliki~\ref{Gost_7}, kjer je potrebno izbrati način plačila (gotovina, kartica).
-
+Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico, slika~\ref{Gost}, kateri bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel. V zgornjem desnem kotu se nahaja gumb call waiter za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Tipka call waiter je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Meni na levi strani je pravzaprav seznam vseh vrst hrane in pijače, ki kažejo na podstrani z artiki, slika~\ref{Gost_3}. To gostu predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše artikle ali spreminja njihovo količino. Nakupovalna košarica (ang. cart) je skupno mesto vseh artiklov potencialnih za naročilo, slika~\ref{Gost_4}.
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=12.5cm]{gost_3.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\caption{Seznam artiklov znotraj vrste špagetov}
 \label{Gost_3}
 \end{center}
 \end{figure}
 
+
+Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki ob kliku gosta preusmeri na prvo stran in izpiše pojavno sporočilo prikazano na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja artikle v košarico, vendar je že oddanim artiklom onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, s tem se spremeni statusa naročila in prikaže se pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom, slika~\ref{Gost_8}. Naročilo se zaključi z klikom na gumb zahtevaj račun (ang. request receipt), ki odpre pojavno okno prikazano na sliki~\ref{Gost_7}, kjer je potrebno izbrati način plačila (gotovina, kartica).
+
+ 
+
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12.5cm]{gost_4.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\includegraphics[width=12cm]{gost_4.jpg}
+\caption{Primer nakupovalne košarice z dvema artikloma}
 \label{Gost_4}
 \end{center}
 \end{figure}
@@ -579,7 +581,7 @@ Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_5.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\caption{Pojavno sporočilo ob uspešni oddaji naročila}
 \label{Gost_5}
 \end{center}
 \end{figure}
@@ -587,7 +589,7 @@ Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_6.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\caption{Pojavno sporočilo ob potrditvi naročila s strani natakarja}
 \label{Gost_6}
 \end{center}
 \end{figure}
@@ -595,7 +597,7 @@ Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_8.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\caption{Pojavno sporočilo ob zavrnitvi naročila s strani natakarja}
 \label{Gost_8}
 \end{center}
 \end{figure}
@@ -604,14 +606,19 @@ Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki uporabnika 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_7.jpg}
-\caption{Način uporabe Axios v aplikaciji za gosta}
+\caption{Pojavno okno z možnostjo izbire načina plačila}
 \label{Gost_7}
 \end{center}
 \end{figure}
 
 
-\section{Vmesnik za natakarja}
-\section{Vmesnik za kuharja}
+\section{Vmesnik za natakarja in kuharja}
+Nadzor nad naročili gosta ima samo natakar. Komunikacija med kuharjem in natakarjem je glede hrane, in sicer ali lahko kuhar pripravi jedi za neko naročilo (v aplikaciji ang. confirm/unconfirm) in ko želi obvesti natakarja, da so jedi za neko naročilo pripravljene (v aplikaciji ang. done). Opcijo zavrnitve ima v primeru pomankanja sestavin. Kuhar ima tudi vpogled vseh jedi za neko naročilo s gumbom check details, slika LALA.
+Na sliki LALAL je prikazan seznam naročil in fukcije, ki jih kuhar lahko izvaja nad njimi. 
+
+Slika lala prikazije prvi pogled ob prijavi natakarja. 
+
+
 
 
 \chapter {Diskusija}

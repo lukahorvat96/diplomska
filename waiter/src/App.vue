@@ -32,7 +32,7 @@
               <v-icon small>fas fa-border-all</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Orders food</v-list-item-title>
+              <v-list-item-title>Food orders</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item

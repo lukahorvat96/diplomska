@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="login" grid-list-lg>
-    <h1>ORDERS FOOD</h1>
+    <h1>FOOD ORDERS</h1>
     <v-divider />
     <order-list :orders="allOrders"></order-list>
   </v-container>

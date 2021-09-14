@@ -385,7 +385,7 @@ Iz analize zahtev smo za lažji pregled nad vsemi funkcionalnostmi izdelali diag
 \end{figure}
 
 
-Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in aplikacija oziroma odjemalec. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije.
+Uporabili smo strukturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in aplikacija oziroma odjemalec. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje strukturo aplikacije \cite{TRINIVO}.
 Podatkovna baza je namenjena shranjevanju vseh podatkov za posamezno restavracijo. Strežnik implementira RESTful vmesnik, ki odjemalcu oziroma aplikaciji posreduje podatke iz podatkovne baze. 
 
 \begin{figure}[!htb]
@@ -552,27 +552,23 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Za prikaz delovanja smo si pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili strežnik in obe aplikaciji. Vse fukcionalosti posameze aplikacije so opisane spodaj.
+Za prikaz delovanja smo si pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili strežnik in aplikaciji. Vse fukcionalosti posameze aplikacije so opisane spodaj.
 
 \section{Vmesnik za gosta}
-Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico, slika~\ref{Gost}, kateri bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel. V zgornjem desnem kotu se nahaja gumb call waiter za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Tipka call waiter je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihek na levi strani je pravzaprav seznam vseh vrst hrane in pijače, ki kažejo na podstrani z artiki, slika~\ref{Gost_3}. To gostu predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše artikle ali spreminja njihovo količino. Nakupovalna košarica (ang. cart) je skupno mesto vseh artiklov potencialnih za naročilo, slika~\ref{Gost_4}.
-
+Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico, slika~\ref{Gost}, katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb call waiter za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Tipka call waiter je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihki na levi strani predstavljajo seznam vse vrste hrane in pijače, katere kažejo na podstrani z artiki, slika~\ref{Gost_3}. To gostu predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše artikle ali spreminja njihovo količino. Vsak artikel vsebuje sliko in naslednje podatke: ime, opis in ceno artikla. Poleg tega vsebuje še gumb add to cart, ki ob kliku izgine in prikaže tri nove gume + (povečaj količno), - (zmanjšaj količino) in remove (odstrani). Nakupovalna košarica (ang. cart) je skupno mesto vseh artiklov potencialnih za naročilo, slika~\ref{Gost_4}.
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12.5cm]{gost_3.jpg}
+\includegraphics[width=11.5cm]{gost_3.jpg}
 \caption{Seznam artiklov znotraj vrste špagetov}
 \label{Gost_3}
 \end{center}
 \end{figure}
 
-
-Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki ob kliku gosta preusmeri na prvo stran in izpiše pojavno sporočilo prikazano na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja artikle v košarico, vendar je že oddanim artiklom onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, s tem se spremeni statusa naročila in prikaže se pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom, slika~\ref{Gost_8}. Naročilo se zaključi z klikom na gumb zahtevaj račun (ang. request receipt), ki odpre pojavno okno prikazano na sliki~\ref{Gost_7}, kjer je potrebno izbrati način plačila (gotovina, kartica).
-
- 
+Naročilo se odda s klikom na oddaj naročilo (ang. place order), ki ob kliku gosta preusmeri na prvo stran in izpiše pojavno sporočilo prikazano na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja artikle v košarico, vendar je že oddanim artiklom onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, kar spremeni statusa naročila in prikaže pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom, slika~\ref{Gost_8}. Naročilo se zaključi s klikom na gumb request receipt, ki odpre pojavno okno prikazano na sliki~\ref{Gost_7}, kjer je potrebno izbrati način plačila.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{gost_4.jpg}
+\includegraphics[width=11.5cm]{gost_4.jpg}
 \caption{Primer nakupovalne košarice z dvema artikloma}
 \label{Gost_4}
 \end{center}
@@ -619,7 +615,7 @@ Prvi pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno ap
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{dvapogleda.jpg}
-\caption{Pojavno okno z možnostjo izbire načina plačila}
+\caption{Začetni pogled ob prijavi natakarja in kuharja}
 \label{Dvapogleda}
 \end{center}
 \end{figure}
@@ -642,7 +638,7 @@ Kuharju se v zavihku food orders pojavijo vsa nezaključena naročila, ki vsebuj
 \end{center}
 \end{figure}
 
-Natakarju se v zavihku all orders pojavijo vsa nezaključena naročila (slika~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila (Order number), čas oddaje naročila, status naročila (Order status), status kuharja (Chef status), način plačila (Payment) in številka mize (Table ID). Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki storjeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi ali zavrniti z gumbom confirm ali unconfirm oziroma urediti v z gumbom check details (slika~\ref{Natakar_3}). Ureja lahko celotno naročilo, vendar ne more dodajati novih artiklov. Ko zaključi urjanje more klikniti na gumb update order. Celotno naročilo lahko sprejme šele ko dobi kuharjevo potrditev/zavrnitev naročila o hrani (confirmed/unconfirmed). Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže. Natakar to v naročilu primerno označi z klikom na gumb served. V primeru, da gost zahteva račun, se natakrju izpiše način plačila v zadevi Payment. Natakar ob kliku na gumb invoice zaključi naročilo.
+Natakarju se v zavihku all orders pojavijo vsa nezaključena naročila (slika~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila (Order number), čas oddaje naročila, status naročila (Order status), status kuharja (Chef status), način plačila (Payment) in številka mize (Table ID). Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki storjeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi ali zavrniti z gumbom confirm ali unconfirm oziroma urediti v z gumbom check details (slika~\ref{Natakar_3}). Ureja lahko celotno naročilo, vendar ne more dodajati novih artiklov. Ko zaključi urjanje more klikniti na gumb update order. Celotno naročilo lahko sprejme šele ko dobi kuharjevo potrditev naročila o hrani (confirmed). Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže (done). Natakar to v naročilu primerno označi s klikom na gumb served. V primeru, da gost zahteva račun, se natakrju izpiše način plačila v zadevi Payment. Naročilo se zaključi, ko natakar natiska račun.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -665,36 +661,37 @@ Natakarju se v zavihku all orders pojavijo vsa nezaključena naročila (slika~\r
 
 Našo aplikacijo bi potencialnim kupcem ponudili v dveh različicah.
 
-Prva različica, ki bi bila cenejša, bi predstavljala aplikacijo v obliki QR kod na vsaki mizi v restavraciji. V kodi bi bilo zapisano ime restavracije in številka mize. Kodo bi gost skeniral z mobilnim telefon in bil preusmerjen v aplikacijo. Celoten sistem bi bil na javnem Internetu tako za goste kot tudi natakarje in kuharje. Strežnik bi bil postavljen za celotno Slovenijo, in bi omogočal storitev vsem restavracija po Sloveniji. Potrebno bi bilo zagotoviti, da ne bi prihajalo do »fantomskih« naročil, kjer bi nepridipravi oddaljeno oddajali neveljavna naročila. To bi lahko zagotovili na primer, da bi moral biti uporabnik prijavljen preko lokalnega omrežja s čimer bi overili njegovo dejansko prisotnost v restavraciji. Seveda bi pri tem morali zagotovi še vrsto drugih varnostnih mehanizmov. Ena od rešitev bi bilo geslo, ki se spreminja za vsako naročilo in ga lahko izda samo natakar. 
+Prva različica, ki bi bila cenejša, bi predstavljala aplikacijo v obliki QR kode, ki bi bila locirana na vsaki mizi v restavraciji. V kodi bi bilo zapisano ime restavracije in številka mize. Kodo bi gost skeniral z mobilnim telefon in bil preusmerjen v aplikacijo. Celoten sistem bi bil na javnem Internetu, tako za goste kot tudi natakarje in kuharje. Strežnik bi bil postavljen za celotno Slovenijo in bi omogočal storitev vsem restavracija po Sloveniji. Potrebno bi bilo zagotoviti, da ne bi prihajalo do fantomskih naročil, kjer bi nepridipravi oddaljeno oddajali neveljavna naročila. Ena rešitev bi bila, da bi moral biti uporabnik prijavljen preko lokalnega omrežja s čimer bi overili svojo dejansko prisotnost v restavraciji. Druga rešitev bi bilo geslo, ki bi ga uporabnik prejel od natakarja. 
 
-Druga oziroma dražja različica bi bila uporaba tablic za vsako mizo. Sistem bi bil dostopen samo lokalno, znotraj restavracije, kar bi bilo iz vidika varnosti precej bolj varno. Restavracija bi potrebovala poleg tablic potrebuje še lokalni spletni strežnik.
+Druga oziroma dražja različica bi bila uporaba tablic za vsako mizo. Sistem bi bil dostopen samo lokalno, znotraj restavracije, kar bi bilo iz vidika varnosti precej bolj varno. Restavracija bi potrebovala poleg tablic še lokalni spletni strežnik.
 
 \section{Izboljšave}
 
 Izboljšav za to aplikacijo je veliko, ker obstaja veliko zadev, ki bi aplikacijo dvignilo na naslednji nivo, vendar v okviru naše implementacije bi lahko izboljšali naslednje stvari:
 
-1.) Možnost hkratnega delovanja več kuharjev, da bi lahko vsak kuhar vedel kaj more delati. Tako kot smo implementirli za natakarje.
+1.) Možnost hrkatnega delovanja več kuharjev, da bi lahko vsak vedel kaj more delati. Tako kot smo implementirli za natakarje.
 
 2.) Dodatno spremljanje hrane in pijače na strani kuharja/natakarja – katera pijača in hrana je že bila postrežena.
 
-3.) Dodajanje novih artiklov s strani natakarja.
+3.) Dodajanje novih artiklov v naročilo na strani natakarja.
 
-4.) Pisanje opom na strani natakarja in kuharja, saj bi s tem preprečili daljše klepete.
+4.) Pisanje opomb pri vsakem naročilo, kar bi natakarju in kuharju oljašalo delo ob povečanemu številu gostov.
 
 Še par izboljšav, ki bi obstoječo aplikacijo dvignilo na naslednji nivo:
 
-1.) Statistika za lastnika restavracije, ki bi poleg vseh podatkov lahko računala oceno nabave za prihodnji mesec. Ta bi imel svoj ločen uporabniški račun, ki bi omogočal tudi nastavitve v pogledu za gosta –lahko bi spreminjal številko mize. 
+1.) Statistika za lastnika restavracije, ki bi poleg vseh podatkov lahko računala oceno nabave za prihodnji mesec. Aplikacija bi imela svoj ločen uporabniški račun, ki bi omogočal tudi nastavitve v pogledu za gosta (npr. lahko bi spreminjal številko mize). 
 
-2.) Brezstično plačevanje s kartico direktno na strani gosta.
+2.) Brezstično plačevanje s kartico neposredno na strani gosta.
 
-3.) Če bi aplikacija delovala na centralnem strežniku, bi lahko za vsako restavracijo omogočali tudi dostavo hrane z enakim pogledom, ki bi bil vedno dostopen na skupni spletni strani – npr. kot Glovo in Wolt.
-Vpeljava sistema v restavracije brez potreb po natakarju. Podobne želje so imeli v LarsSven.  
+3.) Če bi aplikacija delovala na centralnem strežniku, bi lahko za vsako restavracijo omogočali dostavo hrane z enakim pogledom, ki bi bil dostopen na skupni spletni strani npr. kot Glovo in Wolt.
+Tak sistem v restavracijah zmanjša iskanost natakarjem. Podobne želje so imeli v LarsSven.  
 
 
 \section{Konkurenca}
 
-McDonalds, ki rešitev uporablja že nekaj let. Prednosti in slabosti – naročile se lahko izvede elektronsko samo na vhodu, ni mogoče ponovnega hitrega naročila,… 
-Spletne aplikacije, ki ponujajo dostavo vseh restavracij po Sloveniji npr. ehrana in wolt. To bi bilo mogoče narediti tudi za mojo rešitev. Prednost bi bila, da bi mi lahko to restavracijam ponujal kot paket.
+Največja trenutna konkurenca je McDonalds, ki rešitev uporablja že nekaj let. Gre za rešitv pri kateri se naročilo izvede elektronsko pri vhodu, ni mogoče ponovnega hitrega naročila,… 
+
+Velika konkurenca so tudi spletne aplikacije, ki ponujajo dostavo vseh restavracij po Sloveniji npr. Glovo in Wolt. To bi bilo mogoče narediti tudi za mojo rešitev. Prednost bi bila, da bi mi lahko to restavracijam ponujal kot paket.
 
 \chapter {Sklepne ugotovitve}
 \newpage %dodaj po potrebi, da bo številka strani za Literaturo v Kazalu pravilna!

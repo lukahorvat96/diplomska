@@ -553,10 +553,20 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Za prikaz delovanja smo si pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Vse fukcionalosti posameze aplikacije so opisane spodaj.
+Za prikaz delovanja smo pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Primer uporabe je prikazan spodaj, bolj podrobni opis vseh funkcionalnosti pa v naslednjih poglavjih.
+
+Gost skozi menije izbira hrano in pijačim ter jo dodaja v naročilo. V našem primeru je gost izbrala dve sokova in dve pici. Pregled nad celotnim naročilom se nahajva v košarici (podstran \textit{cart})  Končna izbira naročila se potrdi z gumbom na  
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=11.5cm]{opis_1.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Gost}
+\end{center}
+\end{figure}
 
 \section{Vmesnik za gosta}
-Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb call waiter za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Tipka \textit{call waiter} namenjena je gostom, ki aplikacije ne želijo uporabljati ali v primeru kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani le-teh (slika~\ref{Gost_3}). Gostu to predstavlja jedilnik s katerim v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino. Vsaka hrana ali pijača vsebuje sliko in naslednje podatke: ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart}, ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove}(odstrani). Nakupovalna košarica (ang. cart) je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}).
+Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb \textit{call waiter} za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru pomoči, če pridejo do kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo ponuja restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo s katerim v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino. Vsaka hrana ali pijača vsebuje sliko in naslednje podatke: ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart}, ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove}(odstrani). Nakupovalna košarica (ang. cart) je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}).
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=11.5cm]{gost_3.jpg}

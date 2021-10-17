@@ -486,7 +486,6 @@ Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potreb
 	
 
 Aplikacija omogoča urejanje določenih podatkov, zato smo morali zagotoviti ustrezno varnost za urejanje le-teh. Prvi nivo varnosti je avtorizacija odjemalca. Zahtevki, ki se pošiljajo na strežnik morajo biti omogočeni samo avtoriziranim odjemalcem. Zato smo uporabili HTTP piškotke (ang. cookies), ki so izdelani za spletne brskalnike in so namenjeni za sledenje, prilagajanje in shranjevanje informacij o posamezni seji uporabnika. Vsi piškotki so shranjeni na strani odjemalca in so kriptografsko zaščiteni pred morebitnimi neopoblaščenimi posegi odjemalca. S tem odjemalcu preprečujemo spreminjanje podatkov v piškotkih oz. lahko nedovoljene spremembe podatkov na strežniku delektiramo. Uporabili smo Flask-Login, ki omogoča vse funkcionalnost za upravljanje uporabniških sej. 
-
 Na sliki~\ref{Cookies} je prikazano delovanje HTTP piškotkov. Strežnik ob prvem zahtevku, torej ob uspešni prijavi, odjemalcu vrne piškotek. Odjemalec ob vsakem nadaljnjem zahtevku doda piškotek s katerim strežnik overi zahtevo odjemalca.
 
 \begin{figure}[!htb]
@@ -529,7 +528,6 @@ Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve apl
 \end{center}
 \end{figure}
 
-
 Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila, itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikovhitrejša in učinkovitejša. Slika~\ref{SocketIO_1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
@@ -555,13 +553,46 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 \chapter {Delovanje aplikacije}
 Za prikaz delovanja smo pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Primer uporabe je prikazan spodaj, bolj podrobni opis vseh funkcionalnosti pa v naslednjih poglavjih.
 
-Gost skozi menije izbira hrano in pijačim ter jo dodaja v naročilo. V našem primeru je gost izbrala dve sokova in dve pici. Pregled nad celotnim naročilom se nahajva v košarici (podstran \textit{cart})  Končna izbira naročila se potrdi z gumbom na  
+Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo. V našem primeru gost izbere dve sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis1}).
+Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo. V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika), da lahko natakar potrdi celotno naročilo gostu (slika ). Ko je hrana pripravljena, kuhar o tem obvesti natakrja (slika lala). Natakar naročilo postreže in naročilo označi kot postreženo (slika lalal). Gost zaključiti naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo. Natakar je obveščen o zahtevi za račun s strani gosta, kjer ima opisan način plačila. S tiskanjem računa, natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11.5cm]{opis_1.jpg}
+\includegraphics[width=14cm]{opis1.jpg}
 \caption{Spletni vmesnik za gosta}
-\label{Gost}
+\label{Opis1}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{opis11.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Opis2}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{opis2.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Opis2}
+\end{center}
+\end{figure}
+	
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{opis3.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Opis2}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14cm]{opis4.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Opis2}
 \end{center}
 \end{figure}
 

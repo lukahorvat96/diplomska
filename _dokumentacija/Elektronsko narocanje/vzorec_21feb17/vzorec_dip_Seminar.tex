@@ -551,14 +551,14 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Za prikaz delovanja smo pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Primer uporabe je prikazan spodaj, bolj podrobni opis vseh funkcionalnosti pa v naslednjih poglavjih.
+Za prikaz delovanja smo pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Primer uporabe je opisan in prikazan spodaj, bolj podroben opis vseh funkcionalnosti pa v naslednjih poglavjih.
 
 Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo. V našem primeru gost izbere dve sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis1}).
 Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo. V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika), da lahko natakar potrdi celotno naročilo gostu (slika ). Ko je hrana pripravljena, kuhar o tem obvesti natakrja (slika lala). Natakar naročilo postreže in naročilo označi kot postreženo (slika lalal). Gost zaključiti naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo. Natakar je obveščen o zahtevi za račun s strani gosta, kjer ima opisan način plačila. S tiskanjem računa, natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{opis1.jpg}
+\includegraphics[width=14.5cm]{opis1.jpg}
 \caption{Spletni vmesnik za gosta}
 \label{Opis1}
 \end{center}
@@ -566,7 +566,7 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{opis11.jpg}
+\includegraphics[width=14.5cm]{opis11.jpg}
 \caption{Spletni vmesnik za gosta}
 \label{Opis2}
 \end{center}
@@ -574,7 +574,7 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{opis2.jpg}
+\includegraphics[width=14.5cm]{opis2.jpg}
 \caption{Spletni vmesnik za gosta}
 \label{Opis2}
 \end{center}
@@ -582,7 +582,7 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 	
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{opis3.jpg}
+\includegraphics[width=14.5cm]{opis3.jpg}
 \caption{Spletni vmesnik za gosta}
 \label{Opis2}
 \end{center}
@@ -590,43 +590,55 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14cm]{opis4.jpg}
+\includegraphics[width=14.5cm]{opis5.jpg}
 \caption{Spletni vmesnik za gosta}
 \label{Opis2}
 \end{center}
 \end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis6.jpg}
+\caption{Spletni vmesnik za gosta}
+\label{Opis2}
+\end{center}
+\end{figure}
+
 
 \section{Vmesnik za gosta}
-Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb \textit{call waiter} za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru pomoči, če pridejo do kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo ponuja restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo s katerim v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino. Vsaka hrana ali pijača vsebuje sliko in naslednje podatke: ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart}, ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove}(odstrani). Nakupovalna košarica (ang. cart) je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}).
+Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb \textit{call waiter} za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru pomoči, če pridejo do kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11.5cm]{gost_3.jpg}
+\includegraphics[width=12cm]{gost_3.jpg}
 \caption{Seznam artiklov znotraj vrste špagetov}
 \label{Gost_3}
 \end{center}
 \end{figure}
 
-Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na prvo stran in obvesti s pojavnim sporočilom prikazanim na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja hrano in pijačo v košarico, vendar je že oddani hrani in pijači onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, kar spremeni status naročila in prikaže pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom (slika~\ref{Gost_8}). Naročilo se zaključi s klikom na gumb \textit{request receipt}, ki odpre pojavno okno (slika~\ref{Gost_7}) na katerem je potrebno izbrati način plačila.
-
+Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo ponuja restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo s katerim v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo ponuja restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo s katerim v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino.
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11.5cm]{gost_4.jpg}
+\includegraphics[width=12cm]{gost_4.jpg}
 \caption{Primer naročila}
 \label{Gost_4}
 \end{center}
 \end{figure}
+ 
+Vsaka hrana ali pijača vsebuje sliko in naslednje podatke: ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart}, ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove}(odstrani). Nakupovalna košarica (ang. cart) je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}).
+
+Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na prvo stran in obvesti s pojavnim sporočilom prikazanim na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja hrano in pijačo v košarico, vendar je že oddani hrani in pijači onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, kar spremeni status naročila in prikaže pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom (slika~\ref{Gost_8}). Naročilo se zaključi s klikom na gumb \textit{request receipt}, ki odpre pojavno okno (slika~\ref{Gost_7}) na katerem je potrebno izbrati način plačila.
+
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=9cm]{gost_5.jpg}
+\includegraphics[width=8.5cm]{gost_5.jpg}
 \caption{Pojavno sporočilo ob uspešni oddaji naročila}
 \label{Gost_5}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=9cm]{gost_6.jpg}
+\includegraphics[width=8.5cm]{gost_6.jpg}
 \caption{Pojavno sporočilo ob potrditvi naročila s strani natakarja}
 \label{Gost_6}
 \end{center}
@@ -639,8 +651,6 @@ Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na p
 \label{Gost_8}
 \end{center}
 \end{figure}
-
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_7.jpg}
@@ -651,22 +661,13 @@ Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na p
 
 
 \section{Vmesnik za natakarja in kuharja}
+Prvi pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno aplikacijo kjer se pogledi razlikujejo glede vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, namreč oba uporabnika imata zelo podobne funkcije. Slika~\ref{NatakarGost} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sing out}. Prva podstran imenovana \textit{dashboard} ali prva strani ob uspešni prijavi, prikazuje napis za hitrejšo razlikovanje med vlogami. Natakar ima poleg tega v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
 
-Prvi pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno aplikacijo kjer se pogledi razlikujejo glede vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, namreč oba uporabnika imata zelo podobne funkcije. Slika~\ref{NatakarGost} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sing out}. Prva podstran imenovana \textit{dashboard} ali prva strani ob uspešni prijavi, prikazuje napis za hitrejšo razlikovanje med vlogami (slika~\ref{Dvapogleda}). Natakar ima poleg tega v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14cm]{dvapogleda.jpg}
-\caption{Začetni pogled ob prijavi natakarja in kuharja}
-\label{Dvapogleda}
-\end{center}
-\end{figure}
-
-Kuharju se v zavihku food orders pojavijo vsa nezaključena naročila, ki vsebujejo hrano (slika~\ref{Kuhar_4}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status kuharja in številka mize. Kuhar mora naročilo najprej pregledati z gumbom \textit{check details} (slika~\ref{Kuhar_3}) ter ga sprejeti ali zavrniti z gumbom \textit{confirm} in \textit{unconfirm}. Naročilo lahko kuhar zavrne v primeru pomanjkanja sestavin. Ko kuhar zaključi s pripravo hrane o tem obvesti natakarja s klikom na gumb \textit{done}, ki izbriše naročilo iz seznama. Ob vsaki izvedeni akciji se pri vsakem naročilu spremi status kuharja, ki je lahko: updated, confirmed, unconfirmed in done. Status updated je v primeru dodajanja artiklov k naročilu s strani gosta.
+Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, ki vsebujejo hrano (slika ~\ref{Kuhar_4}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status kuharja in številka mize. Kuhar mora naročilo najprej pregledati z gumbom \textit{check details} (slika  ~\ref{Kuhar_3}) ter ga sprejeti ali zavrniti z gumbom \textit{confirm} in \textit{unconfirm}. Naročilo lahko kuhar zavrne v primeru pomanjkanja sestavin. Ko kuhar zaključi s pripravo hrane o tem obvesti natakarja s klikom na gumb \textit{done}, ki izbriše naročilo iz seznama. Ob vsaki izvedeni akciji se pri vsakem naročilu spremi status kuharja, ki je lahko: updated, confirmed, unconfirmed in done. Status updated je v primeru dodajanja artiklov k naročilu s strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=13cm]{kuhar_4.jpg}
+\includegraphics[width=12cm]{kuhar_22.jpg}
 \caption{Zavihek food orders}
 \label{Kuhar_4}
 \end{center}
@@ -674,30 +675,30 @@ Kuharju se v zavihku food orders pojavijo vsa nezaključena naročila, ki vsebuj
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=13cm]{kuhar_3.jpg}
+\includegraphics[width=12cm]{kuhar_23.jpg}
 \caption{Zavihek, ki se odpre kuharju ob kliku na gumb \textit{check details}}
 \label{Kuhar_3}
 \end{center}
 \end{figure}
 
-Natakarju se v zavihku all orders pojavijo vsa nezaključena naročila (slika~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status naročila, status kuharja, način plačila in številka mize. Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki izvedeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi ali zavrniti z gumbom \textit{confirm} ali \textit{unconfirm} oziroma urediti v z gumbom \textit{check details} (slika~\ref{Natakar_3}). Ureja lahko celotno naročilo, to pomeni da lahko spreminja količino hrano in pijačo ali jo izbriše iz naročila, vendar ne more pa dodajati hrane in pijače, ki ni na naročilu. Ko zaključi urjanje mora klikniti na gumb \textit{update order}. Celotno naročilo lahko sprejme šele ko dobi kuharjevo potrditev naročila o hrani (Chef status označen s confirmed). Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže (Chef status označen z done). Natakar postreženo naročilo označi s klikom na gumb \textit{served}. V primeru, da gost zahteva račun, se natakarju izpiše način plačila v zadevi payment. Naročilo se zaključi, ko natakar natisne račun s klikom na gumb \textit{invoice}.
+Natakarju se v zavihku all orders pojavijo vsa nezaključena naročila (slika ~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status naročila, status kuharja, način plačila in številka mize. Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki izvedeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi ali zavrniti z gumbom \textit{confirm} ali \textit{unconfirm} oziroma urediti v z gumbom \textit{check details} (slika~\ref{Natakar_3}). Ureja lahko celotno naročilo, to pomeni da lahko spreminja količino hrano in pijačo ali jo izbriše iz naročila, vendar ne more pa dodajati hrane in pijače, ki ni na naročilu. Ko zaključi urjanje mora klikniti na gumb \textit{update order}. Celotno naročilo lahko sprejme šele ko dobi kuharjevo potrditev naročila o hrani (Chef status označen s confirmed). Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže (Chef status označen z done). Natakar postreženo naročilo označi s klikom na gumb \textit{served}. V primeru, da gost zahteva račun, se natakarju izpiše način plačila v zadevi payment. Naročilo se zaključi, ko natakar natisne račun s klikom na gumb \textit{invoice}.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=13cm]{natakar_2.jpg}
+\includegraphics[width=12cm]{natakar_21.jpg}
 \caption{Zavihek all orders}
 \label{Natakar_2}
 \end{center}
 \end{figure}
 
 \begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=13cm]{natakar_3.jpg}
+\includegraphics[width=12cm]{natakar_22.jpg}
 \caption{Zavihek, ki se odpre natakarju ob kliku na gumb \textit{check details}}
 \label{Natakar_3}
-\end{center}
 \end{figure}
-\chapter {Diskusija}
+
+
+
 
 \section{Implementacija programa v realnosti}
 

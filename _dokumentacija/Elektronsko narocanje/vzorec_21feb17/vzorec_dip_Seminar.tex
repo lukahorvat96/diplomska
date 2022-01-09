@@ -54,7 +54,7 @@
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Luka Horvat}
-\newcommand{\tkeywords}{spletna aplikacija, elektronsko naročanje, restavracije, visokonivojska arhitektura}
+\newcommand{\tkeywords}{spletna aplikacija, elektronsko naročanje, restavracija, Vue, JavaScript}
 \newcommand{\tkeywordsEn}{computer, computer, computer}
 
 
@@ -299,16 +299,15 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 
 \noindent\begin{tabular}{p{0.1\textwidth}|p{.4\textwidth}|p{.4\textwidth}}    % po potrebi razširi prvo kolono tabele na račun drugih dveh!
   {\bf kratica} & {\bf angleško}                             & {\bf slovensko} \\ \hline
-  {\bf SPA}      & single page application               &  aplikacija na eni strani \\
-  {\bf SQL} & structured query language & strukturirani povpraševalni jezik za delo s podatkovnimi bazami  \\
-  {\bf CLI}   & command-line interface              & znakovni uporabniški vmesnik \\
-  {\bf REST}   & representational state transfer              & aktualni prenos stanja \\
-  {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
-  {\bf SPA}   &  single-page application              & aplikacija na eni strani \\
-  {\bf HTTP}   &  hypertext transfer protocol               & protokol za prenos hiperteksta \\
-  {\bf SUPB}   &  database management system              & sistem za upravljanje s podatkovno bazo \\
   {\bf API}   &  application programming interface              & programski vmesnik\\
+  {\bf CLI}   & command-line interface              & ukazno-vrstični vmesnik \\
+  {\bf HTTP}   &  hypertext transfer protocol               &  protokol svetovnega spleta \\
   {\bf QR}   &  qucik  response              & hiter odziv\\
+  {\bf REST}   & representational state transfer              & reprezentativni prenos stanja \\
+  {\bf SPA}      & single page application               &  enostranska aplikacija \\	
+  {\bf SQL} & structured query language & poizvedovalni jezik SQL  \\
+  {\bf SUPB}   &  database management system              & sistem za upravljanje s podatkovno bazo \\
+  {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -330,7 +329,7 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
 
 %\noindent\textbf{Povzetek:} 
 \noindent 
-Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki je namenjena elektronskemu naročanju hrane in pijače v restavracijah. Namen aplikacije je olajšati delo natakarjem in nuditi bolj kakovostno postrežbo gostom. Ključne funkcionalnosti so oddajanje naročil s strani gosta ter nadzor in upravljanje naročil s strani natakarja in kuharja. Omogočeno je naročanje preko aplikacije ali z neposrednim stikom z natakarjem. Aplikacija je zasnovana po visokonivojski arhitekturi, ki jo sestavljajo aplikacija, strežnik in podatkovna baza. Za razvoj aplikacije se je uporabil programski jezik JavaScript, Python in MySQL za podatkovno bazo. Razvita rešitev je pripravljena za implementacijo v restavracijah.
+Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki omogoča elektronsko naročanje hrane in pijače v restavracijah. Namen aplikacije je olajšati delo natakarjem in nuditi bolj kakovostno postrežbo gostom. Ključne funkcionalnosti so oddajanje naročil s strani gosta ter nadzor in upravljanje naročil s strani natakarja in kuharja. Omogočeno je naročanje preko aplikacije ali z neposrednim stikom z natakarjem. Aplikacija je zasnovana po visokonivojski arhitekturi, ki jo sestavljajo aplikacija, strežnik in podatkovno bazo. Za razvoj aplikacije so uporabljeni ogrodje Vue in programski jeziki JavaScript, Python ter MySQL za podatkovno bazo.
 \bigskip
 
 \noindent\textbf{Ključne besede:} \tkeywords.
@@ -365,28 +364,31 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
  
 \chapter{Uvod}
-Slovenija velja za državo z veliko restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji so obstajali projekti s podobnimi idejami, vendar z napačnimi cilji zaradi katerih so bili neuspešni. Glavni razlog, da jim ni uspelo, je bilo sabotiranje s strani natakarjev, saj so misli da bo tehnologija zamenjala njegove službe. Problematiko smo vzeli kot motivacijo ter si zadali cilj, da izdelamo aplikacijo, kot pripomoček za optimizacijo dela natakarjev. Ker ustrezne rešitve za ta problem nismo zaznali, nam pa se je zdelo, da je lahko realiziramo, smo se odločili narediti diplomsko nalogo na to tematiko.
+Slovenija velja za državo z veliko restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji so obstajali projekti s podobnimi idejami, vendar z napačnimi cilji zaradi katerih so bili neuspešni. Glavni razlog, da jim ni uspelo, je bilo sabotiranje natakarjev, saj so misli da bo tehnologija nadomestila njegove službe. Problematiko smo vzeli kot motivacijo ter si zadali cilj, da izdelamo aplikacijo, kot pripomoček za optimizacijo dela natakarjev. Ker ustrezne rešitve za ta problem nismo zaznali, nam pa se je zdelo, da je lahko realiziramo, smo se odločili narediti diplomsko nalogo na to tematiko.
 
-Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi bil namenjen zamenjavi ljudi v strežbi, temveč kot pregledovalnik ponudbe z možnostjo naročanja hrane in pijače. Aplikacija za stranke bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločala ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Natakar bi tako imel več časa, katerega bi lahko posvetil pripravi pijače, kvaliteti postrežbe in ostalih dolžnosti. Tudi stranke, katere sedaj veljajo za bolj zahtevne in neučakane na vseh področijh, bi bile hitreje in bolj kvalitetno postrežene. Tako bi imeli poleg restavracij s hitro prehrano tudi restavracije s hitro postrežbo. 
+Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi nadomestil ljudi v strežbi, temveč bi služil kot pregledovalnik ponudbe z možnostjo naročanja hrane in pijače. Aplikacija bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločala ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Delovanje bi bilo sledeče, stranka oziroma gost odda naročilo ter ga odda, natakar in kuhar ga preverita, potrdita in pripravita.  Natakar in kuhar bi s tem imela več časa za pripravo. Posledično bi bile stranke, ki veljajo za bolj zahtevne in neučakane na vseh področjih, hitreje in bolj kvalitetno postrežene. 
 
-Aplikacija podpira tri uporabniške vloge, in sicer gost, natakar in kuhar.
+Aplikacija podpira tri vrste uporabnikov, in sicer gost, natakar in kuhar. 
+
 
 \chapter{Načrtovanje in razvoj aplikacije}
 
-Razvoj aplikacije je potekal v treh delih in sicer analiza zahtev oziroma izdelava diagrama primerov uporabe, načrtovanje arhitekture in izbira tehnologij ter implementacija.
-Rešitev sestavljajo dve aplikaciji. Ena aplikacija je namenjena gostom, druga pa natakarjem in kuharjem. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo vsi gosti za mizo naročati skupaj. 
+Načrtovanje aplikacije je potekalo v treh delih in je vključevalo opis zahtev oziroma izdelavo diagrama primerov uporabe, razvoj arhitekture in izbiro tehnologij. 
+Predlagana rešitev je bila v nadaljevanju osnova za izdelavo dveh spletnih aplikacij, ki sta uporabljeni v restavraciji. Ena aplikacija je namenjena gostom, druga pa natakarjem in kuharjem. Restavracija ima lahko več miz, vendar za eno mizo je lahko hkrati odprto eno naročilo. To pomeni, da morajo vsi gosti za mizo naročati skupaj. Slika~\ref{FunkVloge} prikazuje primere uporabe za izvedbo celotnega naročila. 
 
-Gost lahko odda, spremeni ali zaključi naročilo. Funkcionalnosti gosta so: dodajanje in brisanje artiklov iz naročila, oddajanje, urejanje in pregledovanje naročila, spremljanje statusa naročila in zahtevanje računa. V restavraciji je lahko več natakarjev, ki svoje delo opravljajo istočasno. Funkcionalnosti natakarja so: dodajanje in brisanje artiklov iz naročila, urejanje in pregledovanje naročila, spremljanje statusa naročila, spremljanje statistke naročil in možnost tiskanja računa za določeno naročilo. Kuhar lahko sprejeme ali zavrne naročilo. Restavracija ima lahko več kuharjev, vendar vsi uporabljajo aplikacijo preko iste prijave. Omejitev je v podatkovnem modelu. Funkcionalnosti kuharja so: pregledovanje in potrjevanje naročila, obveščanje natakarja o zaključku priprave jedi ter spremljanje statistke naročil. 
+Gost lahko odda, spremeni ali zaključi naročilo. Funkcionalnosti gosta so: dodajanje in brisanje artiklov iz naročila, oddajanje, urejanje in pregledovanje naročila, spremljanje statusa naročila in zahtevanje računa. 
+
+Natakar lahko potrdi, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko več natakarjev, ki svoja naročila vodijo preko ločene prijave. Funkcionalnosti natakarja so: urejanje in pregledovanje naročila, spremljanje status in statistike naročil in možnost tiskanja računa za določeno naročilo. Kuhar lahko potrdi ali zavrne naročilo ter obvesti natakarja o zaključku priprave jedi za določeno naročolo. Restavracija ima lahko več kuharjev, vendar vsi uporabljajo aplikacijo preko iste prijave. Omejitev je v podatkovnem modelu. Funkcionalnosti kuharja so: pregledovanje in potrjevanje naročila, obveščanje natakarja o zaključku priprave jedi ter spremljanje statistke naročil. 
+
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11.5cm]{Skica2.png}
-\caption{Diagram primerov uporabe spretnega naročanja}
+\includegraphics[width=10.5cm]{Skica2.png}
+\caption{Diagram primerov uporabe spletnega naročanja}
 \label{FunkVloge}
 \end{center}
 \end{figure}
 
-
-Uporabili smo arhitekturo novodobnih aplikacij katero sestavljajo podatkovna baza, strežnik in aplikacija oziroma odjemalec. Gre za koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje arhitekturno rešitev aplikacije \cite{TRINIVO}.
+Uporabili smo trenutno najbolj razširjeno arhitekturo, katero sestavljajo podatkovna baza, strežnik in aplikacija oziroma odjemalec. To je koncept, ki ga je moč prilagajati predvsem z uporabniškega vidika. Slika~\ref{StrukApk} prikazuje arhitekturno rešitev aplikacije \cite{TRINIVO}.
 Podatkovna baza je namenjena shranjevanju vseh podatkov za posamezno restavracijo. Strežnik implementira vmesnik RESTful, ki odjemalcu oziroma aplikaciji posreduje podatke iz podatkovne baze. 
 
 \begin{figure}[!htb]

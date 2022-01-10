@@ -301,13 +301,17 @@ Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazit
   {\bf kratica} & {\bf angleško}                             & {\bf slovensko} \\ \hline
   {\bf API}   &  application programming interface              & programski vmesnik\\
   {\bf CLI}   & command-line interface              & ukazno-vrstični vmesnik \\
+  {\bf DBMS}   &  database management system              & sistem za upravljanje s podatkovno bazo \\
+  {\bf ENUM}   & enumerated type              & naštevni tip \\
   {\bf HTTP}   &  hypertext transfer protocol               &  protokol svetovnega spleta \\
+  {\bf JSON}   &  avaScript object notation               &  objektna notacija za JavaScript \\
   {\bf QR}   &  qucik  response              & hiter odziv\\
   {\bf REST}   & representational state transfer              & reprezentativni prenos stanja \\
   {\bf SPA}      & single page application               &  enostranska aplikacija \\	
   {\bf SQL} & structured query language & poizvedovalni jezik SQL  \\
-  {\bf SUPB}   &  database management system              & sistem za upravljanje s podatkovno bazo \\
   {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
+  {\bf XML}   &  extensible markup language              & razširljiv označevalni jezik \\
+
 %  \dots & \dots & \dots \\
 \end{tabular}
 
@@ -400,11 +404,11 @@ Podatkovna baza je namenjena shranjevanju vseh podatkov za posamezno restavracij
 
 
 \section{Podatkovna baza}
-Na podlagi izdelanega diagrama zahtev oziroma funkcij smo najprej izdelali logičen podatkovni model (slika~\ref{Database_physical}). Podatkovna baza je sestavljena iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
+Na podlagi predvidenih zahtev oziroma funkcionalnosti, ki jih bo imela spletna aplikacija, smo najprej izdelali logičen podatkovni model (slika~\ref{Database_physical}). Podatkovna baza je sestavljena iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12.5cm]{Database_physical}
+\includegraphics[width=11.9cm]{Database_physical}
 \caption{Logični podatkovni model}
 \label{Database_physical}
 \end{center}
@@ -412,41 +416,41 @@ Na podlagi izdelanega diagrama zahtev oziroma funkcij smo najprej izdelali logi�
 
 Tabela \textit{ProductType} je namenjana zapisom za vrste jedi (predjed, glavna jed, sladica) in pijač (sokovi, piva, vina, ...). Sestavljena je iz atributov: \textit{ID}, \textit{Name} in \textit{Type}. Atribut \textit{Type} je namenjen razlikovanju hrane in pijače v naročilu.
 
-Tabela \textit{Product} je namenjena opisu hrane in pijače ter je sestavljena iz atributov: \textit{ID}, \textit{Name}, \textit{Price}, \textit{Size}, \textit{Calorie}, \textit{Picture} in \textit{Description}. V vrednost atributa \textit{Picture} se zapiše ime slike, ki se prikaže v aplikaciji. Vse slike so shranjene v datotečnem sistemu spletnega strežnika.
+Tabela \textit{Product} je namenjena opisu hrane in pijače ter je sestavljena iz atributov: \textit{ID}, \textit{Name}, \textit{Price}, \textit{Size}, \textit{Calorie}, \textit{Picture} in \textit{Description}. V vrednost atributa \textit{Picture} se zapiše ime slike, ki se prikaže v aplikaciji.
 
 Tabela \textit{ProductOrder} je namenjena količini in končni ceni hrane in pijače v naročilu. Sestavljena je iz atributov: \textit{TotalPrice} in \textit{Quantity}. Zapis ne obstaja, če nima definiranega naročila. Tabela je nastala zaradi razmerja M:N t.i. mnogo-proti-mnogo med tabelo \textit{Product} in \textit{Order}.
 
-Tabela \textit{Order} je namenjena zapisovanju naročil in njegovih podrobnosti. Sestavljena je iz atributov: \textit{ID}, \textit{Start}, \textit{End}, \textit{OrderStatus}, \textit{CookStatus} in \textit{Payment}. Vsebuje tudi tuji ključ od tabele \textit{Table}, ki določa, na katero mizo je vezano naročilo. Atributa \textit{OrderStatus} in \textit{CookStatus} sta ENUM podatkovnega tip (preddefinirane vrednosti) in sporočata status naročila med vlogami.
+Tabela \textit{Order} je namenjena zapisovanju naročil in njegovih podrobnosti. Sestavljena je iz atributov: \textit{ID}, \textit{Start}, \textit{End}, \textit{OrderStatus}, \textit{CookStatus} in \textit{Payment}. Vsebuje tudi tuji ključ od tabele \textit{Table}, ki določa, na katero mizo je vezano naročilo. Atributa \textit{OrderStatus} in \textit{CookStatus} sta definirana kot naštevalni podatkovni tip, ang. enumerated type (ENUM), in sporočata status naročila med vlogami.
 
 Tabela \textit{Table} je namenjena označevanju miz v restavracijah. Sestavljajo jo atributi: \textit{ID}, \textit{Name} in \textit{Position}, v katerega se lahko bolj podrobno opiše lokacija mize.
 
-Tabela \textit{User} je namenjena predvsem aplikativnemu delu za natakarje in kuharje. Sestavljna je iz atributov: \textit{ID}, \textit{Role}, \textit{Name} in \textit{Password}. 
+Tabela \textit{User} je namenjena predvsem za natakarje in kuharje. Sestavljena je iz atributov: \textit{ID}, \textit{Role}, \textit{Name} in \textit{Password}. 
+f
+Strukturo podatkovne baze smo definirali s pomočjo programa Toad DataModeler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjemu razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access in Mircrosoft SQL Server.
 
-Strukturo podatkovne baze smo definirali s pomočjo programa Toad DataModeler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjem razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access in Mircrosoft SQL Server.
-
-Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo (DBMS), ang. database management system (SUPB), MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
+Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo, ang. database management system (DBMS), MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
 
 
 \section{Strežnik}
-Strežnik predstavlja vmesnik med podatkovno bazo in odjemalcem. Najbolj pomembno je, da je sistem zanesljiv, saj odjemalec brez njega ne more delovati. Izbrali smo arhitekturo REST zaradi načel, ki so opisana spodaj \cite{RESTAPI}. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo povezav URI (ang. uniform resource identifier) oglašuje na relativnih povezavah. Strežnik smo napisali v programskem jeziku Python z vključitvijo knjižnic Flask, MySQL, SocketIO in CORS.
+Strežnik predstavlja vmesnik med podatkovno bazo in odjemalcem. Najbolj pomembno je, da je sistem zanesljiv, saj odjemalec brez njega ne more delovati. Izbrali smo arhitekturo REST (ang. representational state transfer) zaradi načel, ki so opisana spodaj \cite{RESTAPI}. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo povezav URI (ang. uniform resource identifier) oglašuje na relativnih povezavah. Strežnik smo napisali v programskem jeziku Python z vključitvijo knjižnic Flask, MySQL, SocketIO in CORS.
 
 Načela arhitekure REST so sledeča:
 
-1.) Odjemalec-strežnik (ang. Client-server) zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvija ali zamenjuje neodvisno. V aplikaciji imamo dva različna odjemalca (gost in natakar/kuhar), kar za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
+1.) Odjemalec-strežnik (ang. Client-server) zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvijata ali zamenjujeta neodvisno. V aplikaciji imamo dva različna odjemalca (gost in natakar/kuhar), kar za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
 
 2.) Brez stanja (ang. Stateless) morajo biti vse interakcije med strežnikom in odjemalcem. Strežnik ne sme shranjevati nobenih stanj oziroma mora vsako zahtevo odjemalca obravnavati kot popolnoma novo. V programski kodi strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vsi podatki, ki so potrebni, da strežnik odgovori na zahtevo HTTP (ang. hypertext transfer protocol), se nahajajo bodisi v podatkovni bazi ali pa jih odjemalec na strežnik posreduje z zahtevkom.
 
-3.) Predpomnjenje (ang. Cachable) prinaša izboljšanje zmogljivosti na strani odjemalca in omogoča razširljivost strežnika, ker se obremenitev zmanjša. V aplikacijah REST se predpomnjenje uporabi za vire, ki to potrebujejo. Sami tega nismo uporabili, saj nimamo tako zahtevnih virov.
+3.) Predpomnjenje (ang. Cachable) prinaša izboljšanje zmogljivosti na strani odjemalca in omogoča razširljivost strežnika, ker se obremenitev zmanjša. V aplikacijah REST se predpomnjenje uporabi za vire, ki to potrebujejo. V aplikaciji tega nismo uporabili, saj nimamo tako zahtevnih virov.
 
 4.) Večslojni sistem (ang. Layered system) je sestavljen iz hierarhičnih slojev kjer npr. za vmesnik API (ang. application programming interface) uporabimo strežnik A, za shranjevanje podatkov strežnik B ter strežnik C za avtenticiranje zahtev. S tem odjemalec ne more ugotoviti ali komunicira s končnim strežnikom ali s posrednikom.
 
 5.) Izvajanje programske kode na zahtevo (ang. Code on demand) je opcijsko načelo. Strežnik na zahtevo odjemalca pošlje oziroma izvede programsko kodo na strani odjemalca. To smo vpeljali s pomočjo spletnih vtičnikov (ang. websocket), ki so bolj podrobno opisani spodaj.
 
-6.) Enotni vmesnik (ang. Uniform interface) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo, ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov se lahko uporabi poljuben format, vendar najbolj pogosta sta XML in JSON. 
+6.) Enotni vmesnik (ang. Uniform interface) med strežnikom in odjemalcem. Vsak vir mora vsebovati povezavo, ki kaže na svoj relativen URI. Odjemalec te vire pridobi od strežnika v obliki zahtev, ki so lahko GET, POST, PUT ali DELETE. Za predstavitev virov se lahko uporabi poljuben format, vendar najbolj pogosta sta XML (ang. extensible markup language) in JSON (ang. JavaScript object notation).
 
-Knjižnica Flask nam je poenostavila izdelavo strežnika, saj gre ze eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (ang. Freamwork) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v spletnem ogrodju Django.
+Knjižnica Flask nam je poenostavila izdelavo strežnika, saj gre ze eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (ang. framework) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v spletnem ogrodju Django.
 
-Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz podatkovne baze. Podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka \textit{query} predstavlja poizvedbeni stavek v podatkovni bazi. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti \textit{drinks}. Strežnik vsebuje 34 relativni povezav URI in 600 vrstic programske kode.
+Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz podatkovne baze. Podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka \textit{query} predstavlja poizvedbeni stavek. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti \textit{drinks}. Strežnik vsebuje 34 relativnih povezav URI in 600 vrstic programske kode.
 
 
 \begin{figure}[!htb]
@@ -465,7 +469,7 @@ Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz poda
 \end{center}
 \end{figure}
 
-Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v formatu JSON. Na sliki~\ref{ServerEX} je primer zahtevka v programu Postman, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (metoda GET protokola HTTP). Strežnik omogoča tudi sprejemanje podatkov z metodami PUT in POST. Mi smo uporabili metodo POST za posredovanje podatkov, ki so potrebnih za zapis v podatkovno bazo, na strežnik. Spremljanje zahtevkov na strani strežnika je mogoče v konzolnem vmesniku CLI, ki se uporablja pri zagonu strežnika, slika~\ref{ServerEX2}.
+Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v formatu JSON. Na sliki~\ref{ServerEX} je primer zahtevka v programu Postman, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (metoda GET protokola HTTP). Strežnik omogoča tudi sprejemanje podatkov z metodami PUT in POST. Mi smo uporabili metodo POST za posredovanje podatkov, ki so potrebni za zapis v podatkovno bazo, na strežnik. Spremljanje zahtevkov na strani strežnika je mogoče v konzolnem vmesniku, ang. command-line interface (CLI), ki se uporablja pri zagonu strežnika, slika~\ref{ServerEX2}.
 
 \begin{figure}[!htb]   
 \begin{center}
@@ -483,25 +487,25 @@ Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v formatu JS
 \end{center}
 \end{figure}
 
-Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo potrebovali še spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca. Zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga zaradi medsebojnega obveščanja odjemalcov o spremembah v podatkovni bazi. Uporabili smo funkcijo \textit{emit}, ki omogoča dodajanje podatkov in izbiranje načina razpršenega oddajanja (ang. broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo \textit{emit}, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
+Za potrebe pridobivanja podatkov v realnem času na strani odjemalca, smo uporabili spletni vtičnik SocketIO. Implementirali smo ga na strani strežnika in odjemalca. Zagotavlja dvosmerno komunikacijo oziroma komunikacijo na podlagi dogodkov. Deluje na vseh platformah, brskalnikih ali napravah. Uporabili smo ga zaradi medsebojnega obveščanja odjemalcov o spremembah v podatkovni bazi. Uporabili smo funkcijo \textit{emit}, ki omogoča dodajanje podatkov in izbiranje načina razpršenega oddajanja (ang. broadcast). To pomeni, da vsi prejemajo te informacije ob oddajanju na strani strežnika. Gre predvsem za splošne podatke, tako da ne more priti do zlorabe. Npr. ob spremembi naročila na strani gosta se te razlike preverijo na strežniku in vpišejo v podatkovno bazo ter o tem obvesti natakarja s funkcijo \textit{emit}, ki vsebuje številko naročila v katerem je prišlo do sprememb. 
 	
 
-Aplikacija omogoča urejanje določenih podatkov, zato smo morali zagotoviti ustrezno varnost za urejanje le-teh. Prvi nivo varnosti je avtorizacija odjemalca. Zahtevki, ki se pošiljajo na strežnik morajo biti omogočeni samo avtoriziranim odjemalcem. Zato smo uporabili HTTP piškotke (ang. cookies), ki so izdelani za spletne brskalnike in so namenjeni za sledenje, prilagajanje in shranjevanje informacij o posamezni seji uporabnika. Vsi piškotki so shranjeni na strani odjemalca in so kriptografsko zaščiteni pred morebitnimi neopoblaščenimi posegi. S tem odjemalcu preprečujemo spreminjanje podatkov v piškotkih oz. lahko nedovoljene spremembe podatkov na strežniku zaznamo. Uporabili smo Flask-Login, ki omogoča vse funkcionalnost za upravljanje uporabniških sej. 
-Na sliki~\ref{Cookies} je prikazano delovanje HTTP piškotkov. Strežnik ob prvem zahtevku, torej ob uspešni prijavi, odjemalcu vrne piškotek. Odjemalec ob vsakem nadaljnjem zahtevku doda piškotek s katerim strežnik overi zahtevo odjemalca.
+Aplikacija omogoča urejanje določenih podatkov, zato smo morali zagotoviti ustrezno varnost za urejanje le-teh. Prvi nivo varnosti je avtorizacija odjemalca. Zahtevki, ki se pošiljajo na strežnik morajo biti omogočeni samo avtoriziranim odjemalcem. Zato smo uporabili HTTP piškotke (ang. cookies), ki so izdelani za spletne brskalnike in so namenjeni za sledenje, prilagajanje in shranjevanje informacij o posamezni seji uporabnika. Vsi piškotki so shranjeni na strani odjemalca in so kriptografsko zaščiteni pred morebitnimi nepooblaščenimi dostopi. S tem odjemalcu preprečujemo spreminjanje podatkov v piškotkih oz. lahko nedovoljene spremembe podatkov na strežniku zaznamo. Uporabili smo Flask-Login, ki omogoča vse funkcionalnosti za upravljanje uporabniških sej. 
+Na sliki~\ref{Cookies} je prikazano delovanje piškotkov HTTP. Strežnik ob prvem zahtevku, torej ob uspešni prijavi, odjemalcu vrne piškotek. Odjemalec ob vsakem nadaljnjem zahtevku doda piškotek s katerim strežnik overi zahtevo odjemalca.
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{cookie-how1.png}
-\caption{Delovanje HTTP piškotkov med odjemalcem in strežnikom}
+\caption{Delovanje piškotkov HTTP med odjemalcem in strežnikom}
 \label{Cookies}
 \end{center}
 \end{figure}
 
 \section{Odjemalec}
 
-Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue	.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React,… poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkciji oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi projektov SPA (ang. single-page application), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam olajšale izdelavo aplikacije. Uporabili smo naslednje:
+Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue	.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi projektov SPA (ang. single-page application), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
 \begin{description}
-\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na povezovanje njih v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
+\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na njihovo povezovanje v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
 \item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo SPA aplikacij. Usmerjevalnik je mišljen v smislu usmerjanja na druge komponente (angl. Component), ki v Vue.js predstavljajo druge poglede, lahko bi rekli podobno kot podstrani.
 \item[ESLint] je orodje za prepoznavanje in poročanje o popravkih v programski kodi \cite{ESLint}. Cilj je narediti kodo bolj pregledno in urejeno, kar pripomore k izogibanju napak.
@@ -510,7 +514,7 @@ Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScri
 \end{description}
 
 
-Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti izgled obeh aplikacij.
+Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti vstopno stran aplikacij.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -528,7 +532,7 @@ Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve apl
 \end{center}
 \end{figure}
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obvečanju gosta o stanju naročila, itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila, itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -538,7 +542,7 @@ Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postre
 \end{center}
 \end{figure}
 
-Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knižnjice pridobimo na stran odjemalca (slika~\ref{axios_1}). 
+Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knjižnice pridobimo na stran odjemalca (slika~\ref{axios_1}). 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -695,17 +699,17 @@ Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila 
 \includegraphics[width=12cm]{natakar_22.jpg}
 \caption{Zavihek, ki se odpre natakarju ob kliku na gumb \textit{check details}}
 \label{Natakar_3}
-\end{center}
+\end{center} 
 \end{figure}
 
 
 
 
-\section{Implementacija programa v realnosti}
+\section{Implementirana rešitev}
 
 Trenutna rešitev omogoča implementacijo znotraj le ene restavracije. Aplikacija bi bila nameščena na lokalnem spletnem strežniku. Naročanje bi gost izvajal s pomočjo tablic, ki bi bile locirane na vsaki mizi v restavraciji. 
 
-Nadgrajena bi predstavljala uporabo aplikacije za naročanje z branjem kode QR (ang. quick response), ki bi bila locirana na vsaki mizi v restavraciji. V kodi bi bilo zapisano ime restavracije in številka mize. Kodo bi gost skeniral z mobitelom in bi bil preusmerjen v aplikacijo. Celoten sistem bi deloval v odprtem internetnem omrežju, tako za goste kot tudi natakarje in kuharje. Strežnik bi bil postavljen za celotno Slovenijo in bi omogočal storitev vsem restavracijam po Sloveniji. Potrebno bi bilo zagotoviti, da ne bi prihajalo do fantomskih naročil, kjer bi nepridipravi oddajali neveljavna naročila. Temu bi se lahko izognili na dva načina. Prvi način bi bil, da bi moral biti uporabnik prijavljen preko lokalnega omrežja s čimer bi overili svojo dejansko prisotnost v restavraciji.
+Nadgrajena bi predstavljala uporabo aplikacije za naročanje z branjem kode QR (ang. quick response), ki bi bila locirana na vsaki mizi v restavraciji. V kodi bi bilo zapisano ime restavracije in številka mize. Kodo bi gost skeniral z mobilno napravo s preusmeritvijo v aplikacijo. Celoten sistem bi deloval v odprtem internetnem omrežju, tako za goste kot tudi natakarje in kuharje. Strežnik bi lahko bil implementiran za eno ali večje število restavracij in bi omogočal storitev vsem restavracijam po Sloveniji. Potrebno bi bilo zagotoviti, da ne bi prihajalo do fantomskih naročil, kjer bi nepridipravi oddajali neveljavna naročila. Temu bi se lahko izognili na dva načina. Prvi način bi bil, da bi moral biti uporabnik prijavljen preko lokalnega omrežja s čimer bi overili svojo dejansko prisotnost v restavraciji.
 Drugi način bi bilo geslo, ki bi ga uporabnik prejel od natakarja. 
 
 
@@ -715,11 +719,15 @@ Potrebne izboljšave, da bi lahko aplikacijo ponudili potencialnim kupcem so:
 
 1.) Možnost dodajanja hrane in pijače k naročilu s strani vsakega posameznika za mizo.
 
-2.) Možnost hkratnega delovanja več kuharjev, da bi lahko vsak vedel kaj more delati. Tako kot smo to implementirli za natakarje.
+2.) Možnost hkratnega delovanja več kuharjev, kot smo to implementirli za natakarje.
 
-3.) Dodatno spremljanje hrane in pijače na strani kuharja/natakarja, kot npr. katera pijača in hrana je že bila postrežena.
+3.) Administrativni dostop za urejanje menijev.
 
-4.) Pisanje opomb pri vsakem naročilu, kar bi natakarju in kuharju oljašalo delo ob povečanemu številu gostov.
+4.) Spremljanje zaloge hrane in pijače.
+
+5.) Dodatno spremljanje hrane in pijače na strani kuharja/natakarja, kot npr. katera pijača in hrana je že bila postrežena.
+
+6.) Pisanje opomb pri vsakem naročilu, kar bi natakarju in kuharju oljašalo delo ob povečanemu številu gostov.
 
 
 Napredne izboljšave: 
@@ -733,12 +741,9 @@ Napredne izboljšave:
 
 
 \chapter {Sklepne ugotovitve}
-Namen naše diplomske naloge je bil ustvariti enostavno aplikacijo, ki bi olajšala delo natakarjem in nudila bolj kakovostno postrežbo gostom. Uporaba aplikacije gostom ponuja drugačno uporabniško izkušnjo, ki vseeno omogoča klasično naročanje, in sicer z neposrednim stikom z natakarjem. S tem smo želeli poudariti, da aplikacija ni namenjena nadomestitvi delovnih mest natakarjev, vendar kot pripomoček pri izvajanju njihovega dela. Natakarjeva glavna naloga bi še vedno bila postrežba gosta ter priprava pijače. 
+Namen naše diplomske naloge je bil izdelati enostavno aplikacijo, ki bi olajšala delo natakarjem in nudila bolj kakovostno postrežbo gostom. Mislimo da je aplikacija v okviru diplomskega dela realizirana v skladu z zahtevami, pričakovanji in cilji. Uporaba aplikacije gostom ponuja drugačno uporabniško izkušnjo, ki omogoča tudi klasično izbiro naročanja, in sicer z neposrednim stikom z natakarjem. S tem smo želeli poudariti, da aplikacija ni namenjena nadomestitvi delovnih mest natakarjev, vendar omogoča digitalizacijo procesov pri izvajanju njihovega dela. Natakarjeva glavna naloga bi še vedno bila postrežba gosta ter priprava pijače. 
 
-Aplikacija je dovršena za uporabo, vendar smo med razvojem dobili veliko idej za izboljšavo. Uporabljali bi jo lahko v vsaki restavraciji, če ne drugače kot pomoč ob veliki zasedenosti. Trenutno, v času COVID-19 krize, bi lahko ta aplikacija omogočala nemoteno delovanje restavracij in barov. 
-
-Mislimo da je aplikacija v okviru diplomskega dela realizirana v skladu z zahtevami, pričakovanji in cilji.
-
+Aplikacija je primerna prototipna rešitev za testiranje in za uporabo, vendar smo med razvojem dobili veliko idej za izboljšavo. Uporabljali bi jo lahko v vsaki restavraciji, če ne drugače kot pomoč ob veliki zasedenosti. Trenutno, v času COVID-19 krize, bi lahko ta aplikacija omogočala določeno podporo za delovanje restavracij in barov. 
 
 
 \newpage %dodaj po potrebi, da bo številka strani za Literaturo v Kazalu pravilna!

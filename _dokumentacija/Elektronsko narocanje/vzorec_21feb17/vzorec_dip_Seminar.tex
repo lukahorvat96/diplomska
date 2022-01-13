@@ -554,56 +554,13 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Za prikaz delovanja smo pripravili testno okolje, kjer smo znotraj lokalnega omrežja postavili podatkovno bazo, strežnik in aplikaciji. Primer uporabe je opisan in prikazan spodaj, bolj podroben opis vseh funkcionalnosti pa v naslednjih poglavjih.
-
-Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo (slika~\ref{Opis1}). V našem primeru gost izbere dve sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis2}).
-Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo (slika~\ref{Opis3}). V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika~\ref{Opis4}), da lahko natakar potrdi celotno naročilo gostu (slika~\ref{Opis5}). Ko je hrana pripravljena, kuhar o tem obvesti natakarja. Natakar naročilo postreže in naročilo označi kot postreženo. Gost zaključi naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo (slika~\ref{Opis6}). Natakar je obveščen o zahtevi za račun in načinu plačila s strani gosta. S tiskanjem računa natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
+Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni računalnik na katerem smo postavili podatkovno bazo MySQL s programom XAMPP, strežnik in aplikaciji za gosta in natakarja/kuharja. Slika~\ref{Program1} prikazuje testno okolje.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=14.5cm]{opis1.jpg}
+\includegraphics[width=14cm]{Programi.jpg}
 \caption{Pregled in izbiranje hrane in pijače}
-\label{Opis1}
-\end{center}
-\end{figure}
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14.5cm]{opis11.jpg}
-\caption{Pregled košarice in oddajanje naročila}
-\label{Opis2}
-\end{center}
-\end{figure}
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14.5cm]{opis2.jpg}
-\caption{Pregled naročila na strani natakarja}
-\label{Opis3}
-\end{center}
-\end{figure}
-	
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14.5cm]{opis3.jpg}
-\caption{Pregled naročila na strani kuharja}
-\label{Opis4}
-\end{center}
-\end{figure}
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14.5cm]{opis5.jpg}
-\caption{Obveščanje gosta o sprejemu naročila}
-\label{Opis5}
-\end{center}
-\end{figure}
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=14.5cm]{opis6.jpg}
-\caption{Zahtevanje računa}
-\label{Opis6}
+\label{Program1}
 \end{center}
 \end{figure}
 
@@ -702,6 +659,70 @@ Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila 
 \end{center} 
 \end{figure}
 
+
+\section{Primer uporabe}
+Uporaba aplikacije je prikazana na spodnjem diagramu poteka, slika~\ref{Diagram1}.
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=16cm]{Diagram_poteka.jpg}
+\caption{Pregled in izbiranje hrane in pijače}
+\label{Diagram1}
+\end{center}
+\end{figure}
+
+Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo (slika~\ref{Opis1}). V našem primeru gost izbere dve sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis2}).
+Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo (slika~\ref{Opis3}). V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika~\ref{Opis4}), da lahko natakar potrdi celotno naročilo gostu (slika~\ref{Opis5}). Ko je hrana pripravljena, kuhar o tem obvesti natakarja. Natakar naročilo postreže in naročilo označi kot postreženo. Gost zaključi naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo (slika~\ref{Opis6}). Natakar je obveščen o zahtevi za račun in načinu plačila s strani gosta. S tiskanjem računa natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
+
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis1.jpg}
+\caption{Pregled in izbiranje hrane in pijače}
+\label{Opis1}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis11.jpg}
+\caption{Pregled košarice in oddajanje naročila}
+\label{Opis2}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis2.jpg}
+\caption{Pregled naročila na strani natakarja}
+\label{Opis3}
+\end{center}
+\end{figure}
+	
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis3.jpg}
+\caption{Pregled naročila na strani kuharja}
+\label{Opis4}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis5.jpg}
+\caption{Obveščanje gosta o sprejemu naročila}
+\label{Opis5}
+\end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=14.5cm]{opis6.jpg}
+\caption{Zahtevanje računa}
+\label{Opis6}
+\end{center}
+\end{figure}
 
 
 

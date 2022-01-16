@@ -50,7 +50,7 @@
 %	DIPLOMA INFO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ttitle}{Elektronsko naročanje v restavraciji}
-\newcommand{\ttitleEn}{Diploma thesis sample}
+\newcommand{\ttitleEn}{Digital ordering in a restaurant}
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Luka Horvat}
@@ -239,7 +239,7 @@ Fakulteta za računalništvo in informatiko izdaja naslednjo nalogo:
 
 Tematika naloge: Elektronsko naročanje v restavracij
 \end{tabbing}
-Besedilo teme diplomskega dela študent prepiše iz študijskega informacijskega sistema, kamor ga je vnesel mentor. V nekaj stavkih bo opisal, kaj pričakuje od kandidatovega diplomskega dela. Kaj so cilji, kakšne metode uporabiti, morda bo zapisal tudi ključno literaturo.
+Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraciji. Zasnuje naj spletno aplikacijo, ki omogoča gostom pregled ponudbe, izvedbo in možnost spreminjanja naročila. Osebje naj ima možnost urejanja naročil, njihovo spremljanje in izvedbo ter zaključitev postopka z izdajo računa, pri čemer naj bo omogočena interakcija v stvarnem času.
 \vspace{15mm}
 
 
@@ -255,7 +255,8 @@ Besedilo teme diplomskega dela študent prepiše iz študijskega informacijskega
 % zahvala
 \thispagestyle{empty}\mbox{}\vfill\null\it%
 \noindent
-Na tem mestu zapišite, komu se zahvaljujete za izdelavo diplomske naloge. Pazite, da ne boste koga pozabili. Utegnil vam bo zameriti. Temu se da izogniti tako, da celotno zahvalo izpustite.
+Zahvaljujem se mentorju doc. dr. Miri Trebar in somentorju as. dr. Davidu Jelencu za vso pomoč in nasvete.
+Zahvaljujem se tudi ožji družini in punci za podporo.
 \rm\normalfont
 
 % prazna stran
@@ -420,27 +421,25 @@ Tabela \textit{Product} je namenjena opisu hrane in pijače ter je sestavljena i
 
 Tabela \textit{ProductOrder} je namenjena količini in končni ceni hrane in pijače v naročilu. Sestavljena je iz atributov: \textit{TotalPrice} in \textit{Quantity}. Zapis ne obstaja, če nima definiranega naročila. Tabela je nastala zaradi razmerja M:N t.i. mnogo-proti-mnogo med tabelo \textit{Product} in \textit{Order}.
 
-Tabela \textit{Order} je namenjena zapisovanju naročil in njegovih podrobnosti. Sestavljena je iz atributov: \textit{ID}, \textit{Start}, \textit{End}, \textit{OrderStatus}, \textit{CookStatus} in \textit{Payment}. Vsebuje tudi tuji ključ od tabele \textit{Table}, ki določa, na katero mizo je vezano naročilo. Atributa \textit{OrderStatus} in \textit{CookStatus} sta definirana kot naštevalni podatkovni tip, ang. enumerated type (ENUM), in sporočata status naročila med vlogami.
+Tabela \textit{Order} je namenjena zapisovanju naročil in njegovih podrobnosti. Sestavljena je iz atributov: \textit{ID}, \textit{Start}, \textit{End}, \textit{OrderStatus}, \textit{CookStatus} in \textit{Payment}. Vsebuje tudi tuji ključ od tabele \textit{Table}, ki določa na katero mizo je vezano naročilo. Atributa \textit{OrderStatus} in \textit{CookStatus} sta definirana kot naštevalni podatkovni tip (ang. enumerated type, ENUM), ki sporočata status naročila med vlogami.
 
 Tabela \textit{Table} je namenjena označevanju miz v restavracijah. Sestavljajo jo atributi: \textit{ID}, \textit{Name} in \textit{Position}, v katerega se lahko bolj podrobno opiše lokacija mize.
 
-Tabela \textit{User} je namenjena predvsem za natakarje in kuharje. Sestavljena je iz atributov: \textit{ID}, \textit{Role}, \textit{Name} in \textit{Password}. 
-f
-Strukturo podatkovne baze smo definirali s pomočjo programa Toad DataModeler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjemu razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access in Mircrosoft SQL Server.
+Tabela \textit{User} je namenjena le za natakarje in kuharje. Sestavljena je iz atributov: \textit{ID}, \textit{Role}, \textit{Name} in \textit{Password}. 
 
-Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo, ang. database management system (DBMS), MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
+Strukturo podatkovne baze smo definirali s pomočjo programa Toad Data Modeler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjemu razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access in Mircrosoft SQL Server.
+
+Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo (SUPB ali ang. database management system, DBMS) MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
 
 
 \section{Strežnik}
-Strežnik predstavlja vmesnik med podatkovno bazo in odjemalcem. Najbolj pomembno je, da je sistem zanesljiv, saj odjemalec brez njega ne more delovati. Izbrali smo arhitekturo REST (ang. representational state transfer) zaradi načel, ki so opisana spodaj \cite{RESTAPI}. Sama arhitektura omogoča, da odjemalec s pomočjo zahtev pridobiva podatke od strežnika, kateri jih s pomočjo povezav URI (ang. uniform resource identifier) oglašuje na relativnih povezavah. Strežnik smo napisali v programskem jeziku Python z vključitvijo knjižnic Flask, MySQL, SocketIO in CORS.
-
-Načela arhitekure REST so sledeča:
+Strežnik predstavlja vmesnik med podatkovno bazo in odjemalcem. Najbolj pomembno je, da je sistem zanesljiv, saj odjemalec brez strežnika ne more delovati. Izbrali smo arhitekturo REST (ang. representational state transfer) zaradi načel, ki so opisana spodaj \cite{RESTAPI}. Sama arhitektura omogoča, da odjemalec z zahtevami pridobiva podatke od strežnika, kateri jih s pomočjo povezav URI (ang. uniform resource identifier) oglašuje na relativnih povezavah. Strežnik smo napisali v programskem jeziku Python z vključitvijo knjižnic Flask, MySQL, SocketIO in CORS.Načela arhitekure REST so sledeča:
 
 1.) Odjemalec-strežnik (ang. Client-server) zahteva ločitev odjemalca od strežnika kar onemogoča odjemalcu direktno povezljivost s podatkovno bazo in s tem poenostavi razširljivost uporabniškega dela. Strežnik ne zanima uporabniški vmesnik ali podatki, tako da je bolj enostaven in prilagodljiv za uporabo. Tako se lahko uporabniški kot strežniški del razvijata ali zamenjujeta neodvisno. V aplikaciji imamo dva različna odjemalca (gost in natakar/kuhar), kar za strežnik ne predstavlja nobenih omejitev razen na strani podatkovne baze, ki omejuje število hkratnih poizvedb. V naši aplikaciji te omejitve nismo presegli.
 
 2.) Brez stanja (ang. Stateless) morajo biti vse interakcije med strežnikom in odjemalcem. Strežnik ne sme shranjevati nobenih stanj oziroma mora vsako zahtevo odjemalca obravnavati kot popolnoma novo. V programski kodi strežnika je dobro razvidno, da ne uporabljamo nobenih globalnih spremenljivk. Vsi podatki, ki so potrebni, da strežnik odgovori na zahtevo HTTP (ang. hypertext transfer protocol), se nahajajo bodisi v podatkovni bazi ali pa jih odjemalec na strežnik posreduje z zahtevkom.
 
-3.) Predpomnjenje (ang. Cachable) prinaša izboljšanje zmogljivosti na strani odjemalca in omogoča razširljivost strežnika, ker se obremenitev zmanjša. V aplikacijah REST se predpomnjenje uporabi za vire, ki to potrebujejo. V aplikaciji tega nismo uporabili, saj nimamo tako zahtevnih virov.
+3.) Predpomnjenje (ang. Cachable) prinaša izboljšanje zmogljivosti na strani odjemalca in omogoča razširljivost strežnika, ker se obremenitev zmanjša. V aplikacijah REST se predpomnjenje uporabi za vire, ki to potrebujejo. V naši aplikaciji tega nismo uporabili, saj nimamo tako zahtevnih virov.
 
 4.) Večslojni sistem (ang. Layered system) je sestavljen iz hierarhičnih slojev kjer npr. za vmesnik API (ang. application programming interface) uporabimo strežnik A, za shranjevanje podatkov strežnik B ter strežnik C za avtenticiranje zahtev. S tem odjemalec ne more ugotoviti ali komunicira s končnim strežnikom ali s posrednikom.
 
@@ -469,7 +468,7 @@ Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz poda
 \end{center}
 \end{figure}
 
-Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v formatu JSON. Na sliki~\ref{ServerEX} je primer zahtevka v programu Postman, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (metoda GET protokola HTTP). Strežnik omogoča tudi sprejemanje podatkov z metodami PUT in POST. Mi smo uporabili metodo POST za posredovanje podatkov, ki so potrebni za zapis v podatkovno bazo, na strežnik. Spremljanje zahtevkov na strani strežnika je mogoče v konzolnem vmesniku, ang. command-line interface (CLI), ki se uporablja pri zagonu strežnika, slika~\ref{ServerEX2}.
+Tako smo dobili vmesnik, ki na zahtevo odjemalca odgovori s podatki v formatu JSON. Na sliki~\ref{ServerEX} je primer zahtevka v programu Postman, ko odjemalec zahteva podatke vseh pijač iz podatkovne baze (metoda GET protokola HTTP). Strežnik omogoča tudi sprejemanje podatkov z metodami PUT in POST. Mi smo uporabili metodo POST za posredovanje podatkov, ki so potrebni za zapis v podatkovno bazo, na strežnik. Spremljanje zahtevkov na strani strežnika je mogoče v konzolnem vmesniku (ang. command-line interface, CLI), ki se uporablja pri zagonu strežnika, slika~\ref{ServerEX2}.
 
 \begin{figure}[!htb]   
 \begin{center}
@@ -503,40 +502,33 @@ Na sliki~\ref{Cookies} je prikazano delovanje piškotkov HTTP. Strežnik ob prve
 
 \section{Odjemalec}
 
-Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue	.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost}, je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi projektov SPA (ang. single-page application), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
+Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost} je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi projektov SPA (ang. single-page application), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
 \begin{description}
 \item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na njihovo povezovanje v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
-\item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo SPA aplikacij. Usmerjevalnik je mišljen v smislu usmerjanja na druge komponente (angl. Component), ki v Vue.js predstavljajo druge poglede, lahko bi rekli podobno kot podstrani.
+\item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo aplikacij SPA. Usmerjevalnik je mišljen v smislu usmerjanja na druge komponente (ang. component), ki v Vue.js predstavljajo druge poglede oziroma podstrani.
 \item[ESLint] je orodje za prepoznavanje in poročanje o popravkih v programski kodi \cite{ESLint}. Cilj je narediti kodo bolj pregledno in urejeno, kar pripomore k izogibanju napak.
 \item[Vuetify] je eden izmed mnogih uporabniških vmesnikov, ki je zgrajen na vrhu Vue.js \cite{Vuetify}. Za razliko od drugih vmesnikov je Vuetify enostaven za učenje z več stotimi komponentami izdelanih po specifikacijah Material Design.
-\item[Vue-devtools] je zgolj dodatek v brskalniku, ki omogoča lažje sledenje delovanja aplikacije in detektiranju napak. 
+\item[Vue-devtools] je zgolj dodatek v brskalniku, ki omogoča lažje sledenje delovanju aplikacije in detektiranju napak. 
 \end{description}
 
 
-Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju. Sliki~\ref{Gost} in~\ref{NatakarGost} prikazujeti vstopno stran aplikacij.
+Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju. Slika~\ref{Gost} prikazuje vstopno stran aplikacij.
 
-\begin{figure}[!htb]
+\begin{figure}
 \begin{center}
-\includegraphics[width=12cm]{gost_1.jpg}
-\caption{Spletni vmesnik za gosta}
+\includegraphics[width=10cm]{Gost_natakar.png}
+\caption{Spletni vmesnik za gosta (zgoraj) in natakarja/kuharja (spodaj)}
 \label{Gost}
 \end{center}
 \end{figure}
 
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=12cm]{natakar-gost_1.jpg}
-\caption{Spetni vmesnik za natakarja in kuharja}
-\label{NatakarGost}
-\end{center}
-\end{figure}
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila, itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=11cm]{socketio_1.jpg}
+\includegraphics[width=11cm]{socketio_2.jpg}
 \caption{Seznam vtičnikov, ki so uporabljeni na strani gosta}
 \label{socketioo1}
 \end{center}
@@ -559,7 +551,7 @@ Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni račun
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14cm]{Programi.jpg}
-\caption{Pregled in izbiranje hrane in pijače}
+\caption{Testno okolje na osebnem računalniku}
 \label{Program1}
 \end{center}
 \end{figure}
@@ -567,27 +559,28 @@ Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni račun
 
 \section{Vmesnik za gosta}
 Prvi pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja gumb \textit{call waiter} za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjena gostom, ki aplikacije ne želijo uporabljati ali v primeru pomoči, če gost pride do kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. 
+Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo nudi restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo med katero izbira pri dodajanju hrane in pijače v nakupovalno košarico.
+
+
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{gost_3.jpg}
-\caption{Seznam artiklov znotraj vrste špagetov}
+\includegraphics[width=13.7cm]{customer_1.jpg}
+\caption{Seznam artiklov znotraj vrste rižot}
 \label{Gost_3}
 \end{center}
 \end{figure}
 
-Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponube, ki jo nudi restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo s katero v nakupovalno košarico dodaja, briše hrano in pijačo ali spreminja njihovo količino.
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{gost_4.jpg}
+\includegraphics[width=13.7cm]{customer_2.jpg}
 \caption{Primer naročila}
 \label{Gost_4}
 \end{center}
 \end{figure}
- 
-Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart} (dodaj v košarico), ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove} (odstrani). Nakupovalna košarica oziroma \textit{cart} je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}).
 
+
+Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart} (dodaj v košarico), ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količno), \textit{-} (zmanjšaj količino) in \textit{remove} (odstrani). Nakupovalna košarica oziroma \textit{cart} je skupno mesto vse hrane in pijače potencialne za naročilo (slika~\ref{Gost_4}). Vse slike hrane in pijače so shranjene v datotečnemu sistemu spletnega strežnika.
 Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na prvo stran in obvesti s pojavnim sporočilom prikazanim na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja hrano in pijačo v košarico, vendar je že oddani hrani in pijači onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, kar spremeni status naročila in prikaže pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom na sliki~\ref{Gost_8}. Naročilo se zaključi s klikom na gumb \textit{request receipt}, ki odpre pojavno okno (slika~\ref{Gost_7}) na katerem je potrebno izbrati način plačila.
-
 
 \begin{figure}[!htb]
 \begin{center}
@@ -603,7 +596,6 @@ Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na p
 \label{Gost_6}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=9cm]{gost_8.jpg}
@@ -621,13 +613,13 @@ Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na p
 
 
 \section{Vmesnik za natakarja in kuharja}
-Prvi pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno aplikacijo kjer se pogledi razlikujejo glede vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, namreč oba uporabnika imata zelo podobne funkcije. Slika~\ref{NatakarGost} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sing out}. Prva podstran imenovana \textit{dashboard} ali prva stran ob uspešni prijavi, prikazuje napis za hitrejšo razlikovanje med vlogami. Natakar ima poleg tega v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
+Prvi pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno aplikacijo kjer se pogledi razlikujejo glede vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, namreč oba uporabnika imata zelo podobne funkcije. Slika~\ref{Gost} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sing out}. Prva podstran imenovana \textit{dashboard} ali prva stran ob uspešni prijavi, prikazuje napis za hitrejšo razlikovanje med vlogami. Natakar ima poleg tega v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
 
 Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, ki vsebujejo hrano (slika ~\ref{Kuhar_4}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status kuharja in številka mize. Kuhar mora naročilo najprej pregledati z gumbom \textit{check details} (slika  ~\ref{Kuhar_3}) ter ga sprejeti ali zavrniti z gumbom \textit{confirm} in \textit{unconfirm}. Naročilo lahko kuhar zavrne v primeru pomanjkanja sestavin. Ko kuhar zaključi s pripravo hrane o tem obvesti natakarja s klikom na gumb \textit{done}, ki izbriše naročilo iz seznama. Ob vsaki izvedeni akciji se pri vsakem naročilu spremi status kuharja, ki je lahko: \textit{updated}, \textit{confirmed}, \textit{unconfirmed} in \textit{done}. Status \textit{updated} je v primeru dodajanja artiklov k naročilu s strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{kuhar_22.jpg}
+\includegraphics[width=13cm]{cooker_1.jpg}
 \caption{Zavihek \textit{food orders}}
 \label{Kuhar_4}
 \end{center}
@@ -635,8 +627,8 @@ Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, 
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{kuhar_23.jpg}
-\caption{Zavihek, ki se odpre kuharju ob kliku na gumb \textit{check details}}
+\includegraphics[width=13cm]{cooker_2.jpg}
+\caption{Zavihek \textit{check details}}
 \label{Kuhar_3}
 \end{center}
 \end{figure}
@@ -645,37 +637,22 @@ Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila 
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{natakar_21.jpg}
+\includegraphics[width=13.5cm]{waiter_1.jpg}
 \caption{Zavihek \textit{all orders}}
 \label{Natakar_2}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=12cm]{natakar_22.jpg}
-\caption{Zavihek, ki se odpre natakarju ob kliku na gumb \textit{check details}}
+\includegraphics[width=12cm]{waiter_2.jpg}
+\caption{Zavihek \textit{check details}}
 \label{Natakar_3}
 \end{center} 
 \end{figure}
 
-
 \section{Primer uporabe}
-Uporaba aplikacije je prikazana na spodnjem diagramu poteka, slika~\ref{Diagram1}.
-
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=16cm]{Diagram_poteka.jpg}
-\caption{Pregled in izbiranje hrane in pijače}
-\label{Diagram1}
-\end{center}
-\end{figure}
-
 Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo (slika~\ref{Opis1}). V našem primeru gost izbere dve sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis2}).
 Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo (slika~\ref{Opis3}). V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika~\ref{Opis4}), da lahko natakar potrdi celotno naročilo gostu (slika~\ref{Opis5}). Ko je hrana pripravljena, kuhar o tem obvesti natakarja. Natakar naročilo postreže in naročilo označi kot postreženo. Gost zaključi naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo (slika~\ref{Opis6}). Natakar je obveščen o zahtevi za račun in načinu plačila s strani gosta. S tiskanjem računa natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
-
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis1.jpg}
@@ -683,7 +660,6 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \label{Opis1}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis11.jpg}
@@ -691,7 +667,6 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \label{Opis2}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis2.jpg}
@@ -699,7 +674,6 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \label{Opis3}
 \end{center}
 \end{figure}
-	
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis3.jpg}
@@ -707,7 +681,6 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \label{Opis4}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis5.jpg}
@@ -715,7 +688,6 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \label{Opis5}
 \end{center}
 \end{figure}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=14.5cm]{opis6.jpg}
@@ -724,7 +696,14 @@ Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na
 \end{center}
 \end{figure}
 
-
+Uporaba aplikacije je prikazana na spodnjem diagramu poteka, slika~\ref{Diagram1}.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=13cm]{Diagram_poteka.jpg}
+\caption{Pregled in izbiranje hrane in pijače}
+\label{Diagram1}
+\end{center}
+\end{figure}
 
 \section{Implementirana rešitev}
 

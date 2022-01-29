@@ -201,7 +201,7 @@
     \vfill\null%
     {\large \textsc{Mentorica}: doc. dr. Mira Trebar\par}%
    {\large \textsc{Somentor}: as. dr. David Jelenc \par}%
-    {\vskip 2em \large Ljubljana, 2021 \par}%
+    {\vskip 2em \large Ljubljana, 2022 \par}%
 \end{center}
 % prazna stran
 %\clearemptydoublepage      % dodal Solina (izjava o licencah itd. se izpiše na hrbtni strani naslovnice)
@@ -237,12 +237,10 @@ Fakulteta za računalništvo in informatiko izdaja naslednjo nalogo:
 
 
 
-Tematika naloge: Elektronsko naročanje v restavracij
+Tematika naloge: Elektronsko naročanje v restavraciji
 \end{tabbing}
-Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraciji. Zasnuje naj spletno aplikacijo, ki omogoča gostom pregled ponudbe, izvedbo in možnost spreminjanja naročila. Osebje naj ima možnost urejanja naročil, njihovo spremljanje in izvedbo ter zaključitev postopka z izdajo računa, pri čemer naj bo omogočena interakcija v stvarnem času.
+Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraciji. Zasnuje naj spletno aplikacijo, ki omogoča gostom pregled ponudbe in izvedbo. Osebje naj ima možnost urejanja naročil, njihovo spremljanje in izvedbo ter zaključitev postopka z izdajo računa, pri čemer naj bo omogočena interakcija v stvarnem času. Za implementiran model strežnik-odjemalec naj predstavi enostaven primer uporabe vmesnikov za gosta, natakarja in kuharja.
 \vspace{15mm}
-
-
 
 
 
@@ -255,7 +253,7 @@ Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraci
 % zahvala
 \thispagestyle{empty}\mbox{}\vfill\null\it%
 \noindent
-Zahvaljujem se mentorju doc. dr. Miri Trebar in somentorju as. dr. Davidu Jelencu za vso pomoč in nasvete.
+Zahvaljujem se mentorici doc. dr. Miri Trebar in somentorju as. dr. Davidu Jelencu za vso pomoč in nasvete.
 Zahvaljujem se tudi ožji družini in punci za podporo.
 \rm\normalfont
 
@@ -310,6 +308,7 @@ Zahvaljujem se tudi ožji družini in punci za podporo.
   {\bf REST}   & representational state transfer              & reprezentativni prenos stanja \\
   {\bf SPA}      & single page application               &  enostranska aplikacija \\	
   {\bf SQL} & structured query language & poizvedovalni jezik SQL  \\
+  {\bf SUPB}      & database management system &  sistem za upravljanje s podatkovno bazo \\	
   {\bf URI}   &  uniform resource identifier              & enotni identifikator vira \\
   {\bf XML}   &  extensible markup language              & razširljiv označevalni jezik \\
 
@@ -334,7 +333,7 @@ Zahvaljujem se tudi ožji družini in punci za podporo.
 
 %\noindent\textbf{Povzetek:} 
 \noindent 
-Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki omogoča elektronsko naročanje hrane in pijače v restavracijah. Namen aplikacije je olajšati delo natakarjem in nuditi bolj kakovostno postrežbo gostom. Ključne funkcionalnosti so oddajanje naročil s strani gosta ter nadzor in upravljanje naročil s strani natakarja in kuharja. Omogočeno je naročanje preko aplikacije ali z neposrednim stikom z natakarjem. Aplikacija je zasnovana po visokonivojski arhitekturi, ki jo sestavljajo aplikacija, strežnik in podatkovno bazo. Za razvoj aplikacije so uporabljeni ogrodje Vue in programski jeziki JavaScript, Python ter MySQL za podatkovno bazo.
+Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki omogoča elektronsko naročanje hrane in pijače v restavracijah. Namen aplikacije je olajšati delo natakarjem in nuditi bolj kakovostno postrežbo gostom. Ključne funkcionalnosti so oddajanje naročil s strani gosta ter nadzor in upravljanje naročil s strani natakarja in kuharja. Omogočeno je naročanje preko aplikacije ali z neposrednim stikom z natakarjem. Aplikacija je zasnovana kot visokonivojska arhitektura (model odjemalec-strežnik), ki jo sestavljajo aplikacija, strežnik in podatkovna baza. Za razvoj aplikacije so uporabljeni ogrodje Vue in programski jeziki JavaScript, Python ter MySQL za podatkovno bazo.
 \bigskip
 
 \noindent\textbf{Ključne besede:} \tkeywords.
@@ -524,12 +523,12 @@ Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve apl
 \end{figure}
 
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje seznam vseh vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje primer vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=11cm]{socketio_2.jpg}
-\caption{Seznam vtičnikov, ki so uporabljeni na strani gosta}
+\caption{Uporaba spletnih vtičnikov na strani gosta}
 \label{socketioo1}
 \end{center}
 \end{figure}
@@ -727,8 +726,6 @@ Potrebne izboljšave, da bi lahko aplikacijo ponudili potencialnim kupcem so:
 
 5.) Dodatno spremljanje hrane in pijače na strani kuharja/natakarja, kot npr. katera pijača in hrana je že bila postrežena.
 
-6.) Pisanje opomb pri vsakem naročilu, kar bi natakarju in kuharju oljašalo delo ob povečanemu številu gostov.
-
 
 Napredne izboljšave: 
 
@@ -736,8 +733,7 @@ Napredne izboljšave:
 
 2.) Brezstično plačevanje s plačilno kartico neposredno na strani gosta.
 
-3.) Če bi aplikacija delovala v odprtem internetnem omrežju, bi s pomočjo skupne spletne strani omogočali dostavo hrane za vsako restavracijo.
-
+3.) V primeru, da bi aplikacija delovala v odprtem internetnem omrežju bi lahko restavracije oglaševale oziroma sprejamale naročila za dostavo hrane in pijače.
 
 
 \chapter {Sklepne ugotovitve}

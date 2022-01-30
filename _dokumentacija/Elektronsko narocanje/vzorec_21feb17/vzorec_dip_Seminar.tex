@@ -50,12 +50,12 @@
 %	DIPLOMA INFO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ttitle}{Elektronsko naročanje v restavraciji}
-\newcommand{\ttitleEn}{Digital ordering in a restaurant}
+\newcommand{\ttitleEn}{Electronic ordering in a restaurant}
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Luka Horvat}
 \newcommand{\tkeywords}{spletna aplikacija, elektronsko naročanje, restavracija, Vue, JavaScript}
-\newcommand{\tkeywordsEn}{computer, computer, computer}
+\newcommand{\tkeywordsEn}{web application, electronic ordering, restaurant, Vue, JavaScript}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -353,8 +353,7 @@ Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki omo
 \bigskip
 
 %\noindent\textbf{Abstract:} 
-\noindent This sample document presents an approach to typesetting your BSc thesis using \LaTeX. 
-A proper abstract should contain around 100 words which makes this one way too short.
+\noindent The diploma thesis covers the analysis, design, and development of a web application for restaurants' electronic ordering of food and beverages. The purpose of the application is to facilitate the waiters' work and provide better quality service to guests. The key functionalities are placing orders by the guest and the control and management of orders by the waiter and the chef. It is possible to order via this application or directly contact the waiter. The application is designed as a high-level architecture (client-server model), consisting of the application, server, and database. The Vue framework and JavaScript, Python, and MySQL database languages developed the application.
 \bigskip
 
 \noindent\textbf{Keywords:} \tkeywordsEn.
@@ -368,11 +367,10 @@ A proper abstract should contain around 100 words which makes this one way too s
 \pagestyle{fancy}
  
 \chapter{Uvod}
-Slovenija velja za državo z veliko restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji so obstajali projekti s podobnimi idejami, vendar z napačnimi cilji zaradi katerih so bili neuspešni. Glavni razlog, da jim ni uspelo, je bilo sabotiranje natakarjev, saj so misli da bo tehnologija nadomestila njegove službe. Problematiko smo vzeli kot motivacijo ter si zadali cilj, da izdelamo aplikacijo, kot pripomoček za optimizacijo dela natakarjev. Ker ustrezne rešitve za ta problem nismo zaznali, nam pa se je zdelo, da je lahko realiziramo, smo se odločili narediti diplomsko nalogo na to tematiko.
+Slovenija velja za državo z veliko restavracij, vendar le malo iz med njih uporablja napredne sisteme naročanja kot npr. ena izmed večjih verig s hitro prehrano, McDonalds. V Sloveniji so obstajali projekti s podobnimi idejami, vendar do sedaj nismo zasledili takšnih rešitev. Problematiko smo vzeli kot motivacijo ter si zadali cilj, da izdelamo aplikacijo, kot pripomoček za optimizacijo dela natakarjev. Ker ustrezne rešitve za ta problem nismo zaznali, nam pa se je zdelo, da jo lahko realiziramo, smo se odločili v diplomski nalogi razviti izvedbo elektronskega naročanja hrane in pijače.
 
-Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi nadomestil ljudi v strežbi, temveč bi služil kot pregledovalnik ponudbe z možnostjo naročanja hrane in pijače. Aplikacija bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločala ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Delovanje bi bilo sledeče, stranka oziroma gost odda naročilo ter ga odda, natakar in kuhar ga preverita, potrdita in pripravita.  Natakar in kuhar bi s tem imela več časa za pripravo. Posledično bi bile stranke, ki veljajo za bolj zahtevne in neučakane na vseh področjih, hitreje in bolj kvalitetno postrežene. 
+Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi nadomestil ljudi v strežbi, temveč bi služil kot pregledovalnik ponudbe z možnostjo naročanja hrane in pijače. Aplikacija bi bila na tablicah, ki bi bile locirane na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločala ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Delovanje bi bilo sledeče, stranka oziroma gost odda naročilo, natakar in kuhar ga preverita, potrdita in pripravita. Posledično bi bile stranke, ki veljajo za bolj zahtevne in neučakane na vseh področjih, hitreje in bolj kvalitetno postrežene. 
 
-Aplikacija podpira tri vrste uporabnikov, in sicer gost, natakar in kuhar. 
 
 
 \chapter{Načrtovanje in razvoj aplikacije}
@@ -382,7 +380,7 @@ Predlagana rešitev je bila v nadaljevanju osnova za izdelavo dveh spletnih apli
 
 Gost lahko odda, spremeni ali zaključi naročilo. Funkcionalnosti gosta so: dodajanje in brisanje artiklov iz naročila, oddajanje, urejanje in pregledovanje naročila, spremljanje statusa naročila in zahtevanje računa. 
 
-Natakar lahko potrdi, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko več natakarjev, ki svoja naročila vodijo preko ločene prijave. Funkcionalnosti natakarja so: urejanje in pregledovanje naročila, spremljanje status in statistike naročil in možnost tiskanja računa za določeno naročilo. Kuhar lahko potrdi ali zavrne naročilo ter obvesti natakarja o zaključku priprave jedi za določeno naročolo. Restavracija ima lahko več kuharjev, vendar vsi uporabljajo aplikacijo preko iste prijave. Omejitev je v podatkovnem modelu. Funkcionalnosti kuharja so: pregledovanje in potrjevanje naročila, obveščanje natakarja o zaključku priprave jedi ter spremljanje statistke naročil. 
+Natakar lahko potrdi, zavrne, uredi ali zaključi naročilo. V restavraciji je lahko več natakarjev, ki svoja naročila vodijo preko ločene prijave. Funkcionalnosti natakarja so: urejanje in pregledovanje naročila, spremljanje statusa in statistike naročil in možnost tiskanja računa za določeno naročilo. Kuhar lahko potrdi ali zavrne naročilo ter obvesti natakarja o zaključku priprave jedi za določeno naročilo. Restavracija ima lahko več kuharjev, vendar vsi uporabljajo aplikacijo preko iste prijave. Omejitev je v podatkovnem modelu. Funkcionalnosti kuharja so: pregledovanje in potrjevanje naročila, obveščanje natakarja o zaključku priprave jedi ter spremljanje statistke naročil. 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -418,9 +416,9 @@ Tabela \textit{ProductType} je namenjana zapisom za vrste jedi (predjed, glavna 
 
 Tabela \textit{Product} je namenjena opisu hrane in pijače ter je sestavljena iz atributov: \textit{ID}, \textit{Name}, \textit{Price}, \textit{Size}, \textit{Calorie}, \textit{Picture} in \textit{Description}. V vrednost atributa \textit{Picture} se zapiše ime slike, ki se prikaže v aplikaciji.
 
-Tabela \textit{ProductOrder} je namenjena količini in končni ceni hrane in pijače v naročilu. Sestavljena je iz atributov: \textit{TotalPrice} in \textit{Quantity}. Zapis ne obstaja, če nima definiranega naročila. Tabela je nastala zaradi razmerja M:N t.i. mnogo-proti-mnogo med tabelo \textit{Product} in \textit{Order}.
-
 Tabela \textit{Order} je namenjena zapisovanju naročil in njegovih podrobnosti. Sestavljena je iz atributov: \textit{ID}, \textit{Start}, \textit{End}, \textit{OrderStatus}, \textit{CookStatus} in \textit{Payment}. Vsebuje tudi tuji ključ od tabele \textit{Table}, ki določa na katero mizo je vezano naročilo. Atributa \textit{OrderStatus} in \textit{CookStatus} sta definirana kot naštevalni podatkovni tip (ang. enumerated type, ENUM), ki sporočata status naročila med vlogami.
+
+Tabela \textit{ProductOrder} je namenjena količini in končni ceni hrane in pijače v naročilu. Sestavljena je iz atributov: \textit{TotalPrice} in \textit{Quantity}. Zapis ne obstaja, če nima definiranega naročila. Tabela je nastala zaradi razmerja M:N t.i. mnogo-proti-mnogo med tabelo \textit{Product} in \textit{Order}.
 
 Tabela \textit{Table} je namenjena označevanju miz v restavracijah. Sestavljajo jo atributi: \textit{ID}, \textit{Name} in \textit{Position}, v katerega se lahko bolj podrobno opiše lokacija mize.
 
@@ -428,7 +426,7 @@ Tabela \textit{User} je namenjena le za natakarje in kuharje. Sestavljena je iz 
 
 Strukturo podatkovne baze smo definirali s pomočjo programa Toad Data Modeler. To je orodje za izdelavo visokokakovostnih podatkovnih modelov \cite{Toad_Data_Modeler}. Omogoča izdelavo logičnih in fizičnih podatkovnih modelov, kar pripomore k lažjemu razumevanju in razvijanju podatkovne baze. Njegova najboljša funkcionalnost je, da lahko generiramo SQL kodo v različne podatkovne sisteme kot npr. MySQL, Ingres, Microsoft Azurem, Microsoft Access in Mircrosoft SQL Server.
 
-Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo (SUPB ali ang. database management system, DBMS) MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
+Podatkovni model smo implementirali na fizičnem nivoju v sistemu za upravljanje s podatkovno bazo (ang. database management system, DBMS) MySQL. To je eden od odprtokodnih sistemov za upravljanje s podatkovni bazami, ki za delo s podatki uporablja jezik SQL (ang. structured query language) \cite{MySQL}. Napisan je v programskem jeziku C in C++ in deluje v vseh modernih operacijskih sistemih (Windows, Linux, IOS in drugih).
 
 
 \section{Strežnik}
@@ -448,7 +446,7 @@ Strežnik predstavlja vmesnik med podatkovno bazo in odjemalcem. Najbolj pomembn
 
 Knjižnica Flask nam je poenostavila izdelavo strežnika, saj gre ze eno izmed najbolj popularnih spletno aplikacijskih vmesnikov (ang. framework) \cite{Flask}. Zasnovan je tako, da omogoča hiter in enostaven začetek z možnostjo razširitve na zapletene aplikacije. Flask je prvotno zasnoval in razvil Armin Ronacher kot prvoaprilsko šalo leta 2010. Kljub taki predstavitvi je Flask postal izjemno priljubljen kot alternativa projektom narejenih v spletnem ogrodju Django.
 
-Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz podatkovne baze. Podatki so odjemalcu na voljo v JSON podatkovnem formatu. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka \textit{query} predstavlja poizvedbeni stavek. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti \textit{drinks}. Strežnik vsebuje 34 relativnih povezav URI in 600 vrstic programske kode.
+Vsaka relativna povezava URI na strežniku predstavlja svoj vir podatkov iz podatkovne baze. Podatki so odjemalcu na voljo v podatkovnem formatu JSON. Strežnik s pomočjo knjižnice MySQL najprej prebere podatke iz podatkovne baze in jih predstavi na določeni relativni povezavi URI, ki jo določimo mi. Na sliki~\ref{Drinks_DB_function} je prikazana funkcija za branje podatkov iz podatkovne baze, kjer spemenljivka \textit{query} predstavlja poizvedbeni stavek. Slika~\ref{Drinks_URI} prikazuje uporabo te funkcije in relativne poti \textit{drinks}. Strežnik vsebuje 34 relativnih povezav URI in 600 vrstic programske kode.
 
 
 \begin{figure}[!htb]
@@ -501,7 +499,7 @@ Na sliki~\ref{Cookies} je prikazano delovanje piškotkov HTTP. Strežnik ob prve
 
 \section{Odjemalec}
 
-Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v realnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost} je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi projektov SPA (ang. single-page application), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
+Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v stvarnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost} je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi enostranskih aplikacij (angl. single-page application, SPA), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
 \begin{description}
 \item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na njihovo povezovanje v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
@@ -523,7 +521,7 @@ Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve apl
 \end{figure}
 
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanju gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje primer vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanje gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje primer vtičnikov, ki so uporabljeni na strani gosta.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -545,7 +543,7 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni računalnik na katerem smo postavili podatkovno bazo MySQL s programom XAMPP, strežnik in aplikaciji za gosta in natakarja/kuharja. Slika~\ref{Program1} prikazuje testno okolje.
+Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni računalnik na katerem smo postavili podatkovno bazo MySQL, strežnik in aplikaciji za gosta in natakarja/kuharja. Slika~\ref{Program1} prikazuje testno okolje.
 
 \begin{figure}[!htb]
 \begin{center}

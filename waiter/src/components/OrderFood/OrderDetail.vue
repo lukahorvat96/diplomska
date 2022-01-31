@@ -35,7 +35,7 @@
       color="red"
       tile
     >
-      UNCONFIRM
+      DECLINE
     </v-btn>
   </v-card>
 </template>
@@ -96,7 +96,7 @@ export default {
     updateOrderStatusUnconfirm() {
       const latest = {
         order_id: this.order.order_id,
-        cook_status: "UNCONFIRMED"
+        cook_status: "DECLINE"
       };
       this.$store.dispatch("updateOrderCookStatus", latest);
     },

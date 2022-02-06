@@ -57,7 +57,6 @@
 \newcommand{\tkeywords}{spletna aplikacija, elektronsko naročanje, restavracija, Vue, JavaScript}
 \newcommand{\tkeywordsEn}{web application, electronic ordering, restaurant, Vue, JavaScript}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	HYPERREF SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -494,29 +493,29 @@ Na sliki~\ref{Cookies} je prikazano delovanje piškotkov HTTP. Strežnik ob prve
 
 \section{Odjemalec}
 
-Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v stvarnem času. Vue je eden izmed mnogih kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti za upravljanje in izvajanje testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost} je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah za razliko, da je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi enostranskih aplikacij (angl. single-page application, SPA), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
+Odjemalca bi lahko implementirali v spletnih tehnologijah (HTML, CSS in JavaScript) ali pa v namenski mobilni aplikaciji. Odločili smo se za spletne tehnologije, kjer je glavnina odjemalca implementrana v programskem jeziku JavaScript s pomočjo ogrodja Vue.  Naredili smo odziven in reaktiven vmesnik, ki deluje v stvarnem času. Vue je eden izmed mnogih, kot npr. Angular, Ember, React, poznan pa je predvsem zaradi enostavnosti upravljanja in izvajanja testov. Vsem je skupna reaktivnost, vendar v drugačnem pomenu besede. Reaktivnost \cite{reaktivnost} je programska paradigma, ki nam omogoča, da se na deklarativni način prilagodimo spremembam. Tako deluje tudi reaktivnost v aplikacijah, kjer je podatek lahko vezan na več funkcij oziroma delov programske kode, ki se ob spremembi vrednosti posodobijo. Vue je namenjen izdelavi enostranskih aplikacij (angl. Single-Page Application, SPA), saj vsebuje samo eno datoteko HTML. To prednost smo izkoristili s pomočjo ostalih knjižnic, ki so nam omogočale enostavnejšo izdelavo aplikacije. Uporabili smo naslednje:
 \begin{description}
-\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To omogoča razviljacu, da se bolj osredotoči na programiranje in ne na njihovo povezovanje v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
+\item[Vue CLI] velja kot standardno orodje za ekosistem Vue \cite{VueCLI}. Zagotavlja, da že pri gradnji novega projekta poveže različne dodatke med seboj. To razvijalcu omogoča, da se bolj osredotoči na programiranje in ne na njihovo povezovanje v projekt. Z uporabo vmesnika CLI se lahko izbere projekt, kjer so na voljo že privzete nastavitve, lahko pa se jih tudi nastavi po meri. Mi smo uporabili Vuex, Vue-Router, ESLint in Vuetify.
 \item[Vuex] je knjižnica za shranjevanje vrednosti v aplikacijah Vue.js \cite{Vuex}. Služi kot centralizirana baza podatkov za vse komponente v aplikaciji. 
-\item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo aplikacij SPA. Usmerjevalnik je mišljen v smislu usmerjanja na druge komponente (ang. component), ki v Vue.js predstavljajo druge poglede oziroma podstrani.
-\item[ESLint] je orodje za prepoznavanje in poročanje o popravkih v programski kodi \cite{ESLint}. Cilj je narediti kodo bolj pregledno in urejeno, kar pripomore k izogibanju napak.
-\item[Vuetify] je eden izmed mnogih uporabniških vmesnikov, ki je zgrajen na vrhu Vue.js \cite{Vuetify}. Za razliko od drugih vmesnikov je Vuetify enostaven za učenje z več stotimi komponentami izdelanih po specifikacijah Material Design.
+\item[Vue-Router] je uradni usmerjevalnik za Vue.js \cite{VueRouter}. Integrira se globoko z jedrom Vue.js, tako da poenostavi izdelavo aplikacij SPA. Usmerjevalnik je mišljen v smislu usmerjanja na druge komponente (angl. Component), ki v Vue.js predstavljajo druge poglede oziroma podstrani.
+\item[ESLint] je orodje za prepoznavanje in poročanje o popravkih v programski kodi \cite{ESLint}. Cilj je narediti kodo preglednejšo in bolj urejeno, kar pripomore k izogibanju napakam.
+\item[Vuetify] je eden izmed mnogih uporabniških vmesnikov, ki je zgrajen na vrhu Vue.js \cite{Vuetify}. V nasprotju z drugimi vmesniki je Vuetify enostaven za učenje z več stotimi komponentami, izdelanimi po specifikacijah Material Design.
 \item[Vue-devtools] je zgolj dodatek v brskalniku, ki omogoča lažje sledenje delovanju aplikacije in detektiranju napak. 
 \end{description}
 
-Programsko izvedbo na strani odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ki se ločuje s prijavnim oknom in izgledom vmesnika. Druga aplikacija je namenjena samo gostom ter je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisane v naslednjem poglavju.
+Programsko izvedbo za odjemalca smo razdelili v tri vloge oziroma dve aplikaciji. Ena aplikacija je namenjena natakarjem in kuharjem, ločuje se s prijavnim oknom in videzom vmesnika. Druga aplikacija je namenjena samo gostom in je sestavljena iz več pogledov. Ločili smo jih zaradi varnosti, lažjega razvijanja in preglednosti, saj gre za dve popolnoma različni aplikaciji. Vse funkcionalnosti in delovanje ene in druge aplikacije so opisani v naslednjem poglavju.
 
-Ena izmed pomembnih stvari pri obratovanje restavracije je čim hitrejša postrežba katero je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot na strani strežnika, uporabili spletni vtičnik SocketIO. To smo vključili v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanje gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje primer vtičnikov, ki so uporabljeni na strani gosta.
+Ena izmed pomembnih stvari pri obratovanju restavracije je čim hitrejša postrežba, ki jo je mogoče izboljšati s čim hitrejšo komunikacijo. Zato smo, enako kot za strežnik, uporabili spletni vtičnik SocketIO. Vključili smo ga v obeh aplikacijah, in sicer za oddajanje naročil, posodabljanje naročil, obveščanje gosta o stanju naročila itd. Najprej smo hoteli uporabiti samodejno osveževanje na določen časovni interval, vednar je uporaba spletnih vtičnikov hitrejša in učinkovitejša. Slika~\ref{socketioo1} prikazuje primer vtičnikov, ki so uporabljen za gosta.
 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=11cm]{socketio_2.jpg}
-\caption{Uporaba spletnih vtičnikov na strani gosta}
+\caption{Uporaba spletnih vtičnikov za gosta}
 \label{socketioo1}
 \end{center}
 \end{figure}
 
-Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki se oglašujejo na strani strežnika s pomočjo te knjižnice pridobimo na stran odjemalca (slika~\ref{axios_1}). 
+Za potrebe pridobivanje podatkov za odjemalca smo uporabili Axios, ki je namenjen procesiranju zahtevkov  HTTP. To pomeni, da podatke, ki jih oglašuje strežnik, s pomočjo te knjižnice pridobimo za odjemalca (slika~\ref{axios_1}). 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -528,7 +527,7 @@ Za pridobivanje podatkov na strani odjemalca smo uporabili Axios, ki je namenjen
 
 
 \chapter {Delovanje aplikacije}
-Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni računalnik na katerem smo postavili podatkovno bazo MySQL, strežnik in aplikaciji za gosta in natakarja/kuharja. Slika~\ref{Program1} prikazuje testno okolje.
+Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni računalnik, na katerem smo postavili podatkovno bazo MySQL, strežnik in aplikaciji za gosta in natakarja/kuharja. Slika~\ref{Program1} prikazuje testno okolje.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -540,9 +539,8 @@ Delovanje aplikacije smo testirali v testnem okolju. Uporabili smo osebni račun
 
 
 \section{Vmesnik za gosta}
-Začetni pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost_zac}) katerega bi lahko zamenjalo oglaševanja, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahaja 
- \textit{call waiter} za klic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjen gostom, ki aplikacije ne želijo uporabljati ali v primeru pomoči, če ima gost kakšna vprašanja ali pride do kakršnihkoli težav. V spodnjem levem kotu se nahaja status in identifikacijska številka naročila. 
-Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere kažejo na podstrani ponudbe, ki jo nudi restavracija (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo med katero izbira pri dodajanju hrane in pijače v nakupovalno košarico.
+Začetni pogled vmesnika za gosta vsebuje napis za dobrodošlico (slika~\ref{Gost_zac}), ki bi ga lahko zamenjali oglaševanje, predstavitev restavracije ali karkoli bi si potencialni kupec zaželel imeti. V zgornjem desnem kotu se nahajta gumb \textit{call waiter} za priklic natakarja in števec skupne cene artiklov v nakupovalni košarici. Gumb \textit{call waiter} je namenjen gostom, ki aplikacije ne želijo uporabljati, ali v primeru pomoči, če ima gost kakšna vprašanja ali pride do kakršnihkoli težav. V spodnjem levem kotu se nahajata status in identifikacijska številka naročila. 
+Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, ki kažejo na podstrani ponudbe restavracije (slika~\ref{Gost_3}). Gostu to predstavlja ponudbo, med katero izbira pri dodajanju hrane in pijače v nakupovalno košarico.
 
 \begin{figure}[!htb]
 \centering
@@ -553,13 +551,11 @@ Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, katere k
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=13.5cm]{customer_1.jpg}
+\includegraphics[width=12.9cm]{customer_1.jpg}
 \caption{Seznam artiklov znotraj vrste rižot}
 \label{Gost_3}
 \end{figure}
-
-Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart} (dodaj v košarico), ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količino), \textit{-} (zmanjšaj količino) in \textit{remove} (odstrani). Nakupovalna košarica oziroma \textit{cart} je skupno mesto vse hrane in pijače v seznamu za naročilo (slika~\ref{Gost_4}). Vse slike hrane in pijače so shranjene v datotečnemu sistemu spletnega strežnika.
-Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na prvo stran in obvesti s pojavnim sporočilom prikazanim na sliki~\ref{Gost_5}. Ko je naročilo oddano lahko gost ponovno dodaja hrano in pijačo v košarico, vendar je že oddani hrani in pijači onemogočeno zmanjšati količino ali jih izbrisati. Naročilo je sprejeto ko ga natakar potrdi, kar spremeni status naročila in prikaže pojavno sporočilo prikazano na sliki~\ref{Gost_6}. V primeru, da natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom na sliki~\ref{Gost_8}. Naročilo se zaključi s klikom na gumb \textit{request receipt}, ki odpre pojavno okno (slika~\ref{Gost_7}) na katerem se izbere način plačila.
+Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še gumb \textit{add to cart} (dodaj v košarico), ki ob kliku izgine in prikaže tri nove gumbe \textit{+} (povečaj količino), \textit{–} (zmanjšaj količino) in \textit{remove} (odstrani). Nakupovalna košarica oziroma \textit{cart} je skupno mesto vse hrane in pijače v seznamu za naročilo (slika~\ref{Gost_4}). Vse slike hrane in pijače so shranjene v datotečnemu sistemu spletnega strežnika. Naročilo se odda s klikom na gumb \textit{place order}, ki gosta preusmeri na prvo stran in obvesti s pojavnim sporočilom, prikazanim na sliki~\ref{Gost_5}. Ko je naročilo oddano, lahko gost ponovno dodaja hrano in pijačo v košarico, vendar je že oddani hrani in pijači onemogočeno zmanjšanje količine ali brisanje. Naročilo je sprejeto, ko ga natakar potrdi, kar spremeni status naročila in prikaže pojavno sporočilo, predstavljeno na sliki~\ref{Gost_6}. Če natakar zavrne naročilo, ga mora gost pregledati in ponovno oddati. Tudi v tem primeru je gost obveščen s statusom in pojavnim sporočilom, vidnim na sliki~\ref{Gost_8}. Naročilo se zaključi s klikom na gumb \textit{request receipt}, ki odpre pojavno okno (slika~\ref{Gost_7}) za izbiro načina plačila.
 
 \begin{figure}[!htb]
 \centering

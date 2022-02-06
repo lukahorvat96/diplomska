@@ -551,7 +551,7 @@ Zavihki na levi strani predstavljajo seznam vseh vrst hrane in pijače, ki kaže
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=12.9cm]{customer_1.jpg}
+\includegraphics[width=13.2cm]{customer_1.jpg}
 \caption{Seznam artiklov znotraj vrste rižot}
 \label{Gost_3}
 \end{figure}
@@ -572,13 +572,13 @@ Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=11cm]{gost_6.jpg}
-\caption{Pojavno sporočilo ob potrditvi naročila s strani natakarja}
+\caption{Pojavno sporočilo ob natakarjevi potrditvi naročila}
 \label{Gost_6}
 \end{figure}
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=11cm]{gost_8.jpg}
-\caption{Pojavno sporočilo ob zavrnitvi naročila s strani natakarja}
+\caption{Pojavno sporočilo ob natakarjevi zavrnitvi naročila}
 \label{Gost_8}
 \end{figure}
 \begin{figure}[!htb]
@@ -590,7 +590,7 @@ Vsaka hrana ali pijača vsebuje sliko, ime, opis in ceno. Poleg tega vsebuje še
 
 \clearpage
 \section{Vmesnik za natakarja in kuharja}
-Začetni pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupno aplikacijo kjer se pogledi razlikujejo glede vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, namreč oba uporabnika imata zelo podobne funkcije. Slika~\ref{NatKuh_zac} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sign out}. Prva podstran imenovana \textit{dashboard} ali prva stran ob uspešni prijavi, prikazuje napis za hitrejšo razlikovanje med vlogami. Natakar ima poleg tega v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
+Začetni pogled vmesnika je enak za natakarja in kuharja, saj gre za skupno aplikacijo, kjer se pogledi razlikujejo glede na vlogo uporabnika, ki je določena v podatkovni bazi. Nismo naredili ločene aplikacije, saj ni bilo potrebe, funkcije za oba uporabnika so namreč zelo podobne. Slika~\ref{NatKuh_zac} prikazuje prijavno okno. Po prijavi natakarja ali kuharja se uporabniško ime izpiše v levem spodnjem kotu. Na zgornji levi strani se prikaže zavihek z dvema podstranema in odjavnim gumbom \textit{sign out}. Prva podstran, imenovana \textit{dashboard}, ali prva stran ob uspešni prijavi prikazuje napis za hitrejšo razlikovanje med vlogami. Natakar ima v desnem zgornjem kotu še števec čakajočih in zaključenih naročil.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=13.7cm]{prijavno.jpg}
@@ -599,7 +599,7 @@ Začetni pogled vmesnika je enak tako za natakarja kot kuharja, saj gre za skupn
 \end{figure}
 
 
-Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila (slika ~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status naročila, status kuharja, način plačila in številka mize. Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki izvedeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi z gumbom \textit{confirm} ali urediti z gumbom \textit{check details} (slika~\ref{Natakar_3}). Natakar lahko ureja celotno naročilo, kar pomeni da lahko spreminja količino hrane in pijače ali jo briše iz naročila. Ko zaključi urjanje mora klikniti na gumb \textit{update order}. Celotno naročilo lahko potrdi šele ko dobi kuharjevo potrditev o hrani. Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže. Natakar postreženo naročilo označi s klikom na gumb \textit{served}. V primeru, da gost zahteva račun, se natakarju izpiše način plačila v zadevi \textit{payment}. Naročilo se zaključi, ko natakar natisne račun s klikom na gumb \textit{invoice}.
+Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila (slika ~\ref{Natakar_2}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status naročila, status kuharja, način plačila in številka mize. Izvaja lahko popoln nadzor nad naročili, vendar ob vsaki izvedeni akciji obvesti gosta (slike pojavnih sporočil iz prejšnjega poglavja). Novo naročilo mora natakar najprej potrditi z gumbom \textit{confirm} ali urediti z gumbom \textit{check details} (slika~\ref{Natakar_3}). Natakar lahko ureja celotno naročilo, kar pomeni, da lahko spreminja količino hrane in pijače ali jo briše iz naročila. Ko zaključi urejanje, mora klikniti na gumb \textit{update order}. Celotno naročilo lahko potrdi šele, ko dobi kuharjevo potrditev o hrani. Ko je naročilo potrjeno, natakar čaka na kuharjevo potrditev o pripravi hrane, da jo lahko postreže. Natakar postreženo naročilo označi s klikom na gumb \textit{served}. Če gost zahteva račun, se natakarju izpiše način plačila v zadevi \textit{payment}. Naročilo se zaključi, ko natakar natisne račun s klikom na gumb \textit{invoice}.
 
 \begin{figure}[!htb]
 \centering
@@ -616,7 +616,7 @@ Natakarju se v zavihku \textit{all orders} pojavijo vsa nezaključena naročila 
 \end{center}
 \end{figure}
 
-Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, ki vsebujejo hrano (slika ~\ref{Kuhar_4}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status kuharja in številka mize. Kuhar mora naročilo najprej pregledati z gumbom \textit{check details} (slika  ~\ref{Kuhar_3}) ter ga sprejeti ali zavrniti z gumbom \textit{confirm} in \textit{decline}. Naročilo lahko kuhar zavrne v primeru pomanjkanja sestavin. Ko kuhar zaključi s pripravo hrane o tem obvesti natakarja s klikom na gumb \textit{done}, ki izbriše naročilo iz seznama. Ob vsaki izvedeni akciji se pri vsakem naročilu spremeni status kuharja, ki je lahko: \textit{updated}, \textit{confirmed}, \textit{decline} in \textit{done}. Status \textit{updated} je v primeru dodajanja artiklov k naročilu s strani gosta.
+Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, ki vsebujejo hrano (slika ~\ref{Kuhar_4}). Vsako naročilo vsebuje naslednje podatke: identifikacijska številka naročila, čas oddaje naročila, status kuharja in številka mize. Kuhar mora naročilo najprej pregledati z gumboma \textit{check details} (slika  ~\ref{Kuhar_3}) ter ga sprejeti ali zavrniti z gumbom \textit{confirm} in \textit{decline}. Naročilo lahko kuhar zavrne, če mu zmanjka sestavin. Ko kuhar zaključi pripravo hrane, o tem obvesti natakarja s klikom na gumb \textit{done}, ki izbriše naročilo s seznama. Ob vsaki izvedeni akciji se pri vsakem naročilu spremeni status kuharja, ki je lahko: \textit{updated}, \textit{confirmed}, \textit{decline} in \textit{done}. Status \textit{updated} se uporabi, če gost k naročilu doda izdelke.
 
 \begin{figure}[!htb]
 \centering
@@ -634,7 +634,7 @@ Kuharju se v zavihku \textit{food orders} pojavijo vsa nezaključena naročila, 
 
 \clearpage
 \section{Primer uporabe}
-Uporaba aplikacije je prikazana na spodnjem diagramu poteka, slika~\ref{Diagram1}.
+Uporaba aplikacije je prikazana na spodnjem diagramu poteka (slika~\ref{Diagram1}).
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=13cm]{Diagram_poteka.jpg}
@@ -642,8 +642,8 @@ Uporaba aplikacije je prikazana na spodnjem diagramu poteka, slika~\ref{Diagram1
 \label{Diagram1}
 \end{figure}
 
-Gost s sprehajanjem skozi menije izbira hrano in pijačim ter jo sproti dodaja v naročilo (slika~\ref{Opis1}).
-V našem primeru gost izbere dva sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (slika~\ref{Opis2} in~\ref{Opis22}). Natakar in kuhar se prvo prijavita, da imata omogočen pregled nad naročilo. Na seznamu se jima prikaže novo naročilo, katero morata preveriti ali imata vse sestavine za pripravo (slika~\ref{Opis3} in~\ref{Opis33}). V našem primeru naročilo vsebuje hrano, tako da mora naročilo prvo potrdi kuhar (slika~\ref{Opis4} in~\ref{Opis44}), da lahko natakar potrdi celotno naročilo gostu (slika~\ref{Opis5} in~\ref{Opis55}). Ko je hrana pripravljena, kuhar o tem obvesti natakarja. Natakar naročilo postreže in naročilo označi kot postreženo. Gost zaključi naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo (slika~\ref{Opis6}). Natakar je obveščen o zahtevi za račun in načinu plačila s strani gosta  (slika~\ref{Opis66}). S tiskanjem računa natakar zaključi naročilo, kar pomeni da se izbriše iz seznama aktivnih naročil.
+Gost s sprehajanjem skozi menije izbira hrano in pijačo ter jo sproti dodaja v naročilo (slika~\ref{Opis1}).
+V našem primeru gost izbere dva sokova in dve pici. Pregled naročila izvede v košarici, kjer naročilo tudi odda (sliki~\ref{Opis2} in~\ref{Opis22}). Natakar in kuhar se najprej prijavita, da se omogoči pregled naročila. Na seznamu se jima prikaže novo naročilo, pri čemer morata preveriti, ali imata vse sestavine za pripravo (sliki~\ref{Opis3} in~\ref{Opis33}). V našem primeru naročilo vsebuje hrano, tako da mora naročilo najprej potrditi kuhar (sliki~\ref{Opis4} in~\ref{Opis44}), da lahko natakar celotno naročilo potrdi gostu (sliki~\ref{Opis5} in~\ref{Opis55}). Ko je hrana pripravljena, kuhar o tem obvesti natakarja. Natakar naročilo postreže in naročilo označi kot postreženo. Gost zaključi naročilo z zahtevanjem račun v zavihku košarica, kjer je naročilo tudi oddal. Način plačila izbere ob kliku na zahtevo (slika~\ref{Opis6}). Natakar je obveščen o zahtevi za račun in načinu plačila gosta (slika~\ref{Opis66}). S tiskanjem računa natakar zaključi naročilo, s čimer se to izbriše s seznama aktivnih naročil.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=10cm]{narocanje.jpg}
@@ -667,13 +667,13 @@ V našem primeru gost izbere dva sokova in dve pici. Pregled naročila izvede v 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{order_4.jpg}
-\caption{Pregled naročila na strani natakarja}
+\caption{Pregled naročila, kot ga vidi natakar}
 \label{Opis3}
 \end{figure}
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{order_5.jpg}
-\caption{Pregled podrobnosti naročila na strani natakarja}
+\caption{Pregled podrobnosti naročila, kot ga vidi natakar}
 \label{Opis33}
 \end{figure}
 
@@ -681,13 +681,13 @@ V našem primeru gost izbere dva sokova in dve pici. Pregled naročila izvede v 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{order_6.jpg}
-\caption{Pregled naročila na strani kuharja}
+\caption{Pregled naročila, kot ga vidi kuhar}
 \label{Opis4}
 \end{figure}
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{order_7.jpg}
-\caption{Pregled podrobnosti naročila na strani kuharja}
+\caption{Pregled podrobnosti naročila, kot ga vidi kuhar}
 \label{Opis44}
 \end{figure}
 
@@ -722,40 +722,40 @@ V našem primeru gost izbere dva sokova in dve pici. Pregled naročila izvede v 
 
 \clearpage
 \section{Implementirana rešitev}
-Trenutna rešitev omogoča implementacijo znotraj le ene restavracije. Aplikacija bi bila nameščena na lokalnem spletnem strežniku. Naročanje bi gost izvajal s pomočjo tablic, ki bi bile locirane na vsaki mizi v restavraciji. 
+Trenutna rešitev omogoča implementacijo le znotraj ene restavracije. Aplikacija bi bila nameščena na lokalnem spletnem strežniku. Naročanje bi gost izvajal s pomočjo tablic, ki bi bile nameščene na vsaki mizi v restavraciji. 
 
-Nadgrajena bi predstavljala uporabo aplikacije za naročanje z branjem kode QR (ang. quick response), ki bi bila locirana na vsaki mizi v restavraciji. V kodi bi bilo zapisano ime restavracije in številka mize. Kodo bi gost skeniral z mobilno napravo s preusmeritvijo v aplikacijo. Celoten sistem bi deloval v odprtem internetnem omrežju, tako za goste kot tudi natakarje in kuharje. Strežnik bi lahko bil implementiran za eno ali večje število restavracij in bi omogočal storitev vsem restavracijam po Sloveniji. Potrebno bi bilo zagotoviti, da ne bi prihajalo do fantomskih naročil, kjer bi nepridipravi oddajali neveljavna naročila. Temu bi se lahko izognili na dva načina. Prvi način bi bil, da bi moral biti uporabnik prijavljen preko lokalnega omrežja s čimer bi overili svojo dejansko prisotnost v restavraciji.
+Nadgradnja bi predstavljala uporabo aplikacije za naročanje z branjem kode QR (angl. Quick Response), ki bi bila nameščena na vsaki mizi v restavraciji. V kodi bi bila zapisana ime restavracije in številka mize. Kodo bi gost skeniral z mobilno napravo s preusmeritvijo v aplikacijo. Celoten sistem bi deloval v odprtem internetnem omrežju, tako za goste kot tudi natakarje in kuharje. Strežnik bi lahko implementirali za eno ali večje število restavracij in bi omogočal storitev vsem restavracijam po Sloveniji. Treba bi bilo zagotoviti, da ne bi prihajalo do fantomskih naročil, kjer bi nepridipravi oddajali neveljavna naročila. Temu bi se lahko izognili na dva načina. Prvi način bi bil, da bi moral biti uporabnik prijavljen preko lokalnega omrežja, s čimer bi overil svojo dejansko prisotnost v restavraciji.
 Drugi način bi bilo geslo, ki bi ga uporabnik prejel od natakarja. 
 
 
 \section{Izboljšave}
 
-Potrebne izboljšave, da bi lahko aplikacijo ponudili potencialnim kupcem so:
+Potrebne izboljšave, da bi lahko aplikacijo ponudili potencialnim kupcem, so:
 
-1.) Možnost dodajanja hrane in pijače k naročilu s strani vsakega posameznika za mizo.
+1.) Možnost, da lahko vsak posameznik za mizo dodaja hrano in pijačo k naročilu.
 
-2.) Možnost hkratnega delovanja več kuharjev, kot smo to implementirli za natakarje.
+2.) Možnost hkratnega delovanja več kuharjev, kot smo to implementirali za natakarje.
 
 3.) Administrativni dostop za urejanje menijev.
 
 4.) Spremljanje zaloge hrane in pijače.
 
-5.) Dodatno spremljanje hrane in pijače na strani kuharja/natakarja, kot npr. katera pijača in hrana je že bila postrežena.
+5.) Dodatno spremljanje hrane in pijače za kuharja/natakarja, kot npr. katera pijača in hrana je že bila postrežena.
 
 
 Napredne izboljšave: 
 
 1.) Statistika za lastnika restavracije, ki bi poleg vseh podatkov izračunala predvideno oceno nabave za prihodnji mesec.
 
-2.) Brezstično plačevanje s plačilno kartico neposredno na strani gosta.
+2.) Neposredno brezstično plačevanje s plačilno kartico za gosta.
 
-3.) V primeru, da bi aplikacija delovala v odprtem internetnem omrežju bi lahko restavracije oglaševale oziroma sprejamale naročila za dostavo hrane in pijače.
+3.) Če bi aplikacija delovala v odprtem internetnem omrežju, bi lahko restavracije oglaševale dostavo ali sprejemale naročila za dostavo hrane in pijače.
 
 
 \chapter {Sklepne ugotovitve}
-Namen naše diplomske naloge je bil izdelati enostavno aplikacijo, ki bi olajšala delo natakarjem in nudila bolj kakovostno postrežbo gostom. Mislimo da je aplikacija v okviru diplomskega dela realizirana v skladu z zahtevami, pričakovanji in cilji. Uporaba aplikacije gostom ponuja drugačno uporabniško izkušnjo, ki omogoča tudi klasično izbiro naročanja, in sicer z neposrednim stikom z natakarjem. S tem smo želeli poudariti, da aplikacija ni namenjena nadomestitvi delovnih mest natakarjev, vendar omogoča digitalizacijo procesov pri izvajanju njihovega dela. Natakarjeva glavna naloga bi še vedno bila postrežba gosta ter priprava pijače. 
+Namen diplomske naloge je bil izdelati enostavno aplikacijo, ki bi olajšala delo natakarjem in nudila kakovostnejšo postrežbo gostom. Mislimo, da je aplikacija v okviru diplomskega dela realizirana v skladu z zahtevami, pričakovanji in cilji. Uporaba aplikacije gostom ponuja drugačno uporabniško izkušnjo, ki omogoča tudi klasično izbiro naročanja z neposrednim stikom z natakarjem. S tem smo želeli poudariti, da aplikacija ni namenjena nadomestitvi delovnih mest natakarjev, vendar omogoča digitalizacijo procesov pri izvajanju njihovega dela. Natakarjeva glavna naloga bi še vedno bila postrežba gosta in priprava pijače. 
 
-Aplikacija bi bila s predstavljenimi izboljšavami primerna prototipna rešitev za uporabo. Uporabljali bi jo lahko v vsaki restavraciji, če ne drugače kot pomoč ob veliki zasedenosti. Trenutno, v času COVID-19 krize, bi takšna aplikacija omogočala določeno podporo za delovanje restavracij tudi v primeru spletnega naročanja.
+Aplikacija bi bila s predstavljenimi izboljšavami primerna prototipna rešitev za uporabo. Uporabljali bi jo lahko v vsaki restavraciji, če ne drugače kot pomoč ob veliki zasedenosti. Trenutno, v času krize, povezane z epidemijo covida-19, bi takšna aplikacija omogočala določeno podporo za delovanje restavracij tudi pri spletnem naročanju.
 
 
 \newpage %dodaj po potrebi, da bo številka strani za Literaturo v Kazalu pravilna!

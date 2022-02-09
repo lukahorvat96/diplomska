@@ -65,6 +65,19 @@
 \hypersetup{pdfauthor={\tauthor, matjaz.kralj@fri.uni-lj.si}}
 \hypersetup{pdfkeywords=\tkeywordsEn}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% znaki za copyright stran
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+\newcommand{\CcImageCc}[1]{%
+	\includegraphics[scale=#1]{cc_cc_30.pdf}%
+}
+\newcommand{\CcImageBy}[1]{%
+	\includegraphics[scale=#1]{cc_by_30.pdf}%
+}
+\newcommand{\CcImageSa}[1]{%
+	\includegraphics[scale=#1]{cc_sa_30.pdf}%
+}
 
  
 
@@ -192,7 +205,7 @@
     {\titfont \ttitle \par}%
     {\vskip 3em \textsc{DIPLOMSKO DELO\\[5mm]         % dodal Solina za ostale študijske programe
 %    VISOKOŠOLSKI STROKOVNI ŠTUDIJSKI PROGRAM\\ PRVE STOPNJE\\ RAČUNALNIŠTVO IN INFORMATIKA}\par}%
-    VISOKOŠOLSKI ŠTUDIJSKI PROGRAM \\ PRVE STOPNJE\\ RAČUNALNIŠTVO IN INFORMATIKA}\par}%
+    VISOKOŠOLSKI STROKOVNI ŠTUDIJSKI PROGRAM \\ PRVE STOPNJE\\ RAČUNALNIŠTVO IN INFORMATIKA}\par}%
 %    INTERDISCIPLINARNI UNIVERZITETNI\\ ŠTUDIJSKI PROGRAM PRVE STOPNJE\\ RAČUNALNIŠTVO IN MATEMATIKA}\par}%
 %    INTERDISCIPLINARNI UNIVERZITETNI\\ ŠTUDIJSKI PROGRAM PRVE STOPNJE\\ UPRAVNA INFORMATIKA}\par}%
 %    INTERDISCIPLINARNI UNIVERZITETNI\\ ŠTUDIJSKI PROGRAM PRVE STOPNJE\\ MULTIMEDIJA}\par}%
@@ -206,17 +219,34 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %copyright stran
-\thispagestyle{empty}
-\vspace*{8cm}
+\vspace*{5cm}
+{\small \noindent
+To delo je ponujeno pod licenco \textit{Creative Commons Priznanje avtorstva-Deljenje pod enakimi pogoji 2.5 Slovenija} (ali novej\v so razli\v cico).
+To pomeni, da se tako besedilo, slike, grafi in druge sestavine dela kot tudi rezultati diplomskega dela lahko prosto distribuirajo,
+reproducirajo, uporabljajo, priobčujejo javnosti in predelujejo, pod pogojem, da se jasno in vidno navede avtorja in naslov tega
+dela in da se v primeru spremembe, preoblikovanja ali uporabe tega dela v svojem delu, lahko distribuira predelava le pod
+licenco, ki je enaka tej.
+Podrobnosti licence so dostopne na spletni strani \href{http://creativecommons.si}{creativecommons.si} ali na Inštitutu za
+intelektualno lastnino, Streliška 1, 1000 Ljubljana.
 
-\noindent
-{\sc Copyright}. 
-Rezultati diplomske naloge so intelektualna lastnina avtorja in Fakultete za računalništvo in informatiko Univerze v Ljubljani.
-Za objavo in koriščenje rezultatov diplomske naloge je potrebno pisno privoljenje avtorja, Fakultete za računalništvo in informatiko ter mentorja.
+\vspace*{1cm}
+\begin{center}% 0.66 / 0.89 = 0.741573033707865
+\CcImageCc{0.741573033707865}\hspace*{1ex}\CcImageBy{1}\hspace*{1ex}\CcImageSa{1}%
+\end{center}
+}
 
-\begin{center}
-\mbox{}\vfill
-\emph{Besedilo je oblikovano z urejevalnikom besedil \LaTeX.}
+\vspace*{1cm}
+{\small \noindent
+Izvorna koda diplomskega dela, njeni rezultati in v ta namen razvita programska oprema je ponujena pod licenco GNU General Public License,
+različica 3 (ali novejša). To pomeni, da se lahko prosto distribuira in/ali predeluje pod njenimi pogoji.
+Podrobnosti licence so dostopne na spletni strani \url{http://www.gnu.org/licenses/}.
+}
+
+\vfill
+\begin{center} 
+\ \\ \vfill
+{\em
+Besedilo je oblikovano z urejevalnikom besedil \LaTeX.}
 \end{center}
 % prazna stran
 \clearemptydoublepage
@@ -224,22 +254,30 @@ Za objavo in koriščenje rezultatov diplomske naloge je potrebno pisno privolje
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % stran 3 med uvodnimi listi
 \thispagestyle{empty}
-\vspace*{4cm}
+\
+\vfill
 
-\noindent
-Fakulteta za računalništvo in informatiko izdaja naslednjo nalogo:
-\medskip
-\begin{tabbing}
-\hspace{32mm}\= \hspace{6cm} \= \kill
+\bigskip
+\noindent\textbf{Kandidat:} Luka Horvat\\
+\noindent\textbf{Naslov:} Elektronsko naročanje v restavraciji\\
+% vstavite ustrezen naziv študijskega programa!
+\noindent\textbf{Vrsta naloge:} Diplomska naloga na visokošolskem strokovnem programu prve stopnje Računalništvo in informatika \\
+% izberite pravi habilitacijski naziv mentorja!
+\noindent\textbf{Mentor:} doc. dr. Mira Trebar\\
+\noindent\textbf{Somentor:} as. dr. David Jelenc
 
+\bigskip
+\noindent\textbf{Opis:}\\
+Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraciji. Zasnuje naj spletno aplikacijo, ki omogoča gostom pregled ponudbe in izvedbo naročil. Osebje naj ima možnost urejanja, spremljanje in izvedbo ter zaključitev postopka z izdajo računa v stvarnem času. Za implementiran model odjemalec-strežnik naj predstavi enostaven primer uporabe vmesnikov za gosta, natakarja in kuharja.
 
+\bigskip
+\noindent\textbf{Title:} Electronic ordering in a restaurant
 
+\bigskip
+\noindent\textbf{Description:}\\
+The candidate is instructed to analyze the process of ordering food and beverages in a restaurant. A web application is to be developed that supports said process and allows guests to review the offer and order items. Restaurant staff should be able to oversee, modify, confirm, and complete orders by issuing an invoice, all in real-time. The candidate is to present example interface for the roles of guest, the waiter and the chef.
 
-Tematika naloge: Elektronsko naročanje v restavraciji
-\end{tabbing}
-Kandidat naj v diplomskem delu analizira postopek obdelave naročil v restavraciji. Zasnuje naj spletno aplikacijo, ki omogoča gostom pregled ponudbe in izvedbo. Osebje naj ima možnost urejanja naročil, njihovo spremljanje in izvedbo ter zaključitev postopka z izdajo računa, pri čemer naj bo omogočena interakcija v stvarnem času. Za implementiran model strežnik-odjemalec naj predstavi enostaven primer uporabe vmesnikov za gosta, natakarja in kuharja.
-\vspace{15mm}
-
+\vfill
 
 
 
@@ -350,7 +388,7 @@ Diplomsko delo zajema analizo, načrtovanje in razvoj spletne aplikacije, ki omo
 \bigskip
 
 %\noindent\textbf{Abstract:} 
-\noindent The diploma thesis covers the analysis, design, and development of a web application for restaurant's electronic ordering of food and beverages. The purpose of the application is to facilitate the waiter's work and provide better quality service to guests. The key functionalities are placing orders by the guest and the control and management of orders by the waiter and the chef. It is possible to order via this application or directly contact the waiter. The application is designed as a high-level architecture (client-server model), consisting of the application, server, and database. The Vue framework and JavaScript, Python, and MySQL database languages developed the application.
+\noindent The diploma thesis covers the analysis, design, and development of a web application for restaurant's electronic ordering of food and beverages. The purpose of the application is to facilitate the waiter's work and provide better quality service to guests. The key functionalities are placing orders by the guest and the control and management of orders by the waiter and the chef. It is possible to order via this application or directly contact the waiter. The application is designed as a high-level architecture (client-server model), consisting of the application, server, and database. The Vue framework and JavaScript, Python, and MySQL database languages are used in the development of the application.
 \bigskip
 
 \noindent\textbf{Keywords:} \tkeywordsEn.
@@ -368,7 +406,7 @@ Slovenija velja za državo z veliko restavracijami, vendar le redke med njimi up
 
 Zamislili smo si sistem za oddajanje naročil v restavracijah, ki ne bi nadomestil ljudi v strežbi, temveč bi služil kot pregledovalnik ponudbe z možnostjo naročanja hrane in pijače. Aplikacija bi bila na tablicah, ki bi bile nameščene na vsaki mizi restavracije. Stranka bi bila tista, ki bi se odločala, ali želi pri naročanju uporabiti stik z osebo v strežbi ali bi naročila z uporabo aplikacije na tablici. Delovanje bi bilo sledeče: stranka oziroma gost odda naročilo, natakar in kuhar ga preverita, potrdita in pripravita. Posledično bi bile stranke, ki veljajo za zahtevnejše in bolj neučakane na vseh področjih, hitreje in kakovostneje postrežene. 
 
-Diplomsko delo je razdeljeno na dva dela. V prvem delu bomo opisali načrtovanja in razvoj aplikacije. To pomeni opis komponent, ki sestavljajo samo arhitekturo aplikacije, kako se med seboj povezujejo in sestavljajo delujoč sistem. V drugem delu bomo opisali delovanje aplikacije, najprej podrobneje, nato na podlagi primera. Predstavili bomo tudi omejitve naše rešitve in mogoče izboljšave. Na koncu bomo podali še sklepne ugotovitve. 
+Diplomsko delo je razdeljeno na dva dela. V prvem delu je opisan postopek načrtovanja in razvoj aplikacije. To pomeni opis komponent, ki sestavljajo samo arhitekturo aplikacije, kako se med seboj povezujejo in sestavljajo delujoč sistem. V drugem delu je predstavljeno delovanje aplikacije, najprej podrobneje, nato na podlagi primera. V nadaljevanju so navedene tudi omejitve naše rešitve in mogoče izboljšave. Na koncu so dodane še sklepne ugotovitve. 
 
 \chapter{Načrtovanje in razvoj aplikacije}
 
@@ -397,7 +435,7 @@ Podatkovna baza je namenjena shranjevanju vseh podatkov za posamezno restavracij
 
 
 \section{Podatkovna baza}
-Na podlagi predvidenih zahtev oziroma funkcionalnosti, ki jih bo imela spletna aplikacija, smo najprej izdelali logičen podatkovni model (slika~\ref{Database_physical}). Podatkovna baza je sestavljena iz šestih tabel, ki so: \textit{ProductType, Product, ProductOrder, Order, User, Table}. 
+Na podlagi predvidenih zahtev oziroma funkcionalnosti, ki jih bo imela spletna aplikacija, smo najprej izdelali logičen podatkovni model (slika~\ref{Database_physical}). Podatkovna baza je sestavljena iz šestih tabel, ki so: \textit{ProductType, Product,  Order, ProductOrder, Table, User}. 
 
 \begin{figure}[!htb]
 \centering

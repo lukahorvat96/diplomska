@@ -46,7 +46,7 @@
             <v-list-item-content>
               <v-list-item-title>Sign out</v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item>  
           <!--
         <v-list-group value="true">
           <template v-slot:activator>
